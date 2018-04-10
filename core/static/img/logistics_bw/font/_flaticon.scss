@@ -1,0 +1,111 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 01/03/2018 08:50
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-001-shipping-4:before { content: "\f100"; }
+.flaticon-002-truck-2:before { content: "\f101"; }
+.flaticon-003-truck-1:before { content: "\f102"; }
+.flaticon-004-truck:before { content: "\f103"; }
+.flaticon-005-tax-2:before { content: "\f104"; }
+.flaticon-006-tax-1:before { content: "\f105"; }
+.flaticon-007-tax:before { content: "\f106"; }
+.flaticon-008-document-2:before { content: "\f107"; }
+.flaticon-009-shipping-3:before { content: "\f108"; }
+.flaticon-010-shipping-2:before { content: "\f109"; }
+.flaticon-011-box-2:before { content: "\f10a"; }
+.flaticon-012-boat:before { content: "\f10b"; }
+.flaticon-013-post-office:before { content: "\f10c"; }
+.flaticon-014-shipping-1:before { content: "\f10d"; }
+.flaticon-015-plane:before { content: "\f10e"; }
+.flaticon-016-passport:before { content: "\f10f"; }
+.flaticon-017-shipping:before { content: "\f110"; }
+.flaticon-018-tracking-2:before { content: "\f111"; }
+.flaticon-019-open:before { content: "\f112"; }
+.flaticon-020-tracking-1:before { content: "\f113"; }
+.flaticon-021-inspection-1:before { content: "\f114"; }
+.flaticon-022-inspection:before { content: "\f115"; }
+.flaticon-023-document-1:before { content: "\f116"; }
+.flaticon-024-logistics:before { content: "\f117"; }
+.flaticon-025-delivery:before { content: "\f118"; }
+.flaticon-026-boxes-1:before { content: "\f119"; }
+.flaticon-027-electronic:before { content: "\f11a"; }
+.flaticon-028-drone:before { content: "\f11b"; }
+.flaticon-029-departure:before { content: "\f11c"; }
+.flaticon-030-boxes:before { content: "\f11d"; }
+.flaticon-031-officer:before { content: "\f11e"; }
+.flaticon-032-box-1:before { content: "\f11f"; }
+.flaticon-033-container:before { content: "\f120"; }
+.flaticon-034-document:before { content: "\f121"; }
+.flaticon-035-box:before { content: "\f122"; }
+.flaticon-036-tracking:before { content: "\f123"; }
+    
+    $font-Flaticon-001-shipping-4: "\f100";
+    $font-Flaticon-002-truck-2: "\f101";
+    $font-Flaticon-003-truck-1: "\f102";
+    $font-Flaticon-004-truck: "\f103";
+    $font-Flaticon-005-tax-2: "\f104";
+    $font-Flaticon-006-tax-1: "\f105";
+    $font-Flaticon-007-tax: "\f106";
+    $font-Flaticon-008-document-2: "\f107";
+    $font-Flaticon-009-shipping-3: "\f108";
+    $font-Flaticon-010-shipping-2: "\f109";
+    $font-Flaticon-011-box-2: "\f10a";
+    $font-Flaticon-012-boat: "\f10b";
+    $font-Flaticon-013-post-office: "\f10c";
+    $font-Flaticon-014-shipping-1: "\f10d";
+    $font-Flaticon-015-plane: "\f10e";
+    $font-Flaticon-016-passport: "\f10f";
+    $font-Flaticon-017-shipping: "\f110";
+    $font-Flaticon-018-tracking-2: "\f111";
+    $font-Flaticon-019-open: "\f112";
+    $font-Flaticon-020-tracking-1: "\f113";
+    $font-Flaticon-021-inspection-1: "\f114";
+    $font-Flaticon-022-inspection: "\f115";
+    $font-Flaticon-023-document-1: "\f116";
+    $font-Flaticon-024-logistics: "\f117";
+    $font-Flaticon-025-delivery: "\f118";
+    $font-Flaticon-026-boxes-1: "\f119";
+    $font-Flaticon-027-electronic: "\f11a";
+    $font-Flaticon-028-drone: "\f11b";
+    $font-Flaticon-029-departure: "\f11c";
+    $font-Flaticon-030-boxes: "\f11d";
+    $font-Flaticon-031-officer: "\f11e";
+    $font-Flaticon-032-box-1: "\f11f";
+    $font-Flaticon-033-container: "\f120";
+    $font-Flaticon-034-document: "\f121";
+    $font-Flaticon-035-box: "\f122";
+    $font-Flaticon-036-tracking: "\f123";
