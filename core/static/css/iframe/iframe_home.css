@@ -10,8 +10,8 @@ body {
 }
 
 .section {
-	width: 90%;
-	margin: auto auto;
+	width: 95%;
+	margin: 15px auto;
 	height: 400px;
 	border: 1px solid white;
 }

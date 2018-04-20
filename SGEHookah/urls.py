@@ -19,11 +19,12 @@ from core.views import *
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
-    path('admindjango/', admin.site.urls),
+  path('admindjango/', admin.site.urls),
 	path('admin/', login, {"template_name":"index.html"}, name="login"),
 	path('logout/', logout, {'next_page':'login'}, name="logout"),
 	path('admin/home/', home, name="home"),
 	path('', redirect_home),
-	path('iframe/home', iframe_home, name="iframe_home"),
-	path('produtos/cadastrar', cadastrar_produto, name="cadastrar_produto")
+	path('iframe/home/', iframe_home, name="iframe_home"),
+	path('iframe/produtos/cadastrar/', cadastrar_produto, name="cadastrar_produto"),
+	path('admin/usuario/', user_main, name="user_main")
 ]

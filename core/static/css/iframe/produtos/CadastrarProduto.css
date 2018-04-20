@@ -1,0 +1,63 @@
+h1 {
+	margin-bottom: 50px;
+}
+
+label  {
+	width: 100%;
+	color: white;
+}
+
+input {
+	width: 100%;
+}
+
+div.label {
+	margin: auto auto;
+	width: 90%;
+}
+
+div.input{
+	margin: auto auto;
+	width: 90%;
+}
+
+.formContainer {
+	margin: 10px auto;
+	width: 90%;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+.formInput {
+	width: calc(100%/4);
+}
+
+.formInputContainer {
+	margin: auto auto;
+	padding: 15px;
+	width: 98%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+}
+
+.botaoContainer {
+	width: 93%;
+	margin: auto auto;
+	display: flex;
+	flex-flow: row no-wrap;
+	justify-content: flex-end;
+}
+
+.botao {
+	margin: auto 5px;
+	color: white;
+	width: 100px;
+	height: 30px;
+	background-color: black;
+	border: 2px solid white;
+	border-radius: 5px;
+	font-weight: 600;
+	font-size: 90%;
+	transition : 0.4s;
+}

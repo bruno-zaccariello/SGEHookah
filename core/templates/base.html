@@ -6,16 +6,33 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="/static/css/site.css">
 		<title>SGE-Hookah Sistema Administrativo</title>
+		
+		<script src="/static/js/logoutCover.js"></script>
+		<script src="/static/js/frameHeight.js"></script>
+		<script src="/static/js/userPageFix.js"></script>
 	{% endblock %}
 </head>
-<body>
+<body class="main_body">
+
+	<div id ="ldc_logout" class="logoutDispContainer">
+		<div class="logoutCheckWindow">
+		</div>
+		<div class="logoutCheckMessage">
+			<h2 class="h2_logoutMessage">Tem certeza que deseja sair ?</h2>
+			<br/>
+			<div class="bt_logoutContainer">
+				<button class="btMain btCancelar" onclick="logoutDisplayOff()">Cancelar</button>
+				<a href="/logout"><button class="btMain btConfirmar">Confirmar</button></a>
+			</div>
+		</div>
+	</div>
 	
-	<div class="oa_menu">
+	<section class="oa_menu">
 		<header>
 			
-			<div class="menu_topping">
+			<div id="menu_topping" class="menu_topping">
 			
-				<div class="oam_extra">
+				<div id="oam_extra" class="oam_extra">
 				</div>
 				
 				<div class="oam_brand">
@@ -24,23 +41,32 @@
 				
 				<div class="oam_user_info">
 					{% if user.is_authenticated %}
-					<div class="oam_hello">Olá, <a href="#">{{ user }}</a></div>
-					<div class="oam_logout"><a href="/logout">logout</a></div>
+					<div class="oam_hello">Olá, <a href="/admin/usuario" target="main_frame" onclick="userPageFix()">{{ user }}</a></div>
+					<div class="oam_logout"><a href="javascript:logoutDisplayOn()">logout</a></div>
 					{% endif %}
 				</div>
 			
 			</div>
-			<div class="oam_wrapper">
+			
+			<div id="oam_wrapper" class="oam_wrapper">
 				<div class="oam_opt opt_produto oam_dropdown">
-					<a href="#" target="main_frame"><div class="oam_drop_div">Produtos</div></a>
+					<a href="#" target="main_frame">
+						<div class="oam_drop_div">
+							<div class="oam_drop_div_legend">Produtos</div>
+						</div>
+					</a>
 					<div class="oam_dropdown_content">
-						<a href="/produtos/cadastrar" target="main_frame"><div class="oam_drop_opt">Cadastrar Produto</div></a>
+						<a href="/iframe/produtos/cadastrar" target="main_frame"><div class="oam_drop_opt">Cadastrar Produto</div></a>
 						<a href="teste_2.html" target="main_frame"><div class="oam_drop_opt">Lista de Produtos</div></a>
 					</div>
 				</div>
 				
 				<div class="oam_opt opt_cliente oam_dropdown">
-					<a href="#" target="main_frame"><div class="oam_drop_div">Clientes</div></a>
+					<a href="#" target="main_frame">
+						<div class="oam_drop_div">
+							<div class="oam_drop_div_legend">Clientes</div>
+						</div>
+					</a>
 					<div class="oam_dropdown_content">
 						<a href="#" target="main_frame"><div class="oam_drop_opt">TESTE</div></a>
 						<a href="#" target="main_frame"><div class="oam_drop_opt">TESTE</div></a>
@@ -48,24 +74,40 @@
 				</div>
 				
 				<div class="oam_opt opt_vendas">
-					<a href="#"><div class="oam_drop_div">Vendas</div></a>
+					<a href="#">
+						<div class="oam_drop_div">
+							<div class="oam_drop_div_legend">Vendas</div>
+						</div>
+					</a>
 				</div>
 				
 				<div class="oam_opt opt_producao">
-					<a href="#"><div class="oam_drop_div">Produção</div></a>
+					<a href="#">
+						<div class="oam_drop_div">
+							<div class="oam_drop_div_legend">Produção</div>
+						</div>
+					</a>
 				</div>
 				
 				<div class="oam_opt opt_home_page">
-					<a href="/iframe/home" target="main_frame"><div class="oam_drop_div">Home Page</div></a>
+					<a href="/iframe/home" target="main_frame">
+						<div class="oam_drop_div">
+							<div class="oam_drop_div_legend">Home Page</div>
+						</div>
+					</a>
 				</div>
 				
 				<div class="oam_opt opt_config">
-					<a href="#"><div class="oam_drop_div">Configurações</div></a>
+					<a href="#">
+						<div class="oam_drop_div">
+							<div class="oam_drop_div_legend">Configurações</div>
+						</div>
+					</a>
 				</div>
 				
 			</div>
 			
-			<div class="search_wrapper" id="sw_main">
+			<div id="search_wrapper" class="search_wrapper" id="sw_main">
 				<div class="search_part">
 					<form class="search_form" method="GET">
 						<div class="search_div">
@@ -114,9 +156,12 @@
 			</div>
 			
 		</header>
-	</div>
+	</section>
 
-	<iframe src="/iframe/home" class="main_frame" id="main_frame" name="main_frame"></iframe>
+	<section id="iframe_section">
+		<iframe scrolling="no" src="/iframe/home" onload="iframeLoaded()" class="main_frame" id="main_frame" name="main_frame"></iframe>
+	</section>
+	
 <footer>
 	Sistema Administrativo Endorama - Fabricação de fumos para narguilé e vaporizadores
 </footer>

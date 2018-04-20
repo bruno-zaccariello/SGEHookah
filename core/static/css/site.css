@@ -7,8 +7,7 @@ h1 {
 	border-bottom: 1px solid yellow;
 	margin: auto auto;
 }
-	
-}
+
 
 h2 {
 	
@@ -24,6 +23,10 @@ body {
 	margin-bottom: 0;
 	padding-bottom : 0px;
 	background-color : black;
+}
+
+body.main_body {
+	
 }
 
 footer {
@@ -45,6 +48,102 @@ a{
 
 a:hover{
 	color: #91700d;
+}
+
+/* Logout Window */
+
+.logoutDispContainer {
+	display: none;
+}
+
+.logoutCheckWindow {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: #000;
+	opacity: .3;
+	border: 1px solid red;
+	margin: auto auto;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 1;
+}
+
+.h2_logoutMessage {
+	font-size: 130%;
+}
+
+.logoutCheckMessage {
+	text-align: center;
+	padding: 15px;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	color: white;
+	margin: auto auto;
+	width: 30%;
+	height: 25%;
+	background-color: black;
+	background-color: rgba(0, 0, 0, 0.9);
+	box-shadow: 0 0 35px white;
+	border: 1px solid white;
+	border-radius: 10px;
+	position: fixed;
+	z-index:2;
+}
+
+/* Botoes */
+
+.btMain {
+	margin: auto 5px;
+	color: white;
+	width: 100px;
+	height: 30px;
+	background-color: black;
+	border: 2px solid white;
+	border-radius: 5px;
+	font-weight: 600;
+	font-size: 90%;
+	transition : 0.4s;
+}
+
+.btCadastrar:hover {
+	background-color: white;
+	color: black;
+}
+
+.btLimpar:hover {
+	background-color: #feffb0;
+	color: black;
+}
+
+.btCancelar:hover {
+	background-color: darkred;
+}
+
+.btConfirmar:hover {
+	background-color: darkgreen;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #333; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: white; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ccc; 
 }
 
 /* Dropdown */
@@ -94,7 +193,7 @@ a:hover{
 	border-left: 3px solid black;
 }
 
-/* Classes */
+/* Menu */
 
 .oa_menu {
 	height : auto;
@@ -103,6 +202,7 @@ a:hover{
 .menu_topping {
 	display: grid;
 	grid-template-columns: repeat(3, calc(100%/3));
+	background-color: black;
 }
 
 .oam_brand {
@@ -119,6 +219,7 @@ a:hover{
 }
 
 .oam_user_info {
+	padding-right: 5px;
 	text-align: end;
 	order: 2;
 }
@@ -149,32 +250,44 @@ a:hover{
 }
 
 .oam_wrapper {
-	border : 1px solid black;
+	border-top : 1px solid #3a3a3a;
+	border-bottom : 1px solid #3a3a3a;
 	height : 130px;
 	margin : 0px auto 5px;
 	display : grid;
 	grip-gap: 10px;
 	grid-template-columns: repeat(6, calc(100%/6));
 	padding : 5px;
-	background-color : #2d2d2d;
+	background-color: black;
 }
 
 .oam_opt {
 	margin: auto auto;
 	width : 60%;
 	height : 90%;
-	background-color : lightgray;
-    border-radius: 10px;
-    border: 1px solid gray;
-	transition-duration: 0.2s;
+	background-color : black;
+	border-radius: 10px;
+	border: 2px solid white;
+	transition-duration: 0.3s;
 	background-position: 50% 65%;
-    background-size: 40%;
-    background-repeat: no-repeat;
+	background-size: 35%;
+	background-repeat: no-repeat;
 }
 
 .oam_opt:hover{
-    background-color: lightyellow;
+  background-color: white;
 	border: 3px solid #2d2d2d;
+	background-size: 40%;
+}
+
+.oam_drop_div_legend {
+	color: white;
+	transition-duration: 0.3s;
+	display: block;
+}
+
+.oam_opt:hover .oam_drop_div_legend{
+	color: gray;
 }
 
 .opt_produto{
@@ -228,6 +341,7 @@ a:hover{
 	height: 100%;
 	margin: 5px auto;
 	border : 1px solid black;
+	background-color: black;
 }
 
 .fix_frame {
@@ -302,6 +416,36 @@ select.search_input{
 .search_button:hover{
     background-color: yellow;
     color: black;
+}
+
+/* PAGINA DO USUARIO */
+
+.bt_um_goback {
+	outline: none;
+	padding-left: 9%;
+	background-image: url("/static/img/bg_um_arrowLeft.png");
+	background-position: 6% 50%;
+	background-size: 13%;
+	background-repeat: no-repeat;
+	border: none;
+	border-right: 2px solid black;
+	width: 200px;
+	height: 30px;
+	font-weight: 600;
+	font-size: 13px;
+	color: white;
+	background-color: black;
+	transition: 0.2s;
+} 
+
+.bt_um_goback:hover {
+	border-right: 2px solid yellow;
+}
+
+.bt_um_goback:focus {
+	background: none;
+	color: yellow;
+	border-right: 2px solid black;
 }
 
 @media screen and (max-width: 1400px) {

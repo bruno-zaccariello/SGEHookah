@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
+from core.forms import Teste
 import datetime
 
 '''
@@ -26,12 +27,15 @@ def page_cadastro_disciplina(request):
 
 '''
 
-__all__ = ["index", "home", "redirect_home", "iframe_home", "cadastrar_produto"]
+__all__ = ["index", "home", "redirect_home", "iframe_home", "cadastrar_produto", "user_main"]
 
 # Create your views here.
 
 def index(request):
 	return render(request, "index.html")
+	
+def user_main(request):
+	return render(request, "usuario/user_main.html")
 	
 @login_required(login_url="/admin")
 def home(request):
@@ -44,19 +48,14 @@ def iframe_home(request):
 	return render(request, "iframe/home.html")
 	
 def cadastrar_produto(request):
-	return render(request, "produtos/cadastrar_produto.html")
-'''def teste(request):
-	lista = Teste.objects.all()
 	if request.POST:
-		form = TesteForm(request.POST)
+		form = Teste(request.POST)
 		if form.is_valid():
 			form.save()
-			print('DISCIPLINA CADASTRADA')
-			return redirect('/teste')
-	else :
-		form = TesteForm()
+			print("DISCIPLINA CADASTRADA")
+	else:
+		form = Teste()
 	context = {
-		"form":form,
-		"lista":lista
+			"form":form
 	}
-	return render(request, "teste.html", context)'''
+	return render(request, "iframe/produtos/cadastrar_produto.html", context)
