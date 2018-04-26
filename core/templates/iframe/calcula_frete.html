@@ -1,0 +1,13 @@
+<html>
+<body>
+<form method="POST">
+	{% csrf_token %}
+	{% for campo in form %}
+	{{campo.label_tag}} {{ campo }}
+	{% endfor %}
+	<h1>{{ resposta_frete }}</h1>
+	
+	<button type="submit">Verificar</button>
+</form>
+</body>
+</html>

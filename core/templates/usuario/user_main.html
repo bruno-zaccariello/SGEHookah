@@ -1,11 +1,12 @@
 <html>
 <head>
+	<title id="iframe_title">SGE - Página do Usuário</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="/static/css/site.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/usuario/user_main.css">
 </head>
-<body>
+<body id="user_main_body">
 
 	<div id ="ldc_logout" class="logoutDispContainer">
 		<div class="logoutCheckWindow">
@@ -22,6 +23,10 @@
 	
 	<div class="um_title">
 		<h1>Página do Usuário</h1>
+	</div>
+	
+	<div style="background-color:white">
+		{{ user.email }} {{ user.first_name }}
 	</div>
 
 </body>

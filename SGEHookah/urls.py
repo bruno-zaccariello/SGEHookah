@@ -26,5 +26,6 @@ urlpatterns = [
 	path('', redirect_home),
 	path('iframe/home/', iframe_home, name="iframe_home"),
 	path('iframe/produtos/cadastrar/', cadastrar_produto, name="cadastrar_produto"),
-	path('admin/usuario/', user_main, name="user_main")
+	path('admin/usuario/', user_main, name="user_main"),
+	path('calcula_frete', calcula_frete, name="calcula_frete")
 ]

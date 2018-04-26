@@ -8,7 +8,6 @@ h1 {
 	margin: auto auto;
 }
 
-
 h2 {
 	
 }
@@ -50,6 +49,12 @@ a:hover{
 	color: #91700d;
 }
 
+/* Extras */
+
+.hidden {
+	display: none;
+}
+
 /* Logout Window */
 
 .logoutDispContainer {
@@ -71,13 +76,23 @@ a:hover{
 	z-index: 1;
 }
 
+.logoutCheckWrapper {
+	width: 90%;
+	height: auto;
+	margin: auto auto;
+	padding: 5px;
+}
+
 .h2_logoutMessage {
 	font-size: 130%;
+	margin: 0 auto;
 }
 
 .logoutCheckMessage {
+	display: flex;
+	flex-flow: column no-wrap;
+	justify-content: center;
 	text-align: center;
-	padding: 15px;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -135,15 +150,17 @@ a:hover{
 }
 
 ::-webkit-scrollbar-track {
-    background: #333; 
+    background: none; 
 }
 
 ::-webkit-scrollbar-thumb {
-    background: white; 
+    background-color: white;
+	background-color: rgba(255, 255, 255, 0.5);
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #ccc; 
+	background-color: rgba(200, 200, 200, 1)
 }
 
 /* Dropdown */
@@ -216,6 +233,14 @@ a:hover{
 
 .oam_extra {
 	order: 0;
+	display: flex;
+}
+
+.oam_extra_title {
+	color: white;
+	font-size: 85%;
+	padding: 10px;
+	height: 80%;
 }
 
 .oam_user_info {
@@ -423,7 +448,7 @@ select.search_input{
 .bt_um_goback {
 	outline: none;
 	padding-left: 9%;
-	background-image: url("/static/img/bg_um_arrowLeft.png");
+	/*background-image: url("/static/img/bg_um_arrowLeft.png");*/
 	background-position: 6% 50%;
 	background-size: 13%;
 	background-repeat: no-repeat;
@@ -458,6 +483,12 @@ select.search_input{
 	}
 }
 
+@media screen and (max-width: 1100px) {
+	.oam_extra_title {
+		font-size: 60%;
+	}
+}
+
 @media screen and (max-width: 950px){
 	.search_wrapper{
 		height : auto;
@@ -477,5 +508,18 @@ select.search_input{
 	.oam_wrapper{
 		height: 20%;
 	}
+	
+}
+
+@media screen and (min-width: 1800px) {
+	
+	.oam_opt {
+		background-size: 30%;
+	}
+	
+	.oam_opt:hover {
+		background-size: 35%;
+	}
+	
 	
 }
