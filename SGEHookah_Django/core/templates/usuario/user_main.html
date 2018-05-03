@@ -1,0 +1,163 @@
+<html>
+<head>
+	<title id="iframe_title">SGE - Página do Usuário</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="/static/css/site.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/usuario/user_main.css">
+	<script src="/static/js/Usuario/user_main.js"></script>
+</head>
+<body id="user_main_body">
+	
+	<div class="um_title">
+		<h1>Página do Usuário</h1>
+	</div>
+	
+	{% if senhaAlterada == True %}
+		<div id="alerta_wrapper">
+			<div class="jas_bg">
+			</div>
+			<div class="alerta_wrapper" id="">
+				<div class="trackSuccess"> Senha Alterada com Sucesso </div>
+				<div class="jas_bt_div"><button onclick="javascript:alertSucessOff()" class="btMain btConfirmar">Continuar</button></div>
+			</div>
+		</div>
+	{% endif %}
+	
+	<div class="page_wrapper">
+	
+		<div class="_wrapper info_wrapper">
+			
+			<h3>Informação Pessoal</h3>
+			
+			<div class="info_margin um_infos">
+				<h3 class="h3_title1">Informações do Usuário</h3>
+			
+				<div class="item_um_info">Nome : {{ user_nome }}</div>
+				<div class="item_um_info">Email : {{ user_email }}</div>
+				
+				<div class="item_um_info um_infos_alterar"><a href="javascript:jaiDisplayOn()" class="um_dados_alterar"> Alterar </a></div>
+				
+				<div class="janela_AlterarInfo" id="janela_AlterarInfo">
+
+					<div class="jai_bg" id="jai_bg">
+					</div>
+
+					<form method="POST">
+					
+						<div class="wp_AlterarInfoForm" id="wp_AlterarInfoForm">
+							
+							<h3 class="jai_title"> Altere suas informações: </h3>
+							{% csrf_token %}
+							{% for field in form_userInfo %}
+								<div class="jai_fields_wrapper">
+									<div>{{field.label_tag}}</div>
+									<div>{{field}}</div>
+								</div>
+							{% endfor %}
+							
+							<div class="jas_bt_div">
+								<button onclick="javascript:jaiDisplayOff()" type="reset" class="btMain btCancelar">Cancelar</button>
+								<button class="btMain btConfirmar" type="submit">Confirmar</button>
+							</div>
+							
+						</div>
+					</form>
+				</div>
+			
+			</div>
+			
+			<div class="info_margin um_mudarsenha">
+				
+				<h3 class="h3_title2">
+					<a href="javascript:jasDisplayOn()" class="um_senha_alterar">Alterar Senha</a>
+				</h3>
+				
+				<div class="janela_AlterarSenha" id="janela_AlterarSenha">
+					
+					<div class="jas_bg" id="jas_bg">
+					</div>
+					
+					<form method="POST" id="as_form">
+					
+						<div class="wp_AlterarSenhaForm" id="wp_AlterarSenhaForm">
+							
+							<h3 class="jas_title"> Altere sua senha: </h3>
+							{% csrf_token %}
+							{% if errosFormSenha != 'none' %}
+								<div id="errosFormSenha">
+									{% for field in form_senha %}
+										{{ field.errors }}
+									{% endfor %}
+								</div>
+							{% endif %}
+							
+							{% for field in form_senha%}
+								<div class="jas_fields_wrapper">
+									<div>{{field.label_tag}}</div>
+									<div>{{field}}</div>
+								</div>
+							{% endfor %}
+							
+							<script>
+								ShowErros();
+							</script>
+							
+							<div class="jas_bt_div">
+								<button onclick="javascript:jasDisplayOff()" type="reset" class="btMain btCancelar">Cancelar</button>
+								<button class="btMain btConfirmar" type="submit">Confirmar</button>
+							</div>
+							
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			
+		</div>
+		
+		<div class="_wrapper endereco_wrapper">
+			
+			<h3>Endereço</h3>
+			
+			<div class="info_margin endereco_box">
+			
+				<div class="linha1_grid">
+					<div class="item_endereco">
+						CEP:<br/>02415-002
+					</div>
+					
+					<div class="item_endereco">
+						Endereço:<br/> R. Bom Jesus da Cantareira, 1969
+					</div>
+				</div>	
+			
+				<div class="linha2_grid">
+					<div class="item_endereco">
+						Complemento:<br/> Apto. XX Bl. Y
+					</div>
+					
+					<div class="item_endereco">
+						Bairro:<br/> Jd. Tremembé
+					</div>
+				
+					<div class="item_endereco">
+						Cidade:<br/> São Paulo
+					</div>
+					
+					<div class="item_endereco">
+						UF: SP
+					</div>
+				</div>
+				
+				<div class="um_endereco_alterar_div"><a href="" class="um_endereco_alterar">Alterar</a></div>
+			</div>
+			
+			<div class="info_margin">
+			</div>
+			
+		</div>
+	
+	</div>
+</body>
+</html>

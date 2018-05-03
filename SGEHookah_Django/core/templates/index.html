@@ -1,0 +1,57 @@
+<html>
+<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="/static/css/site.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/index.css">
+		<title> Página Inicial </title>
+</head>
+<body>
+ 
+ <section>
+ {% if user.is_authenticated %}
+ <div class="logadowrapper">
+	<h2>Usuário Logado</h2>
+	<a class="linklogado" href="/admin/home"><div class="logado">Continuar</div></a>
+ </div>
+ {% else %}
+ <div class="partL">
+	
+ </div>
+ 
+ <div class="partR">
+	<div class="BoxLogin">
+	<form class="LoginForm" method="POST">
+			<div class="campos">	
+				{% csrf_token %}
+				{% for field in form %}
+
+					{{ field.errors }}
+					 <div class="formwrapper">
+						<div class="labeldiv"> {{ field.label_tag }} </div>
+						<div class="inputdiv"> {{ field }} </div>
+					</div>
+					
+					{% if loginerror %}
+						<div>Login Inválido</div>
+					{% endif %}
+
+				{% endfor %}
+			</div>
+				<!-- <input class="checkbox" type="checkbox" name="RememberMe" id="RememberMe">
+				<label for="RememberMe">Lembre-se de mim</label><br/> -->
+			
+			<div class="botaoDiv">
+				<button class="botaoLogin" type="submit">Login</button><br/>
+			</div>
+
+	</form>
+	</div>
+ </div>
+ {% endif %}
+ </section>
+<footer>
+	Sistema Administrativo Endorama - Fabricação de fumos para narguilé e vaporizadores
+</footer>
+</body>
+</html>

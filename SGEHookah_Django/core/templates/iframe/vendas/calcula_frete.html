@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title id="iframe_title">SGE - Calcular Frete</title>
+	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+	<link rel="stylesheet" type="text/css" href="/static/css/iframe/vendas/calcula_frete.css"/>
+</head>
+<body>
+
+	<h1> Calcular Frete </h1>
+
+	<div class="wrapper">
+	
+		<div class="form_container">
+			<form method="POST" autocomplete="off">	
+				
+				{% csrf_token %}
+				
+				<div class="formInputContainer">
+				
+					{% if MsgErro != "None" %}
+						<div class="msg_erro">Erro : {{ MsgErro }}</div> 
+					{% endif %}
+					
+					{% for field in form %}
+						<div class="formInput">
+							<div class="label">{{field.label_tag}}</div>
+							<div class="input">{{field}}</div>
+						</div>
+					{% endfor %}
+					
+					<div class="wrapper_bottom">
+						<div class="bt_container">
+							<button class="btMain btEnviar" type="submit">Verificar</button>
+						</div>
+					
+						<div class="retorno_container">
+							
+							<div class="retorno_item ri_prazo">
+								<div>Prazo:</div>
+								<div class="resposta">{{ PrazoEntrega }} Dia(s)</div>
+							</div>	
+							
+							<div class="retorno_item">
+								<div>Preço:</div> 
+								<div class="resposta">R$ {{ Valor }}</div>
+							</div>	
+							
+						</div>
+					</div>
+				</div>
+			
+			</form>
+		</div>
+	
+	</div>
+
+
+</body>
+</html>
