@@ -1,0 +1,17 @@
+body {
+	background-color: black;
+	color: white;
+}
+
+.content_box {
+	margin-top: 15px;
+	display: grid;
+	grid-template-columns: repeat(3, calc(100%/3));
+}
+
+.section {
+	width: 95%;
+	margin: 15px auto;
+	height: 400px;
+	border: 1px solid white;
+}

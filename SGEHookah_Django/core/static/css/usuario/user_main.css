@@ -1,0 +1,331 @@
+h3 {
+	text-align: center;
+	color: white;
+}
+
+/* FORMS E JANELAS QUE SOBREPOEM */
+
+.errorlist {
+	text-decoration: none;
+	list-style: none;
+	font-size: 70%;
+	color: red;
+}
+
+.alerta_wrapper {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-evenly;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 300;
+	background-color: black;
+	margin: auto auto;
+	width: 25%;
+	height: 20%;
+	position: fixed;
+	border: 2px solid white;
+	border-radius: 5px;
+	z-index: 1;
+}
+
+.trackSuccess {
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	font-size: 100%;
+	font-weight: 600;
+	color: green;
+}
+
+.trackFailure {
+	font-size: 70%;
+	color: red;
+}
+
+/* Janela Alterar Senha */
+
+.janela_AlterarSenha {
+	display: none;
+}
+
+.jas_title {
+	margin: 0 auto 10px;
+}
+
+.jas_bg {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: #000;
+	opacity: .9;
+	margin: auto auto;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 1;
+}
+
+.wp_AlterarSenhaForm	{
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	color: white;
+	margin: auto auto;
+	width: 35%;
+	height: 35%;
+	background-color: black;
+	background-color: rgba(0, 0, 0, 1);
+	opacity: 1;
+	border: 1px solid white;
+	border-radius: 10px;
+	position: fixed;
+	padding: 20px;
+	z-index:2;
+}
+
+.jas_fields_wrapper {
+	width: 80%;
+	margin: auto auto;
+}
+
+.jas_bt_div {
+	text-align: center;
+	width: 95%;
+	margin: 10px auto;
+}
+
+/* Janela Alterar Info */
+
+.janela_AlterarInfo {
+	display: none;
+}
+
+.jai_title {
+	margin: 0 auto 10px;
+}
+
+.jai_bg {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: #000;
+	opacity: .9;
+	margin: auto auto;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 1;
+}
+
+.wp_AlterarInfoForm	{
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	color: white;
+	margin: auto auto;
+	width: 35%;
+	height: 35%;
+	background-color: black;
+	background-color: rgba(0, 0, 0, 1);
+	opacity: 1;
+	border: 1px solid white;
+	border-radius: 10px;
+	position: fixed;
+	padding: 20px;
+	z-index:2;
+}
+
+.jai_fields_wrapper {
+	width: 80%;
+	margin: auto auto;
+}
+
+.jai_bt_div {
+	text-align: center;
+	width: 95%;
+	margin: 10px auto;
+}
+
+/* Ancoras */
+
+.um_dados_alterar {
+	color: yellow;
+}
+
+.um_dados_alterar:hover {
+	color: white;
+}
+
+.um_senha_alterar {
+	color: white;
+}
+
+.um_senha_alterar:hover {
+	color: yellow;
+}
+
+.um_endereco_alterar {
+	color: yellow;
+}
+
+.um_endereco_alterar:hover {
+	color: white;
+}
+
+/* PAGINA */
+
+.page_wrapper {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+}
+
+.um_title {
+	margin: 15px auto;
+	margin-bottom: 20px;
+}
+
+/* DIVISORIAS */
+
+._wrapper {
+	margin: 15px;
+	border: 1px dashed #222;
+	border-radius: 10px;
+	padding: 15px;
+}
+
+/* INFORMACOES DO USUARIO */
+
+.info_margin {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.info_wrapper {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	color: white;
+	width: 315px;
+	height: 400px;
+}
+
+.um_infos {
+	border: 1px solid white;
+	border-radius: 10px;
+	color: white;
+	width: auto;
+	padding: 10px;
+}
+
+.item_um_info {
+	width: 90%;
+}
+
+.um_infos_alterar {
+	text-align: end;
+	width: 100%;
+}
+
+/* ALTERAR SENHA */
+
+.um_mudarsenha {
+	border: 1px solid white;
+	border-radius: 10px;
+	color: white;
+	width: auto;
+	padding: 10px;
+}
+
+.um_bt_div {
+	width: 150px;
+	height: 30px;
+	margin: auto auto;
+	border: 1px solid white;
+	border-radius: 10px;
+	color: white;
+}
+
+/* ENDERECO */
+
+.endereco_wrapper {
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: flex-start;
+	width: calc(30% + 15px);
+	max-width: 600px;
+	height: 400px;
+}
+
+.endereco_box {
+	border: 1px solid white;
+	border-radius: 10px;
+	color: white;
+	width: 100%;
+	height: auto;
+	padding: 10px;
+}
+
+.linha1_grid {
+	display: grid;
+	grid-template-columns: 25% 75%;
+}
+
+.linha2_grid {
+	display: grid;
+	grid-template-columns: 25% 30% 30% 15%;
+}
+
+.item_endereco {
+	border: 1px dashed #000;
+	width: auto;
+	padding: 12px;
+}
+
+.um_endereco_alterar_div {
+	width: 100%;
+	text-align: end;
+}
+
+@media screen and (max-width: 1400px) {
+	
+	.endereco_wrapper {
+		display: flex;
+		flex-flow: column wrap;
+		justify-content: flex-start;
+		width: calc(45% + 15px);
+		max-width: 600px;
+		min-width: 550px;
+		height: 400px;
+	}
+	
+	.info_wrapper {
+		min-width: 262px;
+	}
+}
+
+@media screen and (max-width: 890px) {
+	
+	.endereco_wrapper {
+		min-width: 330px;
+	}
+	
+	
+	.linha1_grid {
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	
+	.linha2_grid {
+		display: flex;
+		flex-flow: row wrap;
+	}
+}
