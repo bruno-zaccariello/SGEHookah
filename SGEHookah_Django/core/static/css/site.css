@@ -1,5 +1,10 @@
 /* TAGS */
 
+* {
+	box-sizing : border-box;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 h1 {
 	width: 300px;
 	color: white;
@@ -10,11 +15,6 @@ h1 {
 
 h2 {
 	
-}
-
-* {
-	box-sizing : border-box;
-	font-family: Georgia, serif
 }
 
 body {
@@ -49,10 +49,40 @@ a:hover{
 	color: #91700d;
 }
 
+a.bee {
+	color: white;
+}
+
+a.bee:hover {
+	color: yellow;
+}
+
 /* Extras */
+
+.white {
+	color:white;
+}
 
 .hidden {
 	display: none;
+}
+
+.vertical {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+}
+
+.flex_row {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+}
+
+.flex_column {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
 }
 
 /* Forms */
@@ -68,6 +98,11 @@ label  {
 
 input {
 	width: 100%;
+}
+
+input:focus {
+	outline: none;
+	background-color: #ddd
 }
 
 select {
@@ -229,6 +264,12 @@ div.input{
 	display: inline-block;
 }
 
+.cat_div {
+	height: 1px;
+	width: 100%;
+	border: 1px solid black;
+}
+
 .oam_drop_opt{
 	font-size: 80%;
 	width: 100%;
@@ -262,8 +303,16 @@ div.input{
 	border : 1px solid black;
 	width : 90%;
 	height : 40px;
-	background-color : yellow;
 	order: 1;
+}
+
+.oam_brand_title {
+	width: 90%;
+	text-align: center;
+	margin: 5px auto;
+	color: yellow;
+	font-weight: 600;
+	font-size: 20px;
 }
 
 .oam_extra {
@@ -376,7 +425,7 @@ div.input{
 }
 
 .opt_config{
-	background-image: url("/static/img/bg_menu_config.png");
+	background-image: url("/static/img/bg_menu_config2.png");
 	order: 5;
 }
 
@@ -385,7 +434,9 @@ div.input{
 	margin : 0px auto 5px;
 	display : flex;
 	flex-flow : row wrap;
-	background-color : lightgray;
+	justify-content: space-evenly;
+	background-color : black;
+	color: white;
 	border-radius: 15px;
 }
 
@@ -412,14 +463,16 @@ div.input{
 }
 
 .search_part{
-	border : 1px solid black;
+	border : 1px solid #555;
+	border-collapse: collapse;
+	background-color: #111;
 	width : 33%;
 	width : calc(100%/3);
-    padding: 5px;
-    display: flex;
-    justify-content: space-around;
-    vertical-align: center;
-    line-height: 15px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
+  vertical-align: center;
+  line-height: 15px;
 }
 
 .search_form{
@@ -546,6 +599,10 @@ select.search_input{
 @media screen and (max-height: 880px) {
 	.oam_wrapper{
 		height: 20%;
+	}
+	
+	.oam_brand_title {
+		font-size: 16px;
 	}
 	
 }

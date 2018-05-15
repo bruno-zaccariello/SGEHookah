@@ -1,0 +1,13 @@
+div.foto_produto {
+	width: 150px;
+	height: 150px;
+	margin: 10px;
+	border: 2px dashed gray;
+}
+
+img.foto_produto {
+	object-fit: contain;
+	width: 95%;
+	height: 95%;
+	margin: auto auto;
+}
