@@ -1,14 +1,56 @@
 from django import forms
-from core.models import AuthUser
+from core.models import *
 #from core.models import Teste
 
 ''' class TesteForm(forms.ModelForm):
+	nome = forms.CharField(widget=forms.TextInput(attrs={'class':'codProdutoInput'}))
+	
+	nome.widget.attrs.update({'class':'Descricao'})
+	
 	class Meta:
 		model = Teste
 		fields = ['nome', 'descricao'] '''
 		
-__all__ = ['Teste', 'FreteForm', 'UpdateInfoForm']
+__all__ = ['Teste', 'FreteForm', 'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm']
+
+class CategoriaprodutoForm(forms.ModelForm):
+	nomecategoria = forms.CharField(label="Nome da Categoria", max_length=50)
+	
+	nomecategoria.widget.attrs.update({'placeholder':'...'})
+
+	class Meta :
+		model = Categoriaproduto
+		fields = ["nomecategoria"]
 		
+class ProdutoForm(forms.ModelForm):
+	codproduto = forms.CharField(label="*Código", max_length=8)
+	nomeproduto = forms.CharField(label="*Nome")
+	preco = forms.DecimalField(label="*Preço", max_digits=10, decimal_places=2)
+	precocusto = forms.DecimalField(label="Preço de Custo", max_digits=10, decimal_places=2, required=False)
+	sabor = forms.CharField(label="*Sabor")
+	marca = forms.CharField(label="Marca", required=False)
+	altura = forms.FloatField(label="Altura")
+	largura = forms.FloatField(label="Largura")
+	profundidade = forms.FloatField(label="Profundidade")
+	peso = forms.FloatField(label="Peso")
+	fkid_categoria = forms.ModelChoiceField(label="Categoria", queryset=Categoriaproduto.objects.filter(hide=False), initial=0)
+	fkid_unidademedida = forms.ModelChoiceField(label="Unidade", queryset=Unidademedida.objects.filter(hide=False), initial=0)
+	fotoproduto = forms.FileField(label="Escolha a Foto", required=False)
+	descricao = forms.CharField(label="Descrição", widget=forms.Textarea, required=False)
+	
+	descricao.widget.attrs.update({'class':'Descricao'})
+	fotoproduto.widget.attrs.update({'class':'FotoInput'})
+	altura.widget.attrs.update({'placeholder':'Em cm'})
+	largura.widget.attrs.update({'placeholder':'Em cm'})
+	profundidade.widget.attrs.update({'placeholder':'Em cm'})
+	peso.widget.attrs.update({'placeholder':'Em cm'})
+	
+	class Meta:
+		model = Produto
+		fields = ["codproduto", "nomeproduto", "preco", "precocusto",
+		"sabor", "marca","altura", "largura", "profundidade", "peso","fkid_unidademedida" ,"fkid_categoria", 
+		"fotoproduto", "descricao"]
+
 class Teste(forms.Form):
 	nome = forms.CharField(label='Your name', max_length=100)
 	idade = forms.CharField(label='Idade', max_length=100)
@@ -37,8 +79,8 @@ class FreteForm(forms.Form):
 	
 class UpdateInfoForm(forms.ModelForm):
 	email = forms.EmailField(label="E-mail", required=True)
-	first_name = forms.CharField(label="Nome", required=False)
-	last_name = forms.CharField(label="Sobrenome", required=False)
+	first_name = forms.CharField(label="Nome", required=True)
+	last_name = forms.CharField(label="Sobrenome", required=True)
 	
 	class Meta :
 		model = AuthUser
@@ -49,9 +91,9 @@ class UpdateInfoForm(forms.ModelForm):
 		if email and AuthUser.objects.filter(email=email).count():
 			raise forms.ValidationError('Esse e-mail já está em uso.')
 		return email
-	
+			
 	def save(self, commit=True):
-		user = super(RegistrationForm, self).save(commit=False)
+		user = super(UpdateInfoForm, self).save(commit=False)
 		user.email = self.cleaned_data['email']
 		
 		if commit :

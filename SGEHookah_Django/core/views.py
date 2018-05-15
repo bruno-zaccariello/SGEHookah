@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect
-from django.http import request, HttpResponse
+from django.http import request, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
+from decimal import *
 from core.forms import *
+from core.models import *
 import datetime
 import requests
+from core.funcoes import *
 from xml.etree import ElementTree
 
 '''
@@ -29,13 +33,28 @@ def page_cadastro_disciplina(request):
 
 '''
 
-__all__ = ["index", "home", "redirect_home", "iframe_home", "cadastrar_produto", "user_main", "calcula_frete"]
+__all__ = ["index", "home", "redirect_home", "iframe_home", "cadastrar_produto", "user_main", "calcula_frete", "altera_senha_form", 
+"atualiza_user_form", "pagina_produto", "lista_produtos", "deletar_produto", "lista_categorias", "deletar_categoria"]
 
 # Create your views here.
 	
 def index(request):
 	return render(request, "index.html")
 
+#Home e Principais	
+	
+@login_required(login_url="/admin")
+def home(request):
+	return render(request, "base.html")	
+
+def redirect_home(request):
+	return redirect('/admin')
+
+def iframe_home(request):
+	return render(request, "iframe/home.html")	
+
+# Página do usuário
+	
 def	altera_senha_form(request):
 	senhaAlterada = False
 	if request.method == 'POST':
@@ -54,87 +73,138 @@ def	altera_senha_form(request):
 			erros.append(field.errors)
 	if len(erros) == 0 :
 		erros = 'none'
-	print(erros)
-	return form_senha, senhaAlterada, erros
+	context = {
+		"form_senha":form_senha,
+		"senhaAlterada":senhaAlterada,
+		"errosFormSenha":erros
+		}
+	return render(request, "usuario/forms/AlterarSenha.html", context)
 
 def atualiza_user_form(request):
+	infoAlterada = False
 	if request.method == 'POST':
 		form_userInfo = UpdateInfoForm(request.POST, instance=request.user)
 		if form_userInfo.is_valid():
 			user = form_userInfo.save()
 			update_session_auth_hash(request, user)
+			infoAlterada = True
 		else:
 			messages.error(request, 'Error')
 	else: 
 		form_userInfo = UpdateInfoForm(instance=request.user)
 	erros = []
-	for field in form_senha :
+	for field in form_userInfo :
 		if field.errors:
 			erros.append(field.errors)
 	if len(erros) == 0 :
 		erros = 'none'
-	print(erros)
-	return form_userInfo, erros
+	context = {
+		"form_userInfo":form_userInfo,
+		"errosFormUserInfo":erros,
+		"infoAlterada":infoAlterada
+	}
+	return render(request, "usuario/forms/AlterarInfo.html", context)
 	
 def user_main(request):
-	form_senha, senhaAlterada, errosFormSenha = altera_senha_form(request)
-	form_userInfo = atualiza_user_form(request)
 	usuario = request.user
 	context = {
 		"user_usuario":usuario.get_username(),
 		"user_nome":usuario.get_full_name(),
-		"user_email":usuario.email,
-		"form_senha":form_senha,
-		"senhaAlterada":senhaAlterada,
-		"errosFormSenha":errosFormSenha,
-		"form_userInfo":form_userInfo
+		"user_email":usuario.email
 	}
 	return render(request, "usuario/user_main.html", context)
 	
-@login_required(login_url="/admin")
-def home(request):
-	return render(request, "base.html")
-	
-def redirect_home(request):
-	return redirect('/admin')
-	
-def iframe_home(request):
-	return render(request, "iframe/home.html")
+#Produto
 	
 def cadastrar_produto(request):
+	success = request.GET.get('success', False)
 	if request.POST:
-		form = Teste(request.POST)
+		form = ProdutoForm(request.POST, request.FILES)
 		if form.is_valid():
+			form = form.save(commit=False)
+			if form.fotoproduto == '' or form.fotoproduto == None :
+				form.fotoproduto = 'default_product.png'
+			form.totalestoque = 0
+			form.hide = 0
 			form.save()
-			print("DISCIPLINA CADASTRADA")
+			url = str(request.path_info) + str('?success=True')
+			return HttpResponseRedirect(url)
 	else:
-		form = Teste()
+		form = ProdutoForm()
 	context = {
-			"form":form
+			"form":form,
+			"success":success
 	}
 	return render(request, "iframe/produtos/cadastrar_produto.html", context)
 
-def calculo(
-    nCdServico = "4014",
-    sCepOrigem = "",
-    sCepDestino = "",
-    nVlPeso = "0.5",
-    nCdFormato = 1,
-    nVlComprimento = 16,
-    nVlAltura = 2,
-    nVlLargura = 11,
-    nVlDiametro = "0",
-    sCdMaoPropria = "N",
-    nVlValorDeclarado = 0,
-    sCdAvisoRecebimento = "N"):
-    url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?nCdEmpresa=&sDsSenha=&nCdServico={}&sCepOrigem={}&sCepDestino={}&nVlPeso={}&nCdFormato={}&nVlComprimento={}&nVlAltura={}&nVlLargura={}&nVlDiametro={}&sCdMaoPropria={}&nVlValorDeclarado={}&sCdAvisoRecebimento={}".format(nCdServico, sCepOrigem, sCepDestino, nVlPeso, nCdFormato, nVlComprimento, nVlAltura, nVlLargura, nVlDiametro, sCdMaoPropria, nVlValorDeclarado, sCdAvisoRecebimento)
-    retorno = requests.get(url)
-    tree = ElementTree.fromstring(retorno.content)
-    dici = {}
-    for child in tree.iter('*'):
-        tag = child.tag.split('}')[1]
-        dici[tag] = str(child.text)
-    return dici	
+def pagina_produto(request, id_produto):
+	try :
+		produto = Produto.objects.get(pkid_produto=id_produto)
+	except:
+		return HttpResponseRedirect('/admin/home')
+	context = {
+		"produto":produto
+	}
+	return render(request, "iframe/produtos/pagina_produto.html", context)		
+			
+def lista_produtos(request):
+	codigo = request.GET.get('search_cod_produto', False)
+	pChave = request.GET.get('search_keyword_prod', False)
+	deletado = request.GET.get('deleted', False)
+	page = int(request.GET.get('page', 1))
+	lista_produtos = filtra_produtos(codigo, pChave) #função em funcoes.py
+	paginas = Paginator(lista_produtos, 10)
+	produtos = paginas.get_page(page)
+	url = arruma_url_page(request) #função em funcoes.py
+	context = {
+		"produtos":produtos,
+		"pagina":produtos,
+		"deletado":deletado,
+		"url":url
+	}
+	return render(request, "iframe/produtos/lista_produtos.html", context)
+	
+def deletar_produto(request, id_produto):
+		try :
+			produto = Produto.objects.get(pkid_produto=id_produto)
+			produto.hide = True
+			produto.dt_alteracao = datetime.datetime.now()
+			produto.save()
+		except :
+			return HttpResponseRedirect('/iframe/produtos/lista?deleted=False'), 400
+		return HttpResponseRedirect('/iframe/produtos/lista?deleted=True')
+
+def lista_categorias(request):
+	num_p = int(request.GET.get('page', 1))
+	if request.POST:
+		form = CategoriaprodutoForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(request.path_info)
+	else :
+		form = CategoriaprodutoForm()
+	categorias = Categoriaproduto.objects.filter(hide=False)
+	pagina = paginar(categorias) #função em funcoes.py
+	n_paginas = pagina.keys()
+	if len(pagina[1]) == 0 :
+		n_paginas = []
+	url = arruma_url_page(request) #função em funcoes.py
+	context = {
+		"categorias":categorias,
+		"form":form,
+		"pagina":pagina[num_p],
+		"n_paginas":n_paginas,
+		"url":url
+	}
+	return render(request, "iframe/produtos/categoria/lista_categorias.html", context)
+	
+def deletar_categoria(request, id_categoria):
+	categoria = Categoriaproduto.objects.get(pkid_categoria=id_categoria)
+	categoria.hide = True
+	categoria.save()
+	return HttpResponseRedirect('/iframe/produtos/categorias')
+		
+#Frete		
 	
 def calcula_frete(request):
 	retorno = {"Valor":"0,00", "PrazoEntrega":0, "MsgErro":"None"}
@@ -147,16 +217,19 @@ def calcula_frete(request):
 				form.cleaned_data['nVlComprimento'] = 16
 			if form.cleaned_data['nVlLargura'] < 11 :
 				form.cleaned_data['nVlLargura'] = 11
-			retorno = calculo(
-				form.cleaned_data['nCdServico'],
-				form.cleaned_data['sCepOrigem'],
-				form.cleaned_data['sCepDestino'],
-				form.cleaned_data['nVlPeso'],
-				form.cleaned_data['nCdFormato'],
-				form.cleaned_data['nVlComprimento'],
-				form.cleaned_data['nVlAltura'],
-				form.cleaned_data['nVlLargura']
-				)
+			try :
+				retorno = calculoFrete(
+					form.cleaned_data['nCdServico'],
+					form.cleaned_data['sCepOrigem'],
+					form.cleaned_data['sCepDestino'],
+					form.cleaned_data['nVlPeso'],
+					form.cleaned_data['nCdFormato'],
+					form.cleaned_data['nVlComprimento'],
+					form.cleaned_data['nVlAltura'],
+					form.cleaned_data['nVlLargura']
+					)
+			except :
+				print("Você está sem internet")
 	else:
 		form = FreteForm()
 	context = {

@@ -13,10 +13,29 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from core.views import *
 from django.contrib.auth.views import login, logout
+
+usuario = [
+	path('', user_main, name="user_main"),
+	path('AlterarSenha', altera_senha_form, name="user_alterar_senha"),
+	path('AlterarInfo', atualiza_user_form, name="atualiza_user_form")
+]
+
+produtos = [
+	path('cadastrar/', cadastrar_produto, name="cadastrar_produto"),
+	path('<int:id_produto>', pagina_produto, name="pagina_produto"),
+	path('lista/', lista_produtos, name="lista_produtos"),
+	path('deletar/<int:id_produto>', deletar_produto, name="deletar_produto"),
+	path('categorias/', lista_categorias, name="lista_categorias"),
+	path('categorias/deletar/<int:id_categoria>', deletar_categoria, name="deletar_categoria")
+]
 
 urlpatterns = [
   path('admindjango/', admin.site.urls),
@@ -25,7 +44,10 @@ urlpatterns = [
 	path('admin/home/', home, name="home"),
 	path('', redirect_home),
 	path('iframe/home/', iframe_home, name="iframe_home"),
-	path('iframe/produtos/cadastrar/', cadastrar_produto, name="cadastrar_produto"),
-	path('admin/usuario/', user_main, name="user_main"),
+	path('iframe/produtos/', include(produtos)),
+	path('admin/usuario/', include(usuario)),
 	path('iframe/vendas/calcula_frete', calcula_frete, name="calcula_frete")
 ]
+
+if settings.DEBUG is True:
+  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -40,7 +40,7 @@
 				</div>
 				
 				<div class="oam_brand">
-					ENDORAMA LOGO
+					<h2 class="oam_brand_title">ENDORAMA ESSÊNCIAS</h2>
 				</div>
 				
 				<div class="oam_user_info">
@@ -73,8 +73,10 @@
 						</div>
 					</a>
 					<div class="oam_dropdown_content">
-						<a href="/iframe/produtos/cadastrar" target="main_frame"><div class="oam_drop_opt">Cadastrar Produto</div></a>
-						<a href="" target="main_frame"><div class="oam_drop_opt">Lista de Produtos</div></a>
+						<a href="{% url 'cadastrar_produto' %}" target="main_frame"><div class="oam_drop_opt">Cadastrar Produto</div></a>
+						<a href="{% url 'lista_produtos' %}" target="main_frame"><div class="oam_drop_opt">Lista de Produtos</div></a>
+						<div class="cat_div"></div>
+						<a href="{% url 'lista_categorias' %}" target="main_frame"><div class="oam_drop_opt">Gerenciar Categorias</div></a>
 					</div>
 				</div>
 				
@@ -155,15 +157,15 @@
 				</div>
 				
 				<div class="search_part">
-					<form class="search_form" method="GET">
+					<form class="search_form" method="GET" target="main_frame" action="/iframe/produtos/lista">
 						<div class="search_div">
 							<label class="search_label" for="search_cod_produto">Cód. do Produto:</label><br/>
-							<input class="search_input" type="text" name="search_cod_produto" placeholder="..." />
+							<input class="search_input" type="number" name="search_cod_produto" placeholder="..." />
                         </div>
 						
 						<div class="search_div">
 							<label class="search_label" for="search_keyword_prod">Palavra Chave:</label><br/>
-							<input class="search_input" type="text" name="search_keyword_prod" palceholder="..." />
+							<input class="search_input" type="text" name="search_keyword_prod" placeholder="..." />
 						</div>
 						
 						<div class="search_div search_button_div">
