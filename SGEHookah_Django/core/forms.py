@@ -43,7 +43,7 @@ class ProdutoForm(forms.ModelForm):
 	altura.widget.attrs.update({'placeholder':'Em cm'})
 	largura.widget.attrs.update({'placeholder':'Em cm'})
 	profundidade.widget.attrs.update({'placeholder':'Em cm'})
-	peso.widget.attrs.update({'placeholder':'Em cm'})
+	peso.widget.attrs.update({'placeholder':'Em kg'})
 	
 	class Meta:
 		model = Produto
