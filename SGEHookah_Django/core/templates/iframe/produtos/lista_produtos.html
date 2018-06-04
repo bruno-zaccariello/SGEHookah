@@ -54,102 +54,133 @@
 		SESSÃO PARA FILTRAR PRODUTOS (EM CONSTRUCAO)
 	</div>
 	
-	<div class="divPaginas">
-		{% if produtos.has_previous %}
-			<a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
-			<a class="linkPagina white"> </a>
-			
-			<a class="linkPagina bee" href="{{ url }}&page={{ produtos.previous_page_number }}"> {{ produtos.previous_page_number }}</a>
-		{% else %}
-			<a class="linkPagina bee" href=""><<</a>
-			<a class="linkPagina white"> </a>
-			
-		{% endif %}
-		
-		<a class="linkPagina bee current">{{ produtos.number }}</a>
-			
-		{% if produtos.has_next %}
-			<a class="linkPagina bee" href="{{ url }}&page={{ produtos.next_page_number }}">{{ produtos.next_page_number }}</a>
-			
-			<a class="linkPagina white"> </a>
-			<a class="linkPagina bee" href="{{ url }}&page={{ produtos.paginator.num_pages }}">>></a>
-		{% else %}
-			
-			<a class="linkPagina white"> </a>
-			<a class="linkPagina bee" href="">>></a>
-		{% endif %}
-		
-	</div>
-	
-	<div class="lista_wrapper">
-		
-		<div class="div_legenda">
-			<div class="legenda_img vertical">Foto</div>
-			
-			<div class="borda_leg"></div>
-			
-			<div class="codproduto_leg vertical" >Cód.</div>
-			
-			<div class="borda_leg"></div>
-		
-			<div class="preco_leg vertical" >Preço</div>
-			
-			<div class="borda_leg"></div>
-			
-			<div class="nome_produto_leg vertical">Nome do Produto</div>
-			
-			<div class="borda_leg"></div>
-				
-			<div class="opts_legenda vertical">Opções</div>
-		</div>
-	
-		{% for produto in pagina %}
-			
-			<div class="div_produto">
-				
-				<div class="img_div_produto">
-					<img class="img_produto" src="{{ produto.fotoproduto.url }}" alt="Foto do Produto"></img>
-				</div>
-				
-				<div class="borda"></div>
-				
-				<div class="codproduto vertical">
-					{{ produto.codproduto }}
-				</div>
-				
-				<div class="borda"></div>
-				
-				<div class="preco vertical">
-					R${{ produto.preco }}
-				</div>
-				
-				<div class="borda"></div>
-				
-				<div class="nome_produto vertical">
-					{{ produto.nomeproduto }}
-				</div>
-				
-				<div class="borda"></div>
-				
-				<div class="opts_produto">
-				
-					<a href="/iframe/produtos/{{ produto.pkid_produto }}" class='vertical'>
-						<div style="color:white">
-							Editar
-						</div>
-					</a>
-					
-					<a href="javascript:confirmaJanelaOn('{{ produto.pkid_produto }}')" class='vertical'>
-						<div style="color:red" class='vertical'>
-							Excluir
-						</div>
-					</a>
-					
-				</div>
-				
-			</div>
-		{% endfor %}
-	</div>
+    <div class="pageContainer">
+
+        <div class="divPaginas">
+            {% if produtos.has_previous %}
+                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                <a class="linkPagina white"> </a>
+
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.previous_page_number }}"> {{ produtos.previous_page_number }}</a>
+            {% else %}
+                <a class="linkPagina bee" href=""><<</a>
+                <a class="linkPagina white"> </a>
+
+            {% endif %}
+
+            <a class="linkPagina bee current">{{ produtos.number }}</a>
+
+            {% if produtos.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.next_page_number }}">{{ produtos.next_page_number }}</a>
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.paginator.num_pages }}">>></a>
+            {% else %}
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="">>></a>
+            {% endif %}
+
+        </div>
+
+        <div class="lista_wrapper">
+
+            <div class="div_legenda">
+                <div class="legenda_img vertical">Foto</div>
+
+                <div class="borda_leg"></div>
+
+                <div class="codproduto_leg vertical" >Cód.</div>
+
+                <div class="borda_leg"></div>
+
+                <div class="preco_leg vertical" >Preço</div>
+
+                <div class="borda_leg"></div>
+
+                <div class="nome_produto_leg vertical">Nome do Produto</div>
+
+                <div class="borda_leg"></div>
+
+                <div class="opts_legenda vertical">Opções</div>
+            </div>
+
+            {% for produto in pagina %}
+
+                <div class="div_produto">
+
+                    <div class="img_div_produto">
+                        <img class="img_produto" src="{{ produto.fotoproduto.url }}" alt="Foto do Produto"/>
+                    </div>
+
+                    <div class="borda"></div>
+
+                    <div class="codproduto vertical">
+                        {{ produto.codproduto }}
+                    </div>
+
+                    <div class="borda"></div>
+
+                    <div class="preco vertical">
+                        R${{ produto.preco }}
+                    </div>
+
+                    <div class="borda"></div>
+
+                    <div class="nome_produto vertical">
+                        {{ produto.nomeproduto }}
+                    </div>
+
+                    <div class="borda"></div>
+
+                    <div class="opts_produto">
+
+                        <a href="/iframe/produtos/{{ produto.pkid_produto }}" class='vertical'>
+                            <div style="color:white">
+                                Editar
+                            </div>
+                        </a>
+
+                        <a href="javascript:confirmaJanelaOn('{{ produto.pkid_produto }}')" class='vertical'>
+                            <div style="color:red" class='vertical'>
+                                Excluir
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="divPaginas">
+            {% if produtos.has_previous %}
+                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                <a class="linkPagina white"> </a>
+
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.previous_page_number }}"> {{ produtos.previous_page_number }}</a>
+            {% else %}
+                <a class="linkPagina bee" href=""><<</a>
+                <a class="linkPagina white"> </a>
+
+            {% endif %}
+
+            <a class="linkPagina bee current">{{ produtos.number }}</a>
+
+            {% if produtos.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.next_page_number }}">{{ produtos.next_page_number }}</a>
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.paginator.num_pages }}">>></a>
+            {% else %}
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="">>></a>
+            {% endif %}
+
+        </div>
+
+    </div>
 
 </body>
 

@@ -1,6 +1,6 @@
 h3 {
 	text-align: center;
-	color: white;
+	color: black;
 }
 
 /* FORMS E JANELAS QUE SOBREPOEM */
@@ -96,6 +96,7 @@ div.field input:focus {
 
 .jas_title {
 	margin: 0 auto 10px;
+    color: white;
 }
 
 .jas_bg {
@@ -162,6 +163,7 @@ div.field input:focus {
 
 .jai_title {
 	margin: 0 auto 10px;
+    color: white;
 }
 
 .jai_bg {
@@ -212,6 +214,7 @@ div.field input:focus {
 
 .um_dados_alterar {
 	color: yellow;
+    font-weight: 500;
 }
 
 .um_dados_alterar:hover {
@@ -219,7 +222,7 @@ div.field input:focus {
 }
 
 .um_senha_alterar {
-	color: white;
+	color: black;
 }
 
 .um_senha_alterar:hover {
@@ -228,6 +231,7 @@ div.field input:focus {
 
 .um_endereco_alterar {
 	color: yellow;
+    font-weight: 500;
 }
 
 .um_endereco_alterar:hover {
@@ -238,7 +242,7 @@ div.field input:focus {
 
 .page_wrapper {
 	display: flex;
-	flex-flow: row nowrap;
+	flex-flow: row wrap;
 	justify-content: flex-start;
 }
 
@@ -254,6 +258,7 @@ div.field input:focus {
 	border: 1px dashed #222;
 	border-radius: 10px;
 	padding: 15px;
+	flex: 0 1 auto;
 }
 
 /* INFORMACOES DO USUARIO */
@@ -261,21 +266,22 @@ div.field input:focus {
 .info_margin {
 	margin-top: 10px;
 	margin-bottom: 10px;
+    background-color: darkgray;
 }
 
 .info_wrapper {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: flex-start;
-	color: white;
-	width: 315px;
+	width: 30%;
+	max-width: 315px;
+	min-width: 280px;
 	height: 400px;
 }
 
 .um_infos {
-	border: 1px solid white;
+	border: 1px solid black;
 	border-radius: 10px;
-	color: white;
 	width: auto;
 	padding: 10px;
 }
@@ -292,7 +298,7 @@ div.field input:focus {
 /* ALTERAR SENHA */
 
 .um_mudarsenha {
-	border: 1px solid white;
+	border: 1px solid black;
 	border-radius: 10px;
 	color: white;
 	width: auto;
@@ -303,45 +309,41 @@ div.field input:focus {
 	width: 150px;
 	height: 30px;
 	margin: auto auto;
-	border: 1px solid white;
+	border: 1px solid black;
 	border-radius: 10px;
-	color: white;
 }
 
 /* ENDERECO */
 
 .endereco_wrapper {
 	display: flex;
-	flex-flow: column wrap;
+	flex-flow: column nowrap;
 	justify-content: flex-start;
 	width: calc(30% + 15px);
+	min-width: 330px;
 	max-width: 600px;
 	height: 400px;
 }
 
+.it_end_wrapper {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	width: 90%;
+}
+
 .endereco_box {
-	border: 1px solid white;
+	border: 1px solid black;
 	border-radius: 10px;
-	color: white;
 	width: 100%;
 	height: auto;
 	padding: 10px;
 }
 
-.linha1_grid {
-	display: grid;
-	grid-template-columns: 25% 75%;
-}
-
-.linha2_grid {
-	display: grid;
-	grid-template-columns: 25% 30% 30% 15%;
-}
-
 .item_endereco {
-	border: 1px dashed #000;
 	width: auto;
-	padding: 12px;
+	padding: 10px;
+	flex: 0 1 auto;
 }
 
 .um_endereco_alterar_div {
@@ -352,18 +354,11 @@ div.field input:focus {
 @media screen and (max-width: 1400px) {
 	
 	.endereco_wrapper {
-		display: flex;
-		flex-flow: column wrap;
-		justify-content: flex-start;
 		width: calc(45% + 15px);
 		max-width: 600px;
-		min-width: 550px;
 		height: 400px;
 	}
 	
-	.info_wrapper {
-		min-width: 262px;
-	}
 }
 
 @media screen and (max-width: 890px) {
@@ -378,18 +373,4 @@ div.field input:focus {
 		height: 60%;
 	}
 	
-	.endereco_wrapper {
-		min-width: 330px;
-	}
-	
-	
-	.linha1_grid {
-		display: flex;
-		flex-flow: row nowrap;
-	}
-	
-	.linha2_grid {
-		display: flex;
-		flex-flow: row wrap;
-	}
 }

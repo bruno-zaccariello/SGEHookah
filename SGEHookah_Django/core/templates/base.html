@@ -2,6 +2,8 @@
 <head>
 	{% load static %}
 	{% block scripts %}
+		<script src="/static/jquery/jquery-3.3.1.min.js"></script>
+	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="/static/css/site.css">
@@ -11,6 +13,8 @@
 		<script src="/static/js/logoutCover.js"></script>
 		<script src="/static/js/frameHeight.js"></script>
 		<script src="/static/js/userPageFix.js"></script>
+		<script src="/static/js/toggleMenu.js"></script>
+
 	{% endblock %}
 </head>
 <body class="main_body">
@@ -37,6 +41,12 @@
 			
 				<div id="oam_extra" class="oam_extra">
 					
+					<div class="menu_button" id="menu_button" onclick="ToggleMenu()">
+						<div class="menu_bt_bar"></div>
+						<div class="menu_bt_bar"></div>
+						<div class="menu_bt_bar"></div>
+					</div>
+				
 				</div>
 				
 				<div class="oam_brand">
@@ -59,15 +69,15 @@
 						}
 					</script>
 					
-					<div class="oam_logout"><a href="javascript:logoutDisplayTest()">logout</a></div>
+					<div class="oam_logout"><a href="javascript:logoutDisplayTest()">sair</a></div>
 					{% endif %}
 				</div>
 			
 			</div>
 			
-			<div id="oam_wrapper" class="oam_wrapper">
+			<div id="oam_wrapper" class="oam_wrapper" style="display:none">
 				<div class="oam_opt opt_produto oam_dropdown">
-					<a href="" target="main_frame">
+					<a href="{% url 'lista_produtos' %}" target="main_frame">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Produtos</div>
 						</div>
@@ -76,7 +86,8 @@
 						<a href="{% url 'cadastrar_produto' %}" target="main_frame"><div class="oam_drop_opt">Cadastrar Produto</div></a>
 						<a href="{% url 'lista_produtos' %}" target="main_frame"><div class="oam_drop_opt">Lista de Produtos</div></a>
 						<div class="cat_div"></div>
-						<a href="{% url 'lista_categorias' %}" target="main_frame"><div class="oam_drop_opt">Gerenciar Categorias</div></a>
+						<a href="{% url 'lista_categorias' %}" target="main_frame"><div class="oam_drop_opt">Categorias</div></a>
+						<a href="{% url 'lista_unidades' %}" target="main_frame"><div class="oam_drop_opt">Unidades</div></a>
 					</div>
 				</div>
 				
@@ -134,7 +145,7 @@
 			
 			<div id="search_wrapper" class="search_wrapper">
 				<div class="search_part">
-					<form class="search_form" method="GET">
+					<form class="search_form" method="GET" autocomplete="no">
 						<div class="search_div">
 							<label class="search_label" for="search_cod_pedido">Cód. do Pedido:</label><br/>
 							<input class="search_input" type="text" name="search_cod_pedido" placeholder="..." id="search_cod_pedido"/>
@@ -157,7 +168,7 @@
 				</div>
 				
 				<div class="search_part">
-					<form class="search_form" method="GET" target="main_frame" action="/iframe/produtos/lista">
+					<form class="search_form" method="GET" target="main_frame" action="/iframe/produtos/lista" autocomplete="no">
 						<div class="search_div">
 							<label class="search_label" for="search_cod_produto">Cód. do Produto:</label><br/>
 							<input class="search_input" type="number" name="search_cod_produto" placeholder="..." />
@@ -183,23 +194,23 @@
 		</header>
 	</section>
 	
-	<section id="iframe_section">
+	
 		<script>
 			function iframeLoad() {
-				iframeLoaded();
 				userPageFix2();
 				getTitle();
 				oamTitle();
+				iframeLoaded();
 			}
 		</script>
-		<iframe scrolling="no" src="/iframe/home" onload="iframeLoad()" class="main_frame" id="main_frame" name="main_frame"></iframe>
-	</section>
+		<iframe src="/iframe/home" onload="iframeLoad()" class="main_frame" id="main_frame" name="main_frame"></iframe>
+
 	
 <footer>
-	Sistema Administrativo Endorama - Fabricação de fumos para narguilé e vaporizadores
+	Sistema Administrativo Endorama - SGE Hookah & Faculdade Impacta - Todos os direitos reservados
 </footer>
 
-<script src="/static/js/fix_bar.js"></script>
+<!-- <script src="/static/js/fix_bar.js"></script> -->
 
 </body>
 </html>

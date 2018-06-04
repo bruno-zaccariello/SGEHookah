@@ -9,66 +9,62 @@ textarea {
 
 input, select {
 	font-size: 90%;
-	border: none;
 	height: 23px;
 	padding: 4px;
 	max-height: 60px;
 }
 
-input:focus{
-	outline: 1px solid black;
-	color: black;
-	background-color: #ddd;
+input[type="file"] {
+    border: none;
+    color: black;
+    height: 25px;
 }
 
 select {
 	padding: 0px;
 }
 
-.FotoInput {
-	color: white;
-	border: none;
-}
-
 .FotoInput:focus {
 	outline: none;
+	background-color: none;
 }
 
 .Descricao {
 	resize: none;
 }
 
-.label {
-	color: white;
+div.label {
+	color: black;
 	width: 100%;
 }
 
-.input {
+div.input {
 	width: 100%;
+	max-height: 200px;
 }
 
 .fieldDiv {
-	width: 50%;
+	min-width: 50%;
+	flex: 1 1 auto; 
 	padding: 10px;
 	justify-content: center;
 }
 
 .formContainer {
 	margin: 10px auto;
-	width: 50%;
+	width: 45%;
 	border: 1px solid gray;
 	border-radius: 10px;
 }
 
 .formInput {
-	margin: 4px auto;
-	width: 90%;
+	margin: 0 auto;
 }
 
 .formInputContainer {
 	margin: auto auto;
 	padding: 15px;
-	width: 75%;
+	width: 70%;
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: flex-start;
@@ -78,7 +74,7 @@ select {
 	width: 93%;
 	margin: auto auto;
 	display: flex;
-	flex-flow: row no-wrap;
+	flex-flow: row nowrap;
 	justify-content: flex-end;
 }
 
@@ -134,4 +130,22 @@ select {
 	font-weight: 600;
 	font-size: 90%;
 	transition : 0.4s;
+}
+
+@media screen and (max-width: 1400px) {
+	.formContainer {
+		width: 60%;
+	}
+}
+
+@media screen and (max-width: 1100px) {
+	.formContainer {
+		width: 70%;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.formContainer {
+		width: 90%;
+	}
 }

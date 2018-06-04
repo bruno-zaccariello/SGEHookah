@@ -34,7 +34,9 @@ produtos = [
 	path('lista/', lista_produtos, name="lista_produtos"),
 	path('deletar/<int:id_produto>', deletar_produto, name="deletar_produto"),
 	path('categorias/', lista_categorias, name="lista_categorias"),
-	path('categorias/deletar/<int:id_categoria>', deletar_categoria, name="deletar_categoria")
+	path('categorias/deletar/<int:id_categoria>', deletar_categoria, name="deletar_categoria"),
+	path('unidades/', lista_unidades, name="lista_unidades"),
+	path('unidades/deletar/<int:id_unidade>', deletar_unidade, name="deletar_unidade")
 ]
 
 urlpatterns = [

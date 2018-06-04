@@ -1,7 +1,54 @@
+input, select {
+	height: 22px;
+	padding: 2px;
+}
+
+.page_content {
+	background-color: #bbb;
+	margin: 30px auto;
+	width: 70%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+	border: 1px dashed #333;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.fields_container {
+	margin: auto auto;
+	width: 80%;
+	padding: 0 20px;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+}
+
+.descricao_div {
+	margin: 5px 15px;
+	width: 60%;
+}
+
+.descricao_field {
+	width: 100%;
+}
+
+textarea {
+	width: 100%;
+	height: 100px;
+	resize: none;
+}
+
+.field_wrapper {
+	width: 28%;
+	height: 50px;
+	margin: 5px 15px;
+}
+
 div.foto_produto {
-	width: 150px;
-	height: 150px;
-	margin: 10px;
+	width: 120px;
+	height: 120px;
+	margin: 10px auto 0;
 	border: 2px dashed gray;
 }
 
@@ -10,4 +57,43 @@ img.foto_produto {
 	width: 95%;
 	height: 95%;
 	margin: auto auto;
+}
+
+.foto_wrapper {
+	width: 20%;
+	max-height: 180px;
+	display: flex;
+	flex-flow: column nowrap;
+	text-align: center;
+	justify-content: flex-start;
+}
+
+.label_fotoproduto {
+	width: auto;
+	height: auto;
+	text-align: center;
+	margin: 10px auto;
+}
+
+.foto_label {
+	cursor: pointer;
+	transition: .5s;
+	width: 120px;
+	height: 25px;
+	border: 1px solid white;
+}
+
+.foto_label:hover {
+	background-color: white;
+	color: black;
+}
+
+.foto_label:focus {
+	color: yellow;
+}
+
+.bt_wrapper {
+	margin: auto auto;
+	width: 62%;
+	text-align: end;
 }
