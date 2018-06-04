@@ -1,7 +1,7 @@
 .divPaginas {
 	color: white;
 	width: 60%;
-	margin: 15px auto 2px;
+	margin: 2px auto;
 	display: flex;
 	justify-content: center;
 	text-align: center;
@@ -18,7 +18,7 @@ a.current {
 
 a.current:hover {
 	cursor: default;
-	color; yellow;
+	color: yellow;
 }
 
 /* Janela de Confirmação */
@@ -36,7 +36,7 @@ a.current:hover {
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	opacity: 0.9;
+	opacity: 0.7;
 }
 
 .overlay_content {
@@ -99,6 +99,17 @@ a.current:hover {
 	border: 3px double white;
 }
 
+/* extra */
+
+.pageContainer {
+    border-radius: 5px;
+    border: 3px double black;
+    background-color: #aaa;
+    margin: auto;
+    padding: 20px;
+    width: 70%;
+}
+
 /* LEGENDA */
 
 .borda_leg {
@@ -114,10 +125,10 @@ a.current:hover {
 	justify-content: flex-start;
 	height: 50px;
 	padding: 5px;
-	width: 70%;
+	width: 95%;
 	border: 3px solid #666;
+    background-color: #bbb;
 	font-weight: 600;
-	color: #ccc;
 }
 
 .legenda_img {
@@ -132,7 +143,6 @@ a.current:hover {
 	width: 10%;
 	min-width: 75px;
 	height: 95%;
-	color: white;
 	font-size: 100%;
 	text-align: center;
 }
@@ -169,7 +179,7 @@ a.current:hover {
 }
 
 .lista_wrapper {
-	width: 90%;
+	width: 100%;
 	margin: auto auto;
 	display: flex;
 	flex-flow: column nowrap;
@@ -181,16 +191,17 @@ a.current:hover {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
-	height: 60px;
+	height: 50px;
 	padding: 5px;
-	width: 70%;
+	width: 95%;
+    background-color: lightgray;
 	border: 1px solid #555;
 }
 
 .img_div_produto {
 	margin: auto 10px auto 5px;
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 40px;
 }
 
 .img_produto {
@@ -204,8 +215,7 @@ a.current:hover {
 	width: 10%;
 	min-width: 75px;
 	height: 95%;
-	color: white;
-	font-size: 100%;
+	font-size: 15px;
 	text-align: center;
 }
 
@@ -214,8 +224,7 @@ a.current:hover {
 	width: 8%;
 	min-width: 40px;
 	height: 95%;
-	color: white;
-	font-size: 100%;
+	font-size: 16px;
 	text-align: center;
 }
 
@@ -223,7 +232,6 @@ a.current:hover {
 	margin: auto 10px;
 	height: 100%;
 	width: 60%;
-	color: white;
 	font-size: 100%;
 }
 

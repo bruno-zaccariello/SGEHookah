@@ -11,7 +11,7 @@ from core.models import *
 		model = Teste
 		fields = ['nome', 'descricao'] '''
 		
-__all__ = ['Teste', 'FreteForm', 'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm']
+__all__ = ['Teste', 'FreteForm', 'CadProdutoForm', 'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm', 'UnidademedidaForm']
 
 class CategoriaprodutoForm(forms.ModelForm):
 	nomecategoria = forms.CharField(label="Nome da Categoria", max_length=50)
@@ -22,17 +22,26 @@ class CategoriaprodutoForm(forms.ModelForm):
 		model = Categoriaproduto
 		fields = ["nomecategoria"]
 		
-class ProdutoForm(forms.ModelForm):
+class UnidademedidaForm(forms.ModelForm):
+	unidademedida = forms.CharField(label="Unidade", max_length=50)
+	
+	unidademedida.widget.attrs.update({'placeholder':'...'})
+
+	class Meta :
+		model = Unidademedida
+		fields = ["unidademedida"]
+		
+class CadProdutoForm(forms.ModelForm):
 	codproduto = forms.CharField(label="*Código", max_length=8)
 	nomeproduto = forms.CharField(label="*Nome")
 	preco = forms.DecimalField(label="*Preço", max_digits=10, decimal_places=2)
 	precocusto = forms.DecimalField(label="Preço de Custo", max_digits=10, decimal_places=2, required=False)
 	sabor = forms.CharField(label="*Sabor")
 	marca = forms.CharField(label="Marca", required=False)
-	altura = forms.FloatField(label="Altura")
-	largura = forms.FloatField(label="Largura")
-	profundidade = forms.FloatField(label="Profundidade")
-	peso = forms.FloatField(label="Peso")
+	altura = forms.FloatField(label="*Altura")
+	largura = forms.FloatField(label="*Largura")
+	profundidade = forms.FloatField(label="*Profundidade")
+	peso = forms.DecimalField(max_digits=10, decimal_places=3, label="*Peso")
 	fkid_categoria = forms.ModelChoiceField(label="Categoria", queryset=Categoriaproduto.objects.filter(hide=False), initial=0)
 	fkid_unidademedida = forms.ModelChoiceField(label="Unidade", queryset=Unidademedida.objects.filter(hide=False), initial=0)
 	fotoproduto = forms.FileField(label="Escolha a Foto", required=False)
@@ -47,8 +56,38 @@ class ProdutoForm(forms.ModelForm):
 	
 	class Meta:
 		model = Produto
-		fields = ["codproduto", "nomeproduto", "preco", "precocusto",
-		"sabor", "marca","altura", "largura", "profundidade", "peso","fkid_unidademedida" ,"fkid_categoria", 
+		fields = ["codproduto", "nomeproduto", "preco", "precocusto", "sabor",
+		"marca","altura", "largura", "profundidade", "peso","fkid_unidademedida" ,"fkid_categoria",
+		"fotoproduto", "descricao"]
+		
+class ProdutoForm(forms.ModelForm):
+	codproduto = forms.CharField(label="*Código", max_length=8)
+	nomeproduto = forms.CharField(label="*Nome")
+	preco = forms.DecimalField(label="*Preço", max_digits=10, decimal_places=2)
+	precocusto = forms.DecimalField(label="Preço de Custo", max_digits=10, decimal_places=2, required=False)
+	sabor = forms.CharField(label="*Sabor")
+	marca = forms.CharField(label="Marca", required=False)
+	altura = forms.FloatField(label="*Altura")
+	largura = forms.FloatField(label="*Largura")
+	profundidade = forms.FloatField(label="*Profundidade")
+	peso = forms.DecimalField(max_digits=10, decimal_places=3, label="*Peso")
+	fkid_categoria = forms.ModelChoiceField(label="Categoria", queryset=Categoriaproduto.objects.filter(hide=False), initial=0)
+	fkid_unidademedida = forms.ModelChoiceField(label="Unidade", queryset=Unidademedida.objects.filter(hide=False), initial=0)
+	totalestoque = forms.FloatField(label="Estoque")
+	fotoproduto = forms.FileField(label="Escolha a Foto", required=False)
+	descricao = forms.CharField(label="Descrição", widget=forms.Textarea, required=False)
+	
+	descricao.widget.attrs.update({'class':'Descricao'})
+	fotoproduto.widget.attrs.update({'class':'FotoInput'})
+	altura.widget.attrs.update({'placeholder':'Em cm'})
+	largura.widget.attrs.update({'placeholder':'Em cm'})
+	profundidade.widget.attrs.update({'placeholder':'Em cm'})
+	peso.widget.attrs.update({'placeholder':'Em kg'})
+	
+	class Meta:
+		model = Produto
+		fields = ["codproduto", "nomeproduto", "preco", "precocusto", "sabor",
+		"marca","altura", "largura", "profundidade", "peso","fkid_unidademedida" ,"fkid_categoria", "totalestoque",
 		"fotoproduto", "descricao"]
 
 class Teste(forms.Form):

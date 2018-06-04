@@ -294,7 +294,7 @@ class Produto(models.Model):
 		altura = models.IntegerField(db_column='Altura')  # Field name made lowercase.
 		largura = models.IntegerField(db_column='Largura')  # Field name made lowercase.
 		profundidade = models.IntegerField(db_column='Profundidade')  # Field name made lowercase.
-		peso = models.IntegerField(db_column='Peso')  # Field name made lowercase.
+		peso = models.DecimalField(max_digits=10, decimal_places=3, db_column='Peso')  # Field name made lowercase.
 		fotoproduto = models.FileField(upload_to='uploads/%Y/%m',db_column='FotoProduto', max_length=1000, blank=True, null=True)  # Field name made lowercase.
 		hide = models.BooleanField(db_column='HIDE')  # Field name made lowercase.
 

@@ -27,7 +27,8 @@ a.beeIn:hover {
 }
 
 .errorlist {
-	
+	color: red;
+	text-decoration: none;
 }
 
 .btCadastrar {
@@ -100,8 +101,9 @@ a.beeIn:hover {
 	right: 0;
 	bottom: 30%;
 	left: 0;
-	width: 30%;
-	height: 25%;
+	width: 35%;
+	height: 30%;
+	min-height: 220px;
 	margin: auto auto;
 	background-color: black;
 	border: 1px solid white;

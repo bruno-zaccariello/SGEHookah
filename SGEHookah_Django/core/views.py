@@ -34,7 +34,8 @@ def page_cadastro_disciplina(request):
 '''
 
 __all__ = ["index", "home", "redirect_home", "iframe_home", "cadastrar_produto", "user_main", "calcula_frete", "altera_senha_form", 
-"atualiza_user_form", "pagina_produto", "lista_produtos", "deletar_produto", "lista_categorias", "deletar_categoria"]
+"atualiza_user_form", "pagina_produto", "lista_produtos", "deletar_produto", "lista_categorias", "deletar_categoria", "lista_unidades",
+"deletar_unidade"]
 
 # Create your views here.
 	
@@ -119,7 +120,7 @@ def user_main(request):
 def cadastrar_produto(request):
 	success = request.GET.get('success', False)
 	if request.POST:
-		form = ProdutoForm(request.POST, request.FILES)
+		form = CadProdutoForm(request.POST, request.FILES)
 		if form.is_valid():
 			form = form.save(commit=False)
 			if form.fotoproduto == '' or form.fotoproduto == None :
@@ -130,7 +131,7 @@ def cadastrar_produto(request):
 			url = str(request.path_info) + str('?success=True')
 			return HttpResponseRedirect(url)
 	else:
-		form = ProdutoForm()
+		form = CadProdutoForm()
 	context = {
 			"form":form,
 			"success":success
@@ -142,8 +143,21 @@ def pagina_produto(request, id_produto):
 		produto = Produto.objects.get(pkid_produto=id_produto)
 	except:
 		return HttpResponseRedirect('/admin/home')
+	if request.POST :
+		form = ProdutoForm(request.POST, request.FILES, instance=produto)
+		if form.is_valid() and form.has_changed() :
+			form.save()
+			return HttpResponseRedirect(request.path_info)
+	else :
+		form = ProdutoForm(instance=produto)
+	#f['subject'].label_tag(attrs={'class': 'foo'})
+	form_page = [] #For Custom Form fields
+	for field in form :
+		form_page.append(field)
 	context = {
-		"produto":produto
+		"produto":produto,
+		"form":form,
+		"form_page":form_page[:-2]
 	}
 	return render(request, "iframe/produtos/pagina_produto.html", context)		
 			
@@ -176,9 +190,12 @@ def deletar_produto(request, id_produto):
 
 def lista_categorias(request):
 	num_p = int(request.GET.get('page', 1))
+	success = request.GET.get('success', False)
 	if request.POST:
 		form = CategoriaprodutoForm(request.POST)
 		if form.is_valid():
+			form = form.save(commit=False)
+			form.hide = 0
 			form.save()
 			return HttpResponseRedirect(request.path_info)
 	else :
@@ -194,7 +211,8 @@ def lista_categorias(request):
 		"form":form,
 		"pagina":pagina[num_p],
 		"n_paginas":n_paginas,
-		"url":url
+		"url":url,
+		"success":success
 	}
 	return render(request, "iframe/produtos/categoria/lista_categorias.html", context)
 	
@@ -202,7 +220,41 @@ def deletar_categoria(request, id_categoria):
 	categoria = Categoriaproduto.objects.get(pkid_categoria=id_categoria)
 	categoria.hide = True
 	categoria.save()
-	return HttpResponseRedirect('/iframe/produtos/categorias')
+	return HttpResponseRedirect('/iframe/produtos/categorias?success=True')
+		
+def lista_unidades(request):
+	num_p = int(request.GET.get('page', 1))
+	success = request.GET.get('success', False)
+	if request.POST:
+		form = UnidademedidaForm(request.POST)
+		if form.is_valid():
+			form = form.save(commit=False)
+			form.hide = 0
+			form.save()
+			return HttpResponseRedirect(request.path_info)
+	else :
+		form = UnidademedidaForm()
+	unidades = Unidademedida.objects.filter(hide=False)
+	pagina = paginar(unidades) #função em funcoes.py
+	n_paginas = pagina.keys()
+	if len(pagina[1]) == 0 :
+		n_paginas = []
+	url = arruma_url_page(request) #função em funcoes.py
+	context = {
+		"unidades":unidades,
+		"form":form,
+		"pagina":pagina[num_p],
+		"n_paginas":n_paginas,
+		"url":url,
+		"success":success
+	}
+	return render(request, "iframe/produtos/unidade/lista_unidade.html", context)
+		
+def deletar_unidade(request, id_unidade):
+	unidade = Unidademedida.objects.get(pkid_unidademedida=id_unidade)
+	unidade.hide = True
+	unidade.save()
+	return HttpResponseRedirect('/iframe/produtos/unidades?success=True')
 		
 #Frete		
 	
