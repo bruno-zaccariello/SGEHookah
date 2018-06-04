@@ -2,21 +2,18 @@ function userPageFix() {
 	var oamWrapper = document.getElementById("oam_wrapper"); 
 	var searchWrapper = document.getElementById("search_wrapper");
 	if(searchWrapper) {
+        $('#main_frame').addClass('frame_height');
 		oamWrapper.style.display = "none";
-		searchWrapper.style.display = "none";
-		oamWrapper.style.borderBottom = "1px solid white"
-		document.getElementById("menu_topping").style.borderBottom = "1px solid white";
+		$('#search_wrapper').addClass("hidden");
 	}
 }
 
 function userPageOff() {
 	var oamWrapper = document.getElementById("oam_wrapper");
 	var oamExtra = document.getElementById("oam_extra");
-	var searchWrapper = document.getElementById("search_wrapper");
 	oamWrapper.style.display = "grid";
-	oamWrapper.style.borderBottom = "1px solid black"
-	searchWrapper.style.display = "flex";
-	document.getElementById("menu_topping").style.borderBottom = "none";
+	$('#search_wrapper').removeClass("hidden");
+    $('#main_frame').removeClass('frame_height');
 }
 
 function userPageFix2() {
