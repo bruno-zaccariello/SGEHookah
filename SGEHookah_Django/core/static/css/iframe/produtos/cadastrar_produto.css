@@ -51,10 +51,11 @@ div.input {
 }
 
 .formContainer {
+    background-color: #aaa;
+    border: 1px solid gray;
+	border-radius: 10px;
 	margin: 10px auto;
 	width: 45%;
-	border: 1px solid gray;
-	border-radius: 10px;
 }
 
 .formInput {
