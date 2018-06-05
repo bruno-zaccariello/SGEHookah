@@ -3,7 +3,8 @@
 	{% load static %}
 	{% block scripts %}
 		<script src="/static/jquery/jquery-3.3.1.min.js"></script>
-	
+		<script src="/static/jquery/jquery.mask.min.js"></script>
+
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="/static/css/site.css">
@@ -97,7 +98,7 @@
 						</div>
 					</a>
 					<div class="oam_dropdown_content">
-						<a href="" target="main_frame"><div class="oam_drop_opt">TESTE</div></a>
+						<a href="{% url 'cadastrar_cliente' %}" target="main_frame"><div class="oam_drop_opt">Cadastrar Cliente</div></a>
 						<a href="" target="main_frame"><div class="oam_drop_opt">TESTE</div></a>
 					</div>
 				</div>

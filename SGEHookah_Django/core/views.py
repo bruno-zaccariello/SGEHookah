@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
+from django.db import transaction
 from decimal import *
 from core.forms import *
 from core.models import *
@@ -33,9 +34,7 @@ def page_cadastro_disciplina(request):
 
 '''
 
-__all__ = ["index", "home", "redirect_home", "iframe_home", "cadastrar_produto", "user_main", "calcula_frete", "altera_senha_form", 
-"atualiza_user_form", "pagina_produto", "lista_produtos", "deletar_produto", "lista_categorias", "deletar_categoria", "lista_unidades",
-"deletar_unidade"]
+__all__ = ["index", "home", "redirect_home", "iframe_home", "cadastrar_produto", "user_main", "calcula_frete", "altera_senha_form", "atualiza_user_form", "pagina_produto", "lista_produtos", "deletar_produto", "lista_categorias", "deletar_categoria", "lista_unidades", "deletar_unidade", "cadastrar_cliente"]
 
 # Create your views here.
 	
@@ -256,6 +255,37 @@ def deletar_unidade(request, id_unidade):
 	unidade.save()
 	return HttpResponseRedirect('/iframe/produtos/unidades?success=True')
 		
+
+#Cliente
+
+def cadastrar_cliente(request):
+    success = request.GET.get('success', False)
+    if request.POST:
+        pessoaForm = PessoaForm(request.POST)
+        enderecoForm = EnderecoForm(request.POST)
+        if pessoaForm.is_valid() and enderecoForm.is_valid():
+            with transaction.atomic() :
+                enderecoForm = enderecoForm.save(commit=False)
+                enderecoForm.hide = 0
+                enderecoForm.save()
+                pessoaForm = pessoaForm.save(commit=False)
+                pessoaForm.hide = 0
+                pessoaForm.st_pessoajuridica = 'F'
+                pessoaForm.fkid_tipopessoa = Tipopessoa.objects.get(pkid_tipopessoa=1)
+                pessoaForm.fkid_endereco = enderecoForm.pk
+                pessoaForm.save()
+                url = str(request.path_info) + str('?success=True')
+                return HttpResponseRedirect(url)
+    else:
+        pessoaForm = PessoaForm()
+        enderecoForm = EnderecoForm()
+    context = {
+			"pessoaForm":pessoaForm,
+            "enderecoForm":enderecoForm,
+			"success":success
+	}
+    return render(request, "iframe/clientes/cadastrar_cliente.html", context)
+
 #Frete		
 	
 def calcula_frete(request):

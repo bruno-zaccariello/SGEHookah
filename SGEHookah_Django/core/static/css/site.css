@@ -309,6 +309,16 @@ div.input {
     background-color: white;
 }
 
+.menu_button:active {
+    border-color: yellow;
+    transition: .1s;
+}
+
+.menu_button:active .menu_bt_bar {
+    background-color: #ddd;
+    transition: .1s;
+}
+
 .oa_menu {
     height: auto;
 }
@@ -466,16 +476,10 @@ div.input {
     border-radius: 0;
 }
 
-.iframe_section {
-    width: 100%;
-    height: 100%;
-}
-
 .main_frame {
     width: 100%;
     height: 80%;
     margin: 5px auto;
-    background-color: black;
     border: none;
 }
 
