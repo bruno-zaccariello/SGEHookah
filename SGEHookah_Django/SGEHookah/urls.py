@@ -28,6 +28,10 @@ usuario = [
 	path('AlterarInfo', atualiza_user_form, name="atualiza_user_form")
 ]
 
+clientes = [
+    path('cadastrar/', cadastrar_cliente, name="cadastrar_cliente"),
+]
+
 produtos = [
 	path('cadastrar/', cadastrar_produto, name="cadastrar_produto"),
 	path('<int:id_produto>', pagina_produto, name="pagina_produto"),
@@ -40,14 +44,15 @@ produtos = [
 ]
 
 urlpatterns = [
-  path('admindjango/', admin.site.urls),
-	path('admin/', login, {"template_name":"index.html"}, name="login"),
+    path('admindjango/', admin.site.urls),
+    path('admin/', login, {"template_name":"index.html"}, name="login"),
 	path('logout/', logout, {'next_page':'login'}, name="logout"),
 	path('admin/home/', home, name="home"),
 	path('', redirect_home),
 	path('iframe/home/', iframe_home, name="iframe_home"),
 	path('iframe/produtos/', include(produtos)),
 	path('admin/usuario/', include(usuario)),
+    path('iframe/clientes/', include(clientes)),
 	path('iframe/vendas/calcula_frete', calcula_frete, name="calcula_frete")
 ]
 

@@ -7,7 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-__all__ = ["Categoriaproduto", "Produto", "AuthUser", "Unidademedida"]
+__all__ = ["Categoriaproduto", "Produto", "AuthUser", "Unidademedida", "Pessoa", "Endereco", "Telefone", "Tipopessoa"]
 
 class Categoriaproduto(models.Model):
 		pkid_categoria = models.IntegerField(primary_key=True, db_column='PKID_Categoria')  # Field name made lowercase.
@@ -44,7 +44,7 @@ class Endereco(models.Model):
     logradouro = models.CharField(db_column='Logradouro', max_length=100)  # Field name made lowercase.
     numero = models.CharField(db_column='Numero', max_length=7)  # Field name made lowercase.
     complemento = models.CharField(db_column='Complemento', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    cep = models.IntegerField(db_column='CEP')  # Field name made lowercase.
+    cep = models.CharField(db_column='CEP', max_length=9)  # Field name made lowercase.
     bairro = models.CharField(db_column='Bairro', max_length=100)  # Field name made lowercase.
     cidade = models.CharField(db_column='Cidade', max_length=150)  # Field name made lowercase.
     uf = models.CharField(db_column='UF', max_length=2)  # Field name made lowercase.
@@ -269,7 +269,6 @@ class Pessoa(models.Model):
     genero = models.CharField(db_column='Genero', max_length=1)  # Field name made lowercase.
     dt_nascimento = models.DateField(db_column='DT_Nascimento', blank=True, null=True)  # Field name made lowercase.
     st_pessoajuridica = models.CharField(db_column='ST_PessoaJuridica', max_length=1)  # Field name made lowercase.
-    fkid_telefone = models.IntegerField(db_column='FKID_Telefone', blank=True, null=True)  # Field name made lowercase.
     fkid_endereco = models.IntegerField(db_column='FKID_Endereco', blank=True, null=True)  # Field name made lowercase.
     fkid_tipopessoa = models.ForeignKey('Tipopessoa', models.DO_NOTHING, db_column='FKID_TipoPessoa')  # Field name made lowercase.
     hide = models.BooleanField(db_column='HIDE')  # Field name made lowercase.
@@ -335,13 +334,11 @@ class Statusvenda(models.Model):
 
 class Telefone(models.Model):
     pkid_telefone = models.IntegerField(db_column='PKID_Telefone', primary_key=True)  # Field name made lowercase.
+    fkid_pessoa = models.ForeignKey('Pessoa', models.DO_NOTHING, db_column='FKID_Pessoa', blank=True, null=True)  # Field name made lowercase.
     ddi = models.IntegerField(db_column='DDI')  # Field name made lowercase.
     ddd = models.IntegerField(db_column='DDD')  # Field name made lowercase.
     numero = models.IntegerField(db_column='Numero')  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField(db_column='DT_Cadastro')  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField(db_column='DT_Alteracao')  # Field name made lowercase.
     hide = models.TextField(db_column='HIDE')  # Field name made lowercase.
-    fkid_usuarioalteracao = models.IntegerField(db_column='FKID_UsuarioAlteracao')  # Field name made lowercase.
 
     class Meta:
         managed = True

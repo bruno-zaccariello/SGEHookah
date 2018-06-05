@@ -309,6 +309,16 @@ div.input {
     background-color: white;
 }
 
+.menu_button:active {
+    border-color: yellow;
+    transition: .1s;
+}
+
+.menu_button:active .menu_bt_bar {
+    background-color: #ddd;
+    transition: .1s;
+}
+
 .oa_menu {
     height: auto;
 }
@@ -384,7 +394,7 @@ div.input {
 .oam_wrapper {
     border: 1px solid #3a3a3a;
     height: 120px;
-    margin: 0px auto 5px;
+    margin: 0px auto;
     display: grid;
     grip-gap: 10px;
     grid-template-columns: repeat(6, calc(100%/6));
@@ -450,7 +460,7 @@ div.input {
 
 .search_wrapper {
     height: 50px;
-    margin: 0px auto 5px;
+    margin: 5px auto;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
@@ -466,18 +476,15 @@ div.input {
     border-radius: 0;
 }
 
-.iframe_section {
-    width: 100%;
-    height: 100%;
-}
-
 .main_frame {
     width: 100%;
-    height: 100%;
+    height: 85%;
     margin: 5px auto;
-    background-color: black;
     border: none;
-    overflow-y: scroll;
+}
+
+.frame_height {
+    height: 100%;
 }
 
 .fix_frame {
