@@ -1,0 +1,58 @@
+<html>
+
+<head>
+	<title id="iframe_title">SGE - Página Produto</title>
+	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/pagina_produto.css"/>
+	<script src="/static/jquery/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+
+	<h1>Produto</h1>
+
+	<form method="POST" enctype="multipart/form-data" autocomplete="OFF">
+	
+	{% csrf_token %}
+	
+	<div class="page_content">
+	
+	<div class="foto_wrapper">
+		<div class="foto_produto">
+			<img id="foto_produto" class="foto_produto" alt="{{ produto.nomeproduto }}" src="{{ produto.fotoproduto.url }}"/>		
+			<img style="display:none" id="foto_preview" class="foto_produto"/>
+		</div>
+		
+		<label class="label_fotoproduto" for="id_fotoproduto"><div class="foto_label vertical">Alterar Foto</div></label>
+		<input type="file" style="display:none" name="fotoproduto" class="FotoInput" id="id_fotoproduto">
+	</div>
+
+	<div class="fields_container">
+		{% for field in form_page %}	
+		<div class="field_wrapper">
+			{{ field.label_tag }}
+			{{ field }}
+		</div>
+		{% endfor %}
+		
+		<div class="descricao_div">
+			<div>{{ form.descricao.label_tag }}</div>
+			<div class="descricao_field">{{ form.descricao }}</div>
+		</div>
+	</div>
+	
+	</div>
+	
+	<div class="bt_wrapper">
+		<button class="BtMain BtCancelar" id="BtClean" type="reset">Cancelar</button>
+		<button class="BtMain BtConfirmar" type="submit">Salvar</button>
+	</div>
+	
+	</form>
+
+<script src="/static/js/iframe/produtos/pagina_produto.js"></script>
+<script src="/static/js/formsFixes.js"></script>
+	
+</body>
+
+</html>

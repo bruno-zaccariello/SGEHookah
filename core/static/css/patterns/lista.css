@@ -1,0 +1,328 @@
+h1 {
+	margin-bottom: 20px ;
+}
+
+h2 {
+	color: yellow;
+	text-align: center;
+	margin: 15px auto;
+}
+
+input {
+	padding: 5px;
+	height: 25px;
+	border: 1px solid white;
+}
+
+input:focus {
+	outline: 1px solid black;
+}
+
+a.beeIn {
+	color: yellow;
+}
+
+a.beeIn:hover {
+	color: yellow;
+}
+
+a.current {
+	color: yellow;
+	font-weight: 600;
+}
+
+a.current:hover {
+	cursor: default;
+	color: yellow;
+}
+
+.errorlist {
+	color: red;
+	text-decoration: none;
+}
+
+.btCadastrar {
+	border-radius: 3px;
+	border: 2px solid black;
+    box-shadow: 2px 2px 10px -1px black;
+    background-color: #ddd;
+    cursor: pointer;
+    font-size: 13px;
+	padding: 5px;
+    width: auto;
+}
+
+.btCadastrar:hover {
+    color: black;
+    background-color: #ddd;;
+    border-color: yellow;
+}
+
+.btCadastrar:active {
+    border-color: #414100;
+    transition: .1s;
+}
+
+.btCadastrar:focus {
+	outline: none;
+}
+
+.opt_content {
+	margin: auto auto;
+	width: 82%;
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.divPaginas {
+	color: black;
+	width: 90%;
+	margin: 5px;
+	display: flex;
+	justify-content: flex-start;
+	text-align: start;
+}
+
+.linkPagina {
+	margin: auto 3px;
+}
+
+/* Cadastrar Categoria */
+
+.divCadastrarCat {
+	margin-right: 2px;
+	width: 90%;
+	text-align: end;
+}
+
+.ov_cad {
+	display: none;
+}
+
+.bg {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: .7;
+}
+
+.ov_cad_content {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 30%;
+	left: 0;
+	width: 35%;
+	height: 30%;
+	min-height: 220px;
+	margin: auto auto;
+	background-color: black;
+	border: 1px solid white;
+	border-radius: 10px;
+}
+
+.cad_form {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.fields_wrapper {
+	width: 80%;
+	justify-content: center;
+	margin: 15px auto;
+}
+
+.ov_cad_label {
+	text-align: left;
+	width: 70%;
+	margin: auto auto;
+	color: white;
+}
+
+.ov_cad_field {
+	width: 70%;
+	margin: auto auto;
+}
+
+.bt_wrapper {
+	width: 80%;
+	margin: 15px auto;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+
+.lista_container {
+	width: 90%;
+	margin: auto auto;
+}
+
+.borda {
+	width: 1px;
+	height: 100%;
+	border: 1px solid #333;
+}
+
+/* LEGENDA */
+
+.it_lista_leg {
+	width: 90%;
+	margin: 5px auto;
+	height: 40px;
+	border: 3px solid #333;
+	padding: 5px;
+	font-weight: 600;
+    font-size: 16px;
+}
+
+/* LISTA */
+
+.pageContainer {
+    border-radius: 5px;
+    border: 3px double black;
+    background-color: #aaa;
+    margin: auto;
+    padding: 20px;
+    width: 70%;
+}
+
+.it_lista {
+    background-color: lightgray;
+    border: 1px solid #333;
+    font-size: 15px;
+    height: 35px;
+	margin: 5px auto;
+	padding: 5px;
+    width: 90%;
+}
+
+.it_id {
+	width: 5%;
+	text-align: center;
+	margin: auto 10px;
+	margin-left: 5px;
+}
+
+.it_nome {
+	width: 80%;
+	margin: auto 10px;
+    padding-left: 10px;
+}
+
+div.it_lista_leg div.it_nome {
+    text-align: center;
+    padding: 0;
+}
+
+.it_opcoes {
+	display: flex;
+	flex-flow: row wrap;
+    height: 100%;
+	justify-content: center;
+	margin: auto;
+    padding-left: 5px;
+	text-align: center;
+    width: 15%;
+}
+
+.redlink {
+	color: red;
+}
+
+.redlink:hover {
+	color: #ff4444;
+}
+
+.opt_bt {
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 20px;
+    width: 20px;
+}
+
+a.opt_bt {
+    margin: auto 5px;
+    height: auto;
+    width: 20px;
+}
+
+.opt_edit {
+    background-image: url("/static/img/edit.png");
+    background-size: 80%;
+}
+
+.opt_delete {
+    background-image: url("/static/img/delete.png");
+    background-size: 80%;
+}
+
+/* JANELA CONFIRMA */
+
+.overlay {
+	display: none;
+}
+
+.overlay_bg {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.7;
+}
+
+.overlay_content {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 50%;
+	margin: auto auto;
+	position: fixed;
+	width: 40%;
+	height: 35%;
+	background-color: black;
+	border: 2px solid white;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+}
+
+.overlay_title {
+	text-align: center;
+	color: white;
+	font-size: 18px;
+}
+
+.overlay_content_success {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto auto;
+	position: fixed;
+	width: 35%;
+	height: 30%;
+	background-color: black;
+	border: 2px solid white;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+}
+
+.overlay_title_success {
+	text-align: center;
+	color: green;
+	font-size: 18px;
+}
+
+.bt_wrapper {
+	text-align: center;
+}

@@ -1,0 +1,51 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/css/site.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/usuario/user_main.css">
+	<script src="/static/js/Usuario/user_main.js"></script>
+</head>
+<body style="background:none;background-color:none;">
+
+	{% if senhaAlterada == True %}
+		<script>
+			jasDisplayOff();
+			jas_alertSucessOn();
+		</script>
+	{% endif %}
+
+	<div class="jas_bg" id="jas_bg">
+	</div>
+	
+	<form method="POST" name="as_form" id="as_form">
+	
+		<div class="wp_AlterarSenhaForm" id="wp_AlterarSenhaForm">
+			
+			<h3 class="jas_title"> Altere sua senha: </h3>
+			{% csrf_token %}
+			{% if errosFormSenha != 'none' %}
+				<div id="errosFormSenha">
+					{% for field in form_senha %}
+						{{ field.errors }}
+					{% endfor %}
+				</div>
+			{% endif %}
+			
+			{% for field in form_senha%}
+				<div class="jas_fields_wrapper">
+					<div class="label">{{field.label_tag}}</div>
+					<div class="field">{{field}}</div>
+				</div>
+			{% endfor %}
+			
+			<script>
+				ShowErrosAs();
+			</script>
+			
+			<div class="jas_bt_div">
+				<button onclick="javascript:jasDisplayOff()" type="reset" class="btMain btCancelar">Cancelar</button>
+				<button name="bt_AlterarSenha" class="btMain btConfirmar" type="submit">Confirmar</button>
+			</div>
+			
+		</div>
+	</form>
+
+</body>

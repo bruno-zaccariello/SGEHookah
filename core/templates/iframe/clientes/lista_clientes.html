@@ -1,0 +1,167 @@
+<html>
+
+<head>
+	<title id="iframe_title">SGE - Lista de Clientes</title>
+	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
+	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_clientes.css"/>
+	<script src="/static/js/iframe/clientes/lista_clientes.js"></script>
+    <script src="/static/js/patterns/lista.js"></script>
+</head>
+
+<body>
+
+	<h1> Lista de Clientes </h1>
+	
+	<!-- ALERTA DE EXCLUIDO COM SUCESSO -->
+	
+	{% if deletado == 'True' %}
+		
+		<div class="bg">
+		</div>
+		
+		<div class="overlay_content_success">
+			<h2 class="overlay_title_success">Cliente Deletado com Sucesso</h2>
+			
+			<div class="bt_wrapper">
+				<a href="{% url 'lista_clientes' %}"><button class="btMain btConfirmar">Continuar</button></a>
+			</div>
+			
+		</div>
+	
+	{% endif %}
+	
+	<!--================================-->
+	
+	<!-- JANELA QUE SOBREPÕE PARA CONFIRMAR EXCLUSÃO -->
+	
+	<div class="overlay" id="overlay">
+		<div class="overlay_bg">
+		</div>
+		
+		<div class="overlay_content">
+			<h2 class="overlay_title">Tem certeza que deseja deletar esse cliente?</h2>
+			
+			<div class="bt_wrapper">
+				<a href="javascript:confirmaJanelaOff()"><button class="btMain btCancelar">Cancelar</button></a>
+				<a id="bt_confirma"><button class="btMain btConfirmar">Confirmar</button></a>
+			</div>
+			
+		</div>
+	</div>
+	
+	<!--============================================-->
+	
+	<div class="search_opts_wrapper white">
+		SESSÃO PARA FILTRAR CLIENTES (EM CONSTRUCAO)
+	</div>
+	
+    <div class="pageContainer">
+
+        <div class="divPaginas">
+            {% if clientes.has_previous %}
+                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                <a class="linkPagina white"> </a>
+
+                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.previous_page_number }}"> {{ clientes.previous_page_number }}</a>
+            {% else %}
+                <a class="linkPagina bee" href=""><<</a>
+                <a class="linkPagina white"> </a>
+
+            {% endif %}
+
+            <a class="linkPagina bee current">{{ clientes.number }}</a>
+
+            {% if clientes.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.next_page_number }}">{{ clientes.next_page_number }}</a>
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.paginator.num_pages }}">>></a>
+            {% else %}
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="">>></a>
+            {% endif %}
+
+        </div>
+
+        <div class="lista_wrapper">
+
+            <div class="div_legenda">
+                <div class="it_id vertical" >Cód.</div>
+
+                <div class="borda"></div>
+
+                <div class="it_nome vertical" >Nome do Cliente</div>
+
+                <div class="borda"></div>
+
+                <div class="it_opcoes vertical">Opções</div>
+            </div>
+
+            {% for cliente in pagina %}
+
+                <div class="it_lista">
+
+                    <div class="it_id vertical">
+                        {{ cliente.pkid_pessoa }}
+                    </div>
+
+                    <div class="borda"></div>
+
+                    <div class="it_nome vertical">
+                        {{ cliente.nomecompleto_razaosocial }}
+                    </div>
+
+                    <div class="borda"></div>
+
+                    <div class="it_opcoes">
+
+                        <a href="/iframe/clientes/{{ cliente.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
+                            <div class="opt_bt opt_edit">
+                            </div>
+                        </a>
+
+                        <a href="javascript:confirmaJanelaOn('{{ cliente.pkid_pessoa }}')" title="deletar" class='vertical opt_bt'>
+                            <div class="opt_bt opt_delete">
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="divPaginas">
+            {% if produtos.has_previous %}
+                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                <a class="linkPagina white"> </a>
+
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.previous_page_number }}"> {{ produtos.previous_page_number }}</a>
+            {% else %}
+                <a class="linkPagina bee" href=""><<</a>
+                <a class="linkPagina white"> </a>
+
+            {% endif %}
+
+            <a class="linkPagina bee current">{{ produtos.number }}</a>
+
+            {% if produtos.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.next_page_number }}">{{ produtos.next_page_number }}</a>
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.paginator.num_pages }}">>></a>
+            {% else %}
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="">>></a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
