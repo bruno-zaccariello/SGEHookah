@@ -25,7 +25,7 @@ SECRET_KEY = '1s+b5%&9$e5)q!=k*z9e)j2#!%t#*qt=sf%5ul#-jen6r204a*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '127.0.0.1:8000', ':8000', '*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '127.0.0.1:8000', ':8000', '*', 'endorama.azurewebsites.net', 'https://endorama.azurewebsites.net']
 
 
 # Application definition
