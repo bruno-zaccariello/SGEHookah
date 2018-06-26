@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1s+b5%&9$e5)q!=k*z9e)j2#!%t#*qt=sf%5ul#-jen6r204a*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['endorama.azurewebsites.net', 'https://endorama.azurewebsites.net']
+ALLOWED_HOSTS = ['endorama.azurewebsites.net']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-		'core'
+    'core'
 ]
 
 MIDDLEWARE = [
