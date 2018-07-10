@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from core.models import *
 from localflavor.br.forms import *
 #from core.models import Teste
@@ -130,12 +131,12 @@ class UpdateInfoForm(forms.ModelForm):
 	last_name = forms.CharField(label="Sobrenome", required=True)
 	
 	class Meta :
-		model = AuthUser
+		model = User
 		fields = ('email', 'first_name', 'last_name')
 		
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
-		if email and AuthUser.objects.filter(email=email).count():
+		if email and User.objects.filter(email=email).count():
 			raise forms.ValidationError('Esse e-mail já está em uso.')
 		return email
 			
