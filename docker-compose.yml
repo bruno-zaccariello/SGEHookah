@@ -1,0 +1,11 @@
+version: "3.1"
+
+services:
+ web:
+  build: .
+  image: brunozaccariello/sgehookah
+  command: python3 './SGEHookah/manage.py' runserver 0.0.0.0:8000
+  volumes: 
+    - .:/SGEHookah
+  ports:
+    - "8000:8000"
