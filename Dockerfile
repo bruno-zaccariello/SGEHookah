@@ -2,7 +2,7 @@ FROM brunozaccariello/sgehookah
 
 ENV PYTHONBUFFERED 1
 
-RUN mkdir /SGEHookah
+RUN apk add postgresql-dev python3-dev gcc musl-dev
 
 WORKDIR /SGEHookah
 
