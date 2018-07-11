@@ -2,10 +2,24 @@ version: "3.1"
 
 services:
  web:
+  depends_on: 
+    - db
   build: .
   image: brunozaccariello/sgehookah
-  command: python3 './SGEHookah/manage.py' runserver 0.0.0.0:8000
+  command: sh -c "python3 ./SGEHookah/manage.py makemigrations && 
+                  python3 ./SGEHookah/manage.py migrate &&
+                  python3 ./SGEHookah/manage.py initadmin &&
+                  python3 ./SGEHookah/manage.py runserver 0.0.0.0:8000"
   volumes: 
     - .:/SGEHookah
   ports:
     - "8000:8000"
+ db:
+  image: postgres:10.4
+  environment:
+    - PGDATA=/var/lib/postgresql/data/pgdata
+    - POSTGRES_PASSWORD=admin123
+  volumes:
+    - sge-db-data:/var/lib/postgresql/data/pgdata
+volumes:
+  sge-db-data:

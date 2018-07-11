@@ -273,7 +273,7 @@ class Pessoa(models.Model):
 
 
 class Produto(models.Model):
-    pkid_produto = models.IntegerField(primary_key=True, )  # Field name made lowercase.
+    pkid_produto = models.AutoField(primary_key=True, )  # Field name made lowercase.
     fkid_categoria = models.ForeignKey(Categoriaproduto, models.DO_NOTHING, )  # Field name made lowercase.
     fkid_unidademedida = models.ForeignKey('Unidademedida', models.DO_NOTHING, blank=True, null=True)  # Field name made lowercase.
     codproduto = models.CharField(unique=True, max_length=8)  # Field name made lowercase.
@@ -340,7 +340,7 @@ class Telefone(models.Model):
 
 
 class Tipopessoa(models.Model):
-    pkid_tipopessoa = models.IntegerField(primary_key=True, )  # Field name made lowercase.
+    pkid_tipopessoa = models.AutoField(primary_key=True, )  # Field name made lowercase.
     tipopessoa = models.CharField(unique=True, max_length=100)  # Field name made lowercase.
     hide = models.BooleanField( default=0)  # Field name made lowercase.
 
@@ -350,7 +350,7 @@ class Tipopessoa(models.Model):
 
 
 class Unidademedida(models.Model):
-    pkid_unidademedida = models.IntegerField(primary_key=True, )  # Field name made lowercase.
+    pkid_unidademedida = models.AutoField(primary_key=True)  # Field name made lowercase.
     unidademedida = models.CharField(unique=True, max_length=50)  # Field name made lowercase.
     hide = models.BooleanField( default=0)  # Field name made lowercase.
 
