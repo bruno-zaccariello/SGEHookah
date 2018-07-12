@@ -187,26 +187,29 @@ def deletar_produto(request, id_produto):
 			produto.save()
 		except :
 			return HttpResponseRedirect('/iframe/produtos/lista?deleted=False'), 400
-		return HttpResponseRedirect('/iframe/produtos/lista?deleted=True')
+		return HttpResponseRedirect('/iframe/produtos/lista?deleted=True'), 500
 
 def lista_categorias(request):
+	# Pega o numero da pagina e se obteve sucesso deletando da URL
 	num_p = int(request.GET.get('page', 1))
 	success = request.GET.get('success', False)
+
 	if request.POST:
 		form = CategoriaprodutoForm(request.POST)
 		if form.is_valid():
-			form = form.save(commit=False)
-			form.hide = 0
 			form.save()
 			return HttpResponseRedirect(request.path_info)
 	else :
 		form = CategoriaprodutoForm()
+
+	# Funções para gerar páginas
 	categorias = Categoriaproduto.objects.filter(hide=False)
 	pagina = paginar(categorias) #função em funcoes.py
 	n_paginas = pagina.keys()
 	if len(pagina[1]) == 0 :
 		n_paginas = []
 	url = arruma_url_page(request) #função em funcoes.py
+
 	context = {
 		"categorias":categorias,
 		"form":form,
@@ -224,23 +227,28 @@ def deletar_categoria(request, id_categoria):
 	return HttpResponseRedirect('/iframe/produtos/categorias?success=True')
 		
 def lista_unidades(request):
+	# Pega o numero da pagina e se obteve sucesso deletando da URL
 	num_p = int(request.GET.get('page', 1))
 	success = request.GET.get('success', False)
+
 	if request.POST:
 		form = UnidademedidaForm(request.POST)
 		if form.is_valid():
-			form = form.save(commit=False)
-			form.hide = 0
 			form.save()
 			return HttpResponseRedirect(request.path_info)
 	else :
 		form = UnidademedidaForm()
+
+	# Cria uma lista com as unidades visiveis (hide=False)
 	unidades = Unidademedida.objects.filter(hide=False)
+
+	# Funções para gerar páginas
 	pagina = paginar(unidades) #função em funcoes.py
 	n_paginas = pagina.keys()
 	if len(pagina[1]) == 0 :
 		n_paginas = []
 	url = arruma_url_page(request) #função em funcoes.py
+
 	context = {
 		"unidades":unidades,
 		"form":form,
@@ -267,14 +275,20 @@ def cadastrar_cliente(request):
         enderecoForm = EnderecoForm(request.POST)
         telefoneForm = TelefoneForm(request.POST)
         if pessoaForm.is_valid() and enderecoForm.is_valid() and telefoneForm.is_valid():
+            # Caso aja erro o atomic() irá desfazer as alteração feitas durante o código.
             with transaction.atomic() :
+            	# Altera o tipo de pessoa no formulario e salva
                 pessoaForm = pessoaForm.save(commit=False)
-                pessoaForm.fkid_tipopessoa = Tipopessoa.objects.get(pkid_tipopessoa=1)
+                pessoaForm.tipopessoa = 'cliente'
                 pessoaForm.save()
                 pessoa = Pessoa.objects.get(pkid_pessoa=pessoaForm.pk)
+
+                # Atualiza o endereço com a pessoa recém criada e salva
                 enderecoForm = enderecoForm.save(commit=False)
                 enderecoForm.fkid_pessoa = pessoa
                 enderecoForm.save()
+
+                # Arruma o campo de telefone e salva
                 telefoneForm = telefoneForm.save(commit=False)
                 if telefoneForm.numero not in ('', None):
                     telefoneForm.fkid_pessoa = pessoa
@@ -282,6 +296,8 @@ def cadastrar_cliente(request):
                     telefoneForm.ddd = numero[1:3]
                     telefoneForm.numero = numero[4:]
                     telefoneForm.save()
+
+                # Arruma a url para devolver que foi cadastrado com sucesso
                 url = str(request.path_info) + str('?success=True')
                 return HttpResponseRedirect(url)
     else:
@@ -296,17 +312,21 @@ def cadastrar_cliente(request):
 	}
     return render(request, "iframe/clientes/cadastrar_cliente.html", context)
 
-def cadastro_rapido_cliente(request):           # CLIENTE
+def cadastro_rapido_cliente(request):
 	success = request.GET.get('success', False)
 	if request.POST:
 		pessoaForm = PessoaRapidoForm(request.POST)
 		if pessoaForm.is_valid():
 			pessoaForm = pessoaForm.save(commit=False)
+			# Arruma o campo de e-mail para não ter conflito
 			if pessoaForm.email == '':
 				pessoaForm.email = None
+
+			# Arruma o campo de cpf para não ter conflito
 			if pessoaForm.cpf_cnpj == '':
 				pessoaForm.cpf_cnpj = None
-			pessoaForm.fkid_tipopessoa = Tipopessoa.objects.get(pkid_tipopessoa=1)
+
+			pessoaForm.tipopessoa = 'cliente'
 			pessoaForm.save()
 		url = str(request.path_info) + '?success=True'
 		return HttpResponseRedirect(url)
@@ -342,12 +362,14 @@ def calcula_frete(request):
 	if request.POST:
 		form = FreteForm(request.POST)
 		if form.is_valid():
+			# Arruma os campos de altura, comprimento e largura para não dar erro.
 			if form.cleaned_data['nVlAltura'] < 2 :
 				form.cleaned_data['nVlAltura'] = 2
 			if form.cleaned_data['nVlComprimento'] < 16 :
 				form.cleaned_data['nVlComprimento'] = 16
 			if form.cleaned_data['nVlLargura'] < 11 :
 				form.cleaned_data['nVlLargura'] = 11
+	
 			try :
 				retorno = calculoFrete(
 					form.cleaned_data['nCdServico'],

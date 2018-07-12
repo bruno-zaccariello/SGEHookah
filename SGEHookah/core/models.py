@@ -7,7 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-__all__ = ["Categoriaproduto", "Produto", "Unidademedida", "Pessoa", "Endereco", "Telefone", "Tipopessoa", "Telefone"]
+__all__ = ["Categoriaproduto", "Produto", "Unidademedida", "Pessoa", "Endereco", "Telefone", "Telefone"]
 
 class Categoriaproduto(models.Model):
     pkid_categoria = models.AutoField(primary_key=True)  # Field name made lowercase.
@@ -37,7 +37,6 @@ class Cotacaocompra(models.Model):
         managed = True
 
 
-
 class Endereco(models.Model):
     pkid_endereco = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_pessoa = models.ForeignKey('Pessoa', models.DO_NOTHING, blank=True, null=True)  # Field name made lowercase.
@@ -52,7 +51,6 @@ class Endereco(models.Model):
 
     class Meta:
         managed = True
-
 
 
 class Entrega(models.Model):
@@ -70,7 +68,6 @@ class Entrega(models.Model):
         managed = True
 
 
-
 class Formapagamento(models.Model):
     pkid_formapag = models.AutoField(primary_key=True)  # Field name made lowercase.
     formapagamento = models.CharField(max_length=50)  # Field name made lowercase.
@@ -83,12 +80,11 @@ class Formapagamento(models.Model):
         managed = True
 
 
-
 class Formulaproduto(models.Model):
     pkid_formula = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_produto = models.IntegerField()  # Field name made lowercase.
-    fkid_materiaprima = models.IntegerField()  # Field name made lowercase.
-    tempomatucao = models.IntegerField(blank=True, null=True)  # Field name made lowercase.
+    fkid_formula_materia = models.ForeignKey('Formula_materia', models.DO_NOTHING, blank=False, null=False)  # Field name made lowercase.
+    tempomaturacao = models.IntegerField(blank=True, null=True)  # Field name made lowercase.
     fkid_usuario_alteracao = models.IntegerField()  # Field name made lowercase.
     dt_cadastro = models.DateTimeField()  # Field name made lowercase.
     dt_alteracao = models.DateTimeField()  # Field name made lowercase.
@@ -97,7 +93,10 @@ class Formulaproduto(models.Model):
     class Meta:
         managed = True
 
-
+class Formula_materia(models.Model):
+    pkid_formula_materia = models.AutoField(primary_key=True)
+    fkid_formulaproduto = models.ForeignKey('Formulaproduto', models.DO_NOTHING, blank=False, null=False)
+    fkid_materiaprima = models.ForeignKey('Materiaprima', models.DO_NOTHING, blank=False, null=False)
 
 class Itemcompra(models.Model):
     pkid_item = models.AutoField(primary_key=True)  # Field name made lowercase.
@@ -183,7 +182,6 @@ class Materiaprima(models.Model):
         managed = True
 
 
-
 class Movimentacao(models.Model):
     pkid_movimentacao = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_produto = models.IntegerField()  # Field name made lowercase.
@@ -200,7 +198,6 @@ class Movimentacao(models.Model):
 
     class Meta:
         managed = True
-
 
 
 class Pedidocompra(models.Model):
@@ -220,7 +217,6 @@ class Pedidocompra(models.Model):
         managed = True
 
 
-
 class Pedidofabricacao(models.Model):
     pkid_pedidofabri = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_produto = models.IntegerField()  # Field name made lowercase.
@@ -232,7 +228,6 @@ class Pedidofabricacao(models.Model):
 
     class Meta:
         managed = True
-
 
 
 class Pedidovenda(models.Model):
@@ -264,17 +259,16 @@ class Pessoa(models.Model):
     genero = models.CharField(max_length=1)  # Field name made lowercase.
     dt_nascimento = models.DateField(blank=True, null=True)  # Field name made lowercase.
     st_pessoajuridica = models.BooleanField(max_length=1, default=0)  # Field name made lowercase.
-    fkid_tipopessoa = models.ForeignKey('Tipopessoa', models.DO_NOTHING, )  # Field name made lowercase.
+    tipopessoa = models.CharField(max_length=15, default='cliente')  # Field name made lowercase.
     hide = models.BooleanField( default=0)  # Field name made lowercase.
 
     class Meta:
         managed = True
 
 
-
 class Produto(models.Model):
     pkid_produto = models.AutoField(primary_key=True, )  # Field name made lowercase.
-    fkid_categoria = models.ForeignKey(Categoriaproduto, models.DO_NOTHING, )  # Field name made lowercase.
+    fkid_categoria = models.ForeignKey('Categoriaproduto', models.DO_NOTHING, )  # Field name made lowercase.
     fkid_unidademedida = models.ForeignKey('Unidademedida', models.DO_NOTHING, blank=True, null=True)  # Field name made lowercase.
     codproduto = models.CharField(unique=True, max_length=8)  # Field name made lowercase.
     nomeproduto = models.CharField(max_length=50)  # Field name made lowercase.
@@ -298,14 +292,12 @@ class Produto(models.Model):
         managed = True
 		
 
-
 class Statuscompra(models.Model):
     pkid_status = models.AutoField(primary_key=True)  # Field name made lowercase.
     descricaostatus = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = True
-
 
 
 class Statusfabricacao(models.Model):
@@ -316,14 +308,12 @@ class Statusfabricacao(models.Model):
         managed = True
 
 
-
 class Statusvenda(models.Model):
     pkid_status = models.AutoField(primary_key=True)  # Field name made lowercase.
     descricaostatus = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = True
-
 
 
 class Telefone(models.Model):
@@ -338,17 +328,6 @@ class Telefone(models.Model):
         managed = True
 
 
-
-class Tipopessoa(models.Model):
-    pkid_tipopessoa = models.AutoField(primary_key=True, )  # Field name made lowercase.
-    tipopessoa = models.CharField(unique=True, max_length=100)  # Field name made lowercase.
-    hide = models.BooleanField( default=0)  # Field name made lowercase.
-
-    class Meta:
-        managed = True
-
-
-
 class Unidademedida(models.Model):
     pkid_unidademedida = models.AutoField(primary_key=True)  # Field name made lowercase.
     unidademedida = models.CharField(unique=True, max_length=50)  # Field name made lowercase.
@@ -361,7 +340,6 @@ class Unidademedida(models.Model):
         managed = True
 		
 
-
 class Usuario(models.Model):
     pkid_usuario = models.AutoField(primary_key=True)  # Field name made lowercase.
     nomecompleto = models.CharField(max_length=45)  # Field name made lowercase.
@@ -373,7 +351,6 @@ class Usuario(models.Model):
 
     class Meta:
         managed = True
-
 
 
 class Usuarioalteracao(models.Model):

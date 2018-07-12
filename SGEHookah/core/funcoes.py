@@ -63,7 +63,7 @@ def filtra_clientes(codigo, nome):
 	if nome in ('', None):
 		nome = False
 	if not codigo and not nome :
-		for cliente in Pessoa.objects.filter(fkid_tipopessoa=1):
+		for cliente in Pessoa.objects.filter(tipopessoa='cliente'):
 			if cliente.hide != True :
 				clientes.append(cliente)
 	else :
