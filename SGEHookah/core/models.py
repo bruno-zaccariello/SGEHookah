@@ -259,8 +259,8 @@ class Pessoa(models.Model):
     genero = models.CharField(max_length=1)  # Field name made lowercase.
     dt_nascimento = models.DateField(blank=True, null=True)  # Field name made lowercase.
     st_pessoajuridica = models.BooleanField(max_length=1, default=0)  # Field name made lowercase.
-    tipopessoa = models.CharField(max_length=15, default='cliente')  # Field name made lowercase.
-    hide = models.BooleanField( default=0)  # Field name made lowercase.
+    tipopessoa = models.CharField(max_length=15, null=False, blank=False)
+    hide = models.BooleanField(default=0)  # Field name made lowercase.
 
     class Meta:
         managed = True
@@ -274,7 +274,7 @@ class Produto(models.Model):
     nomeproduto = models.CharField(max_length=50)  # Field name made lowercase.
     preco = models.DecimalField(max_digits=10, decimal_places=2)  # Field name made lowercase. This field type is a guess.
     precocusto = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase. This field type is a guess.
-    totalestoque = models.IntegerField()  # Field name made lowercase.
+    totalestoque = models.IntegerField(default=0)  # Field name made lowercase.
     descricao = models.CharField(max_length=300, blank=True, null=True)  # Field name made lowercase.
     sabor = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
     marca = models.CharField(max_length=50, blank=True, null=True)  # Field name made lowercase.
@@ -283,7 +283,7 @@ class Produto(models.Model):
     profundidade = models.IntegerField()  # Field name made lowercase.
     peso = models.DecimalField(max_digits=10, decimal_places=3, )  # Field name made lowercase.
     fotoproduto = models.FileField(upload_to='uploads/%Y/%m',max_length=1000, blank=True, null=True)  # Field name made lowercase.
-    hide = models.BooleanField( default=0)  # Field name made lowercase.
+    hide = models.BooleanField(default=0)  # Field name made lowercase.
 
     def __str__(self):
         return self.nomeproduto

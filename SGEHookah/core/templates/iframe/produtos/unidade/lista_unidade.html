@@ -53,20 +53,32 @@
     <div class="pageContainer">
 
         <div class="opt_content">
-            <div class="divPaginas">
-                Página :
-                {% for numero in n_paginas %}
-                    {% if numero == pagina %}
+        <div class="divPaginas">
+            {% if pagina.has_previous %}
+                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                <a class="linkPagina white"> </a>
 
-                    <a class="linkPagina beeIn"></a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.previous_page_number }}"> {{ pagina.previous_page_number }}</a>
+            {% else %}
+                <a class="linkPagina bee" href=""><<</a>
+                <a class="linkPagina white"> </a>
 
-                    {% else %}
+            {% endif %}
 
-                    <a class="linkPagina bee" href="{{url}}&page={{ numero }}">{{ numero }}</a>
+            <a class="linkPagina bee current">{{ pagina.number }}</a>
 
-                    {% endif %}
-                {% endfor %}
-            </div>
+            {% if pagina.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.next_page_number }}">{{ pagina.next_page_number }}</a>
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.paginator.num_pages }}">>></a>
+            {% else %}
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="">>></a>
+            {% endif %}
+
+        </div>
 
             <div class="divCadastrarCat">
                 <button onclick="showOvCad()" class="btMain btCadastrar">CADASTRAR UNIDADE</button>
@@ -101,23 +113,23 @@
 
         <!-- Legenda -->	
 
-        <div class="lista_container flex_column">
+        <div class="table_container flex_column">
 
-            <div class="it_lista_leg flex_row">
+            <div class="table_header flex_row">
 
-                <div class="it_id vertical">
+                <div class="tb_col_5 it_id vertical">
                     ID
                 </div>
 
                 <div class="borda"></div>
 
-                <div class="it_nome vertical">
+                <div class="tb_col_80 it_nome vertical">
                     Unidade
                 </div>
 
                 <div class="borda"></div>
 
-                <div class="it_opcoes vertical">
+                <div class="tb_col_15 opts_leg vertical">
                     Opções
                 </div>
 
@@ -127,21 +139,21 @@
 
             {% for unidade in pagina %}
 
-            <div class="it_lista flex_row">
+            <div class="table_row flex_row">
 
-                <div class="it_id vertical white">
+                <div class="tb_col_5 it_id vertical white">
                     {{ unidade.pkid_unidademedida }}
                 </div>
 
                 <div class="borda"></div>
 
-                <div class="it_nome vertical white">
+                <div class="tb_col_80 it_nome vertical white">
                     {{ unidade.unidademedida }}
                 </div>
 
                 <div class="borda"></div>
 
-                <div class="it_opcoes vertical white">
+                <div class="tb_col_15 it_opcoes vertical white">
 
                     <a href="javascript:confirmaJanelaOn('{{ unidade.pkid_unidademedida }}')" class='vertical opt_bt'>
                         <div class='opt_bt opt_delete'>

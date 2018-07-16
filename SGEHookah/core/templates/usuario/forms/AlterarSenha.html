@@ -5,7 +5,7 @@
 </head>
 <body style="background:none;background-color:none;">
 
-	{% if senhaAlterada == True %}
+	{% if success == True %}
 		<script>
 			jasDisplayOff();
 			jas_alertSucessOn();
@@ -21,15 +21,15 @@
 			
 			<h3 class="jas_title"> Altere sua senha: </h3>
 			{% csrf_token %}
-			{% if errosFormSenha != 'none' %}
+			{% if form_errors == True %}
 				<div id="errosFormSenha">
-					{% for field in form_senha %}
+					{% for field in form_pw %}
 						{{ field.errors }}
 					{% endfor %}
 				</div>
 			{% endif %}
 			
-			{% for field in form_senha%}
+			{% for field in form_pw %}
 				<div class="jas_fields_wrapper">
 					<div class="label">{{field.label_tag}}</div>
 					<div class="field">{{field}}</div>

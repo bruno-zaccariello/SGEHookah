@@ -24,8 +24,8 @@ from django.contrib.auth.views import login, logout
 
 usuario = [
 	path('', user_main, name="user_main"),
-	path('AlterarSenha', altera_senha_form, name="user_alterar_senha"),
-	path('AlterarInfo', atualiza_user_form, name="atualiza_user_form")
+	path('AlterarSenha', change_pw_form, name="user_alterar_senha"),
+	path('AlterarInfo', update_user_form, name="update_user_form")
 ]
 
 clientes = [
@@ -36,7 +36,7 @@ clientes = [
 
 produtos = [
 	path('cadastrar/', cadastrar_produto, name="cadastrar_produto"),
-	path('<int:id_produto>', pagina_produto, name="pagina_produto"),
+	path('<int:id_produto>', product_page, name="product_page"),
 	path('lista/', lista_produtos, name="lista_produtos"),
 	path('deletar/<int:id_produto>', deletar_produto, name="deletar_produto"),
 	path('categorias/', lista_categorias, name="lista_categorias"),

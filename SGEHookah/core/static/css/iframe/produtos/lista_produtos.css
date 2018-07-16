@@ -92,19 +92,6 @@
 	border: 1px solid #333;
 }
 
-.div_legenda {
-	margin: 5px auto;
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: flex-start;
-	height: 50px;
-	padding: 5px;
-	width: 95%;
-	border: 3px solid #666;
-    background-color: #bbb;
-	font-weight: 600;
-}
-
 .legenda_img {
 	margin-right: 10px;
 	margin-left: 5px;
@@ -137,14 +124,6 @@
 	font-size: 100%;
 }
 
-.opts_legenda {
-	margin: auto;
-	height: 100%;
-    padding-left: 5px;
-	width: 15%;
-	text-align: center;
-}
-
 /* LISTA */
 
 .borda {
@@ -162,15 +141,7 @@
 }
 
 .div_produto {
-	margin: 5px auto;
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: flex-start;
 	height: 50px;
-	padding: 5px;
-	width: 95%;
-    background-color: lightgray;
-	border: 1px solid #555;
 }
 
 .img_div_produto {
@@ -187,7 +158,6 @@
 
 .codproduto {
 	margin: auto 5px;
-	width: 10%;
 	min-width: 75px;
 	height: 95%;
 	font-size: 15px;
@@ -196,7 +166,6 @@
 
 .preco {
 	margin: auto 5px;
-	width: 8%;
 	min-width: 40px;
 	height: 95%;
 	font-size: 16px;
@@ -205,8 +174,7 @@
 
 .nome_produto {
 	margin: auto 10px;
-	height: 100%;
-	width: 60%;
+	height: 100%;;
 	font-size: 100%;
 }
 
@@ -214,7 +182,6 @@
 	margin: auto;
 	height: 100%;
     padding-left: 5px;
-	width: 15%;
 	display: flex;
 	flex-flow: row no-wrap;
 	justify-content: center;

@@ -85,37 +85,37 @@
 
         </div>
 
-        <div class="lista_wrapper">
+        <div class="table_container">
 
-            <div class="div_legenda">
-                <div class="it_id vertical" >Cód.</div>
-
-                <div class="borda"></div>
-
-                <div class="it_nome vertical" >Nome do Cliente</div>
+            <div class="table_header">
+                <div class="tb_col_5 it_id vertical" >Cód.</div>
 
                 <div class="borda"></div>
 
-                <div class="it_opcoes vertical">Opções</div>
+                <div class="tb_col_80 it_nome vertical" >Nome do Cliente</div>
+
+                <div class="borda"></div>
+
+                <div class="tb_col_15 it_opcoes vertical">Opções</div>
             </div>
 
             {% for cliente in pagina %}
 
-                <div class="it_lista">
+                <div class="table_row">
 
-                    <div class="it_id vertical">
+                    <div class="tb_col_5 it_id vertical">
                         {{ cliente.pkid_pessoa }}
                     </div>
 
                     <div class="borda"></div>
 
-                    <div class="it_nome vertical">
+                    <div class="tb_col_80 it_nome vertical">
                         {{ cliente.nomecompleto_razaosocial }}
                     </div>
 
                     <div class="borda"></div>
 
-                    <div class="it_opcoes">
+                    <div class="tb_col_15 it_opcoes">
 
                         <a href="/iframe/clientes/{{ cliente.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
                             <div class="opt_bt opt_edit">

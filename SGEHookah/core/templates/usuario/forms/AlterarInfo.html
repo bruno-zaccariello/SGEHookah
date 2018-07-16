@@ -5,7 +5,7 @@
 </head>
 <body style="background:none;background-color:none;">
 
-	{% if infoAlterada == True %}
+	{% if success == True %}
 		<script>
 			jaiDisplayOff();
 			jai_alertSucessOn();
@@ -21,7 +21,7 @@
 			
 			<h3 class="jai_title"> Altere suas informações: </h3>
 			{% csrf_token %}
-			{% if errosFormUserInfo != 'none' %}
+			{% if form_errors == True %}
 				<div id="errosFormUserInfo">
 					{% for field in form_userInfo %}
 						{{ field.errors }}

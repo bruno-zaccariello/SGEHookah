@@ -157,11 +157,6 @@ a.current:hover {
 	justify-content: center;
 }
 
-.lista_container {
-	width: 90%;
-	margin: auto auto;
-}
-
 .borda {
 	width: 1px;
 	height: 100%;
@@ -170,14 +165,16 @@ a.current:hover {
 
 /* LEGENDA */
 
-.it_lista_leg {
-	width: 90%;
-	margin: 5px auto;
-	height: 40px;
+.table_header {
 	border: 3px solid #333;
-	padding: 5px;
+	display: flex;
+	flex-flow: row nowrap;
 	font-weight: 600;
     font-size: 16px;
+	height: 40px;
+	margin: 5px auto;
+	padding: 5px;
+	width: 90%;
 }
 
 /* LISTA */
@@ -191,9 +188,16 @@ a.current:hover {
     width: 70%;
 }
 
-.it_lista {
+.table_container {
+	width: 90%;
+	margin: auto auto;
+}
+
+.table_row {
     background-color: lightgray;
     border: 1px solid #333;
+    display: flex;
+	flex-flow: row nowrap;
     font-size: 15px;
     height: 35px;
 	margin: 5px auto;
@@ -201,15 +205,45 @@ a.current:hover {
     width: 90%;
 }
 
-.it_id {
+.tb_col_5 {
 	width: 5%;
+}
+
+.tb_col_8 {
+	width: 8%;
+}
+
+.tb_col_10 {
+	width: 10%;
+}
+
+.tb_col_15 {
+	width: 15%;
+}
+
+.tb_col_25 {
+	width: 25%;
+}
+
+.tb_col_50 {
+	width: 50%;
+}
+
+.tb_col_60 {
+	width: 60%;
+}
+
+.tb_col_80 {
+	width: 80%;
+}
+
+.it_id {
 	text-align: center;
 	margin: auto 10px;
 	margin-left: 5px;
 }
 
 .it_nome {
-	width: 80%;
 	margin: auto 10px;
     padding-left: 10px;
 }
@@ -227,7 +261,14 @@ div.it_lista_leg div.it_nome {
 	margin: auto;
     padding-left: 5px;
 	text-align: center;
-    width: 15%;
+}
+
+.opts_leg {
+	margin: auto;
+	height: 100%;
+    padding-left: 5px;
+	width: 15%;
+	text-align: center;
 }
 
 .redlink {
