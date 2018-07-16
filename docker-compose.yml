@@ -15,7 +15,7 @@ services:
   volumes: 
     - .:/SGEHookah
   ports:
-    - "8000:8000"
+    - "80:8000"
  db:
   image: postgres:10.4
   environment:
