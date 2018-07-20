@@ -31,7 +31,8 @@ usuario = [
 clientes = [
     path('cadastrar/', cadastrar_cliente, name="cadastrar_cliente"),
     path('cadastrar/cadastro_rapido/', cadastro_rapido_cliente, name="cadastro_rapido_cliente"),
-    path('lista/', lista_clientes, name="lista_clientes")
+    path('lista/', lista_clientes, name="lista_clientes"),
+    path('deletar/<int:id_cliente>', deletar_cliente, name="deletar_cliente")
 ]
 
 produtos = [

@@ -7,13 +7,16 @@
 		<script src="/static/jquery/jquery.mask.min.js"></script>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="height=device-height, initial-scale=1.0" />
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="/static/css/site.css">
+		<link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
+		<link rel="stylesheet"  type="text/css" href="/static/css/my_css/navbar.css"/>
+		<link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
 		<title id="base_title"></title>
 		
 		<script src="/static/js/fix_titles.js"></script>
 		<script src="/static/js/logoutCover.js"></script>
-		<script src="/static/js/userPageFix.js"></script>
 		<script src="/static/js/toggleMenu.js"></script>
 
 	{% endblock %}
@@ -37,7 +40,6 @@
 	
 	<section class="oa_menu">
 		<header>
-			
 			<div id="menu_topping" class="menu_topping">
 			
 				<div id="oam_extra" class="oam_extra">
@@ -76,8 +78,9 @@
 			
 			</div>
 			
-			<div id="oam_wrapper" class="oam_wrapper" style="display:none">
-				<div class="oam_opt opt_produto oam_dropdown">
+			<div class="oam_wrapper_holder">
+			<div id="oam_wrapper" class="oam_wrapper" style="display: none;">
+				<div class="oam_opt opt_produto oam_dropdown opt_none_bg">
 					<a href="{% url 'lista_produtos' %}" target="main_frame">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Produtos</div>
@@ -92,8 +95,8 @@
 					</div>
 				</div>
 				
-				<div class="oam_opt opt_cliente oam_dropdown">
-					<a href="" target="main_frame">
+				<div class="oam_opt opt_cliente oam_dropdown opt_none_bg">
+					<a href="{% url 'lista_clientes' %}" target="main_frame">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Clientes</div>
 						</div>
@@ -105,7 +108,7 @@
 					</div>
 				</div>
 				
-				<div class="oam_opt opt_vendas">
+				<div class="oam_opt opt_vendas opt_none_bg">
 					<a href="">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Vendas</div>
@@ -116,7 +119,7 @@
 					</div>
 				</div>
 				
-				<div class="oam_opt opt_producao">
+				<div class="oam_opt opt_producao opt_none_bg">
 					<a href="">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Produção</div>
@@ -127,7 +130,7 @@
 					</div>
 				</div>
 				
-				<div class="oam_opt opt_home_page">
+				<div class="oam_opt opt_home_page opt_none_bg">
 					<a href="/iframe/home" target="main_frame">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Home Page</div>
@@ -135,7 +138,7 @@
 					</a>
 				</div>
 				
-				<div class="oam_opt opt_config">
+				<div class="oam_opt opt_config opt_none_bg">
 					<a href="">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Configurações</div>
@@ -144,7 +147,7 @@
 				</div>
 				
 			</div>
-			
+
 			<div id="search_wrapper" class="search_wrapper">
 				<div class="search_part">
 					<form class="search_form" method="GET" autocomplete="no">
@@ -192,6 +195,8 @@
 				<div class="search_part">
 				</div>
 			</div>
+
+			</div>
 			
 		</header>
 	</section>
@@ -199,12 +204,11 @@
 	
 		<script>
 			function iframeLoad() {
-				userPageFix2();
 				getTitle();
 				oamTitle();
 			}
 		</script>
-		<iframe src="/iframe/home" onload="iframeLoad()" class="main_frame" id="main_frame" name="main_frame"></iframe>
+		<iframe src="/iframe/home" onload="iframeLoad()" class="main_frame frame_height" id="main_frame" name="main_frame"></iframe>
 
 	
 <footer>

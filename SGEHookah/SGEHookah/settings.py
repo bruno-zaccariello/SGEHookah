@@ -89,17 +89,6 @@ DATABASES = {
     }
 }
 
-'''DATABASES = {
-    'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'endoramadb',
-        'USER': 'adm-endorama',
-        'PASSWORD': '@dmin123',
-        'HOST': 'endorama.database.windows.net',
-        'PORT': '',
-    }
-}'''
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

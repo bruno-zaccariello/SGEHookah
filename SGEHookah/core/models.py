@@ -386,7 +386,7 @@ class Telefone(models.Model):
 
 class Unidademedida(models.Model):
     pkid_unidademedida = models.AutoField(primary_key=True)  # Field name made lowercase.
-    unidademedida = models.CharField('Unidade', unique=True, max_length=50)  # Field name made lowercase.
+    unidademedida = models.CharField('Unidade', max_length=50)  # Field name made lowercase.
     hide = models.BooleanField(default=0)  # Field name made lowercase.
 
     def __str__(self):

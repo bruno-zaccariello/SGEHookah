@@ -1,0 +1,45 @@
+/* Botoes */
+
+.btMain {
+    cursor: pointer;
+    margin: auto 5px;
+    color: black;
+    width: 100px;
+    height: 30px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 90%;
+    transition: 0.4s;
+}
+
+.btCadastrar:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+.btLimpar:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+.btCancelar:hover {
+    background-color: #eee;
+    color: darkred;
+    border-color: darkred;
+}
+
+.btConfirmar:hover {
+    background-color: #eee;
+    color: forestgreen;
+    border-color: forestgreen;
+}
+
+.btEnviar:hover {
+    background-color: white;
+    color: forestgreen;
+	border-color: forestgreen;
+}

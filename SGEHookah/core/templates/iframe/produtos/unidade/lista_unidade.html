@@ -2,9 +2,15 @@
 
 <head>
 	<title id="iframe_title">SGE - Cadastrar Categoria</title>
+    <!-- Site defaults -->
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
-	<link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/dft_table.css"/>
+    <!-- Page specific -->
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
     <link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/unidade/lista_unidade.css"/>
+    
 	<script src="/static/js/iframe/produtos/unidade/lista_unidade.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
 </head>
@@ -53,32 +59,6 @@
     <div class="pageContainer">
 
         <div class="opt_content">
-        <div class="divPaginas">
-            {% if pagina.has_previous %}
-                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
-                <a class="linkPagina white"> </a>
-
-                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.previous_page_number }}"> {{ pagina.previous_page_number }}</a>
-            {% else %}
-                <a class="linkPagina bee" href=""><<</a>
-                <a class="linkPagina white"> </a>
-
-            {% endif %}
-
-            <a class="linkPagina bee current">{{ pagina.number }}</a>
-
-            {% if pagina.has_next %}
-                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.next_page_number }}">{{ pagina.next_page_number }}</a>
-
-                <a class="linkPagina white"> </a>
-                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.paginator.num_pages }}">>></a>
-            {% else %}
-
-                <a class="linkPagina white"> </a>
-                <a class="linkPagina bee" href="">>></a>
-            {% endif %}
-
-        </div>
 
             <div class="divCadastrarCat">
                 <button onclick="showOvCad()" class="btMain btCadastrar">CADASTRAR UNIDADE</button>
@@ -110,63 +90,99 @@
                 </div>
             </div>
         </div>	
+	
+        <!-- Tabela -->
 
-        <!-- Legenda -->	
+        <!-- Header -->
 
-        <div class="table_container flex_column">
+        <table class="">
 
-            <div class="table_header flex_row">
+            <thead>
+            <tr class="tb_head">
 
-                <div class="tb_col_5 it_id vertical">
+                <th class="">
                     ID
-                </div>
+                </th>
 
-                <div class="borda"></div>
 
-                <div class="tb_col_80 it_nome vertical">
+                <th class="">
                     Unidade
-                </div>
+                </th>
 
-                <div class="borda"></div>
 
-                <div class="tb_col_15 opts_leg vertical">
+                <th class="">
                     Opções
-                </div>
+                </th>
 
-            </div>
+            </tr>
+            </thead>
 
-        <!-- A lista em si -->
+        <!-- Conteúdo -->
 
+            <tbody>
             {% for unidade in pagina %}
 
-            <div class="table_row flex_row">
+            <tr class="">
 
-                <div class="tb_col_5 it_id vertical white">
+                <td class="txt_center">
                     {{ unidade.pkid_unidademedida }}
-                </div>
+                </td>
 
-                <div class="borda"></div>
 
-                <div class="tb_col_80 it_nome vertical white">
+                <td class="">
                     {{ unidade.unidademedida }}
-                </div>
+                </td>
 
-                <div class="borda"></div>
 
-                <div class="tb_col_15 it_opcoes vertical white">
+                <td class="">
 
+                    <div class="opts_holder flex_row_nw">
+                    
                     <a href="javascript:confirmaJanelaOn('{{ unidade.pkid_unidademedida }}')" class='vertical opt_bt'>
                         <div class='opt_bt opt_delete'>
                         </div>
                     </a>
 
-                </div>
+                    </div>
 
-            </div>
+                </td>
+
+            </tr>
+
+            </tbody>
 
             {% endfor %}
 
-        </div>
+        </table>
+
+        <div class="divPaginas">
+
+                {% if pagina.has_previous %}
+                    <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                    <a class="linkPagina white"> </a>
+
+                    <a class="linkPagina bee" href="{{ url }}&page={{ pagina.previous_page_number }}"> {{ pagina.previous_page_number }}</a>
+                {% else %}
+                    <a class="linkPagina bee" href=""><<</a>
+                    <a class="linkPagina white"> </a>
+
+                {% endif %}
+
+                <a class="linkPagina bee current">{{ pagina.number }}</a>
+
+                {% if pagina.has_next %}
+                    <a class="linkPagina bee" href="{{ url }}&page={{ pagina.next_page_number }}">{{ pagina.next_page_number }}</a>
+
+                    <a class="linkPagina white"> </a>
+                    <a class="linkPagina bee" href="{{ url }}&page={{ pagina.paginator.num_pages }}">>></a>
+                {% else %}
+
+                    <a class="linkPagina white"> </a>
+                    <a class="linkPagina bee" href="">>></a>
+                {% endif %}
+
+            </div>
+
     </div>
 </body>
 

@@ -1,0 +1,33 @@
+.flex_row_nw {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.flex_row_w {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.flex_col_nw {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.flex_col_w {
+	display: flex;
+	flex-flow: column wrap;
+}
+
+.hidden {
+    display: none;
+}
+
+.vertical {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+
+.txt_center {
+	text-align: center;
+}

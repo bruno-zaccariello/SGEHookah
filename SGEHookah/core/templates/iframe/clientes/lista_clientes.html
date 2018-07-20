@@ -4,6 +4,9 @@
 	<title id="iframe_title">SGE - Lista de Clientes</title>
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/navbar.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
 	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_clientes.css"/>
 	<script src="/static/js/iframe/clientes/lista_clientes.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
@@ -134,24 +137,24 @@
         </div>
 
         <div class="divPaginas">
-            {% if produtos.has_previous %}
+            {% if clientes.has_previous %}
                 <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
                 <a class="linkPagina white"> </a>
 
-                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.previous_page_number }}"> {{ produtos.previous_page_number }}</a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.previous_page_number }}"> {{ clientes.previous_page_number }}</a>
             {% else %}
                 <a class="linkPagina bee" href=""><<</a>
                 <a class="linkPagina white"> </a>
 
             {% endif %}
 
-            <a class="linkPagina bee current">{{ produtos.number }}</a>
+            <a class="linkPagina bee current">{{ clientes.number }}</a>
 
-            {% if produtos.has_next %}
-                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.next_page_number }}">{{ produtos.next_page_number }}</a>
+            {% if clientes.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.next_page_number }}">{{ clientes.next_page_number }}</a>
 
                 <a class="linkPagina white"> </a>
-                <a class="linkPagina bee" href="{{ url }}&page={{ produtos.paginator.num_pages }}">>></a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.paginator.num_pages }}">>></a>
             {% else %}
 
                 <a class="linkPagina white"> </a>

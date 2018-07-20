@@ -27,7 +27,7 @@ def filtra_produtos(codigo, pChave):
 	if pChave == '' or pChave == None :
 		pChave = False
 	if not codigo and not pChave :
-		for produto in Produto.objects.all() :
+		for produto in Produto.objects.all().order_by('pkid_produto') :
 			if produto.hide != True :
 				produtos.append(produto)
 	else :

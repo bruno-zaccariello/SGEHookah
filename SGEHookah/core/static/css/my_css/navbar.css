@@ -1,0 +1,352 @@
+/* Dropdown */
+
+.oam_dropdown_content {
+    display: none;
+    position: absolute;
+    border: 1px solid gray;
+    width: 160%;
+    max-width: 290px;
+}
+
+.oam_drop_div {
+    padding-top: 5px;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    font-weight: 600;
+    vertical-align: bottom;
+    text-align: center;
+    font-size: 90%;
+}
+
+.oam_opt:hover .oam_dropdown_content {
+    display: block;
+    background-color: lightgray;
+}
+
+.oam_dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.cat_div {
+    height: 1px;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.oam_drop_opt {
+    font-size: 80%;
+    width: 100%;
+    height: auto;
+    text-align: left;
+    vertical-align: middle;
+    padding: 5px;
+    border-bottom: 1px solid gray;
+    border-left: 2px solid darkgray;
+}
+
+.oam_drop_opt:hover {
+    background-color: #f2f2f2;
+    border-left: 3px solid black;
+}
+
+/* Menu */
+
+.menu_button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    display: flex;
+    height: 30px;
+    margin: 0 5px;
+    flex-flow: column nowrap;
+    justify-content: center;
+    transition: .4s;
+    width: 30px;
+}
+
+.menu_bt_bar {
+    border-radius: 10px;
+    height: 2px;
+    width: 70%;
+    margin: 2px auto;
+    background-color: black;
+}
+
+.menu_button:hover {
+    background-color: #bbb;
+    box-shadow: 0 0 18px -2px #fff;
+    cursor: pointer;
+}
+
+.menu_button:active {
+    border: 1px solid white;
+    transition: .1s;
+}
+
+.oa_menu {
+    height: auto;
+}
+
+.menu_topping {
+    display: grid;
+    grid-template-columns: repeat(3, calc(100%/3));
+    background-color: lightgray;
+    height: 35px;
+}
+
+.oam_brand {
+    margin: 0px auto 5px;
+    width: 90%;
+    height: 35px;
+    order: 1;
+}
+
+.oam_brand_title {
+    width: 90%;
+    text-align: center;
+    margin: 5px auto;
+    color: black;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.oam_extra {
+    order: 0;
+    display: flex;
+}
+
+.oam_extra_title {
+    color: black;
+    font-size: 85%;
+    padding: 10px;
+    height: 80%;
+}
+
+.oam_user_info {
+    padding-right: 5px;
+    text-align: end;
+    order: 2;
+}
+
+.oam_hello {
+    color: black;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.oam_hello a {
+    color: black;
+    font-weight: 600;
+}
+
+.oam_hello a:hover {
+    color: yellow;
+
+}
+
+.oam_logout a {
+    color: black;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.oam_logout a:hover {
+    color: red;
+}
+
+.oam_wrapper_holder {
+    left: 0;
+    right: 0;
+    background-color: lightgray;
+    position: fixed;
+    margin: 0px auto;
+    width: 99%;
+    z-index: 0;
+}
+
+.oam_wrapper {
+    border: 1px solid #3a3a3a;
+    height: 90px;
+    margin: 0px auto;
+    display: grid;
+    grip-gap: 10px;
+    grid-template-columns: repeat(6, calc(100%/6));
+    padding: 5px;
+    position: relative;
+    background-color: gray;
+    z-index: 1;
+}
+
+.oam_opt {
+    margin: auto auto;
+    width: 60%;
+    height: 90%;
+    background-color: darkgray;
+    border-radius: 10px;
+    border: 2px solid black;
+    transition-duration: 0.3s;
+    background-position: 50% 80%;
+    background-size: 28%;
+    background-repeat: no-repeat;
+    box-shadow: 0px 4px 12px -2px black;
+}
+
+.oam_opt:hover {
+    background-color: #ddd;
+    border: 3px solid #2d2d2d;
+    background-size: 32%;
+}
+
+.oam_drop_div_legend {
+    color: black;
+    transition-duration: 0.3s;
+    display: block;
+}
+
+.opt_produto {
+    background-image: url("/static/img/bg_menu_produtos.png");
+    order: 0;
+}
+
+.opt_cliente {
+    background-image: url("/static/img/bg_menu_clientes.png");
+    order: 1;
+}
+
+.opt_vendas {
+    background-image: url("/static/img/bg_menu_vendas.png");
+    order: 2;
+}
+
+.opt_producao {
+    background-image: url("/static/img/bg_menu_producao.png");
+    order: 3;
+}
+
+.opt_home_page {
+    background-image: url("/static/img/bg_menu_home.png");
+    order: 4;
+}
+
+.opt_config {
+    background-image: url("/static/img/bg_menu_config2.png");
+    order: 5;
+}
+
+.opt_none_bg {
+    background-image: none;
+}
+
+.search_wrapper {
+    background-color: darkgray;
+    border-radius: 15px;
+    color: black;
+    display: flex;
+    flex-flow: row wrap;
+    height: 50px;
+    justify-content: space-evenly;
+    margin: 5px auto 0;
+    opacity: .7;
+    transition: .3s;
+}
+
+.search_wrapper:focus-within, .search_wrapper:hover {
+    opacity: 1;
+}
+
+.search_part {
+    border: 1px solid #555;
+    border-collapse: collapse;
+    background-color: darkgray;
+    width: 33%;
+    width: calc(100%/3);
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    vertical-align: center;
+    line-height: 15px;
+}
+
+.search_form {
+    display: flex;
+    justify-content: space-around;
+    width: 95%;
+}
+
+.search_label {
+    font-size: 12px;
+}
+
+.search_div {
+    margin: auto 5px;
+    width: 90%;
+}
+
+.search_input {
+    margin: auto auto;
+    width: 100%;
+    height: 20px;
+    border-radius: 3px;
+    padding: 4px;
+    font-size: 80%;
+}
+
+select.search_input {
+    padding: 1px;
+}
+
+.search_sel_opt {
+}
+
+.search_button_div {
+    vertical-align: middle;
+    height: auto;
+    width: 35px;
+    height: 35px;
+}
+
+.search_button {
+    background-image: url("/static/img/lupinha.png");
+    background-size: contain;
+    background-position: center;
+    width: 35px;
+    height: 35px;
+    transition-duration: 0.4s;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.search_button:hover {
+    background-color: yellow;
+    color: black;
+}
+
+@media screen and (max-width: 1400px) {
+    .oam_drop_div {
+        font-size: 78%;
+    }
+
+}
+
+@media screen and (max-width: 1100px) {
+    .oam_extra_title {
+        font-size: 60%;
+    }
+
+}
+
+@media screen and (max-width: 950px) {
+    .search_wrapper {
+        height: auto;
+    }
+
+    .oam_drop_div {
+        font-size: 70%;
+    }
+
+}
+
