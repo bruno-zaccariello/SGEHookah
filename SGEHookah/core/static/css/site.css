@@ -1,3 +1,10 @@
+@import url("/static/css/my_css/forms.css");
+@import url("/static/css/my_css/buttons.css");
+@import url("/static/css/my_css/dft_table.css");
+@import url("/static/css/my_css/navbar.css");
+@import url("/static/css/usefull.css");
+
+
 /* TAGS */
 
 * {
@@ -62,43 +69,6 @@ a.bee {
 
 a.bee:hover {
     color: chocolate;
-}
-
-/* Forms */
-
-/* input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px black inset;
-		-webkit-text-fill-color: white !important;
-} */
-
-label {
-    width: 100%;
-}
-
-input {
-    width: 100%;
-    border: 1px solid #777;
-}
-
-select {
-    width: 100%;
-    border: 1px solid darkgray;
-}
-
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    background-color: #eee;
-    border-color: black;
-}
-
-div.label {
-    margin: auto auto;
-    width: 90%;
-}
-
-div.input {
-    margin: auto auto;
-    width: 90%;
 }
 
 /* Logout Window */
@@ -201,7 +171,7 @@ div.input {
 /* Extras */
 
 .required {
-    color:#5a0202;
+    color: #810000;
 }
 
 .iframe_section {

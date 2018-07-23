@@ -31,3 +31,10 @@
 .txt_center {
 	text-align: center;
 }
+
+.divisor {
+    background-color: #666;
+    height: 1px;
+    margin: 10px auto;   
+    width: 80%;
+}

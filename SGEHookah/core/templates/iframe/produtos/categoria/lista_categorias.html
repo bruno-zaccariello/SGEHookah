@@ -4,10 +4,6 @@
 	<title id="iframe_title">SGE - Cadastrar Categoria</title>
     <!-- Site defaults -->
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/navbar.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/dft_table.css"/>
     <!-- Page specific -->
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
     <link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/categoria/lista_categorias.css"/>
@@ -61,7 +57,7 @@
 
         <div class="opt_content">
 
-            <div class="divCadastrarCat">
+            <div class="divCadastrar">
                 <button onclick="showOvCad()" class="btMain btCadastrar">CADASTRAR CATEGORIA</button>
 
                 <div id="ov_cad" class="ov_cad">
@@ -127,7 +123,7 @@
                         {{ categoria.pkid_categoria }}
                     </td>
 
-                    <td>
+                    <td class="lft_padding">
                         {{ categoria.nomecategoria }}
                     </td>
 
@@ -176,6 +172,8 @@
         </div>
 
     </div>
+
+    <script src="/static/js/formsFixes.js"></script>
 
 </body>
 

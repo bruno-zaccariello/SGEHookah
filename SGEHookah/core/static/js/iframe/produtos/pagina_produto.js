@@ -13,14 +13,14 @@ function readURL(input) {
   }
 }
 
+$("#id_fotoproduto").change(function() {
+  readURL(this);
+});
+
 function clean() {
 	$('#foto_produto').show();
   $('#foto_preview').hide();
 }
-
-$("#id_fotoproduto").change(function() {
-  readURL(this);
-});
 
 $('#BtClean').click(function() {
 	clean();

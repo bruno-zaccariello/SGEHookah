@@ -1,10 +1,13 @@
 <head>
+	
 	<link rel="stylesheet" type="text/css" href="/static/css/site.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/usuario/user_main.css">
-	<link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
-	<link rel="stylesheet"  type="text/css" href="/static/css/my_css/navbar.css"/>
-	<link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
+
+	<script src="/static/jquery/jquery-3.3.1.min.js"></script>
+	<script src="/static/jquery/jquery.mask.min.js"></script>
+
 	<script src="/static/js/Usuario/user_main.js"></script>
+
 </head>
 <body style="background:none;background-color:none;">
 
@@ -23,19 +26,15 @@
 		<div class="wp_AlterarInfoForm" id="wp_AlterarInfoForm">
 			
 			<h3 class="jai_title"> Altere suas informações: </h3>
-			{% csrf_token %}
-			{% if form_errors == True %}
-				<div id="errosFormUserInfo">
-					{% for field in form_userInfo %}
-						{{ field.errors }}
-					{% endfor %}
-				</div>
-			{% endif %}
 			
+			{% csrf_token %}
+
 			{% for field in form_userInfo %}
 				<div class="jai_fields_wrapper">
 					<div class="label">{{field.label_tag}}</div>
-					<div class="field">{{field}}</div>
+					<div class="field">{{field}}
+						{{ field.errors }}
+					</div>
 				</div>
 			{% endfor %}
 			
@@ -50,5 +49,7 @@
 			
 		</div>
 	</form>
+	
+	<script src="/static/js/formsFixes.js"></script>
 	
 </body>

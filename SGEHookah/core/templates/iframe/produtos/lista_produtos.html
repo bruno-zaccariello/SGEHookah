@@ -5,10 +5,6 @@
     
     <!-- Site defaults -->
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/navbar.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/dft_table.css"/>
     <!-- Page specific -->
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
 	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/lista_produtos.css"/>
@@ -66,8 +62,14 @@
 	
     <div class="pageContainer">
 
-        <div class="divCadastrarCat">
-            <a href="/iframe/produtos/cadastrar"  class="btMain btCadastrar">CADASTRAR CATEGORIA</button>
+        <div class="opt_content">
+            <div class="divCadastrar">
+                <a href="/iframe/produtos/cadastrar">
+                    <button class="btMain btCadastrar">
+                    CADASTRAR PRODUTO
+                    </button>
+                </a>
+            </div>
         </div>
 
         <table>
@@ -76,7 +78,7 @@
                 <tr>
                     <th>Foto</th>
 
-                    <th>Cód.</th>
+                    <th>Código</th>
                     
                     <th>Preço</th>
                     
@@ -98,17 +100,17 @@
                     </td>
 
                     
-                    <td>
+                    <td class="txt_center">
                         {{ produto.codproduto }}
                     </td>
 
                     
-                    <td>
+                    <td class="txt_center">
                         R${{ produto.preco }}
                     </td>
 
                     
-                    <td>
+                    <td class="lft_padding">
                         {{ produto.nomeproduto }}
                     </td>
                     
@@ -117,6 +119,11 @@
 
                             <a href="/iframe/produtos/{{ produto.pkid_produto }}" title="editar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_edit">
+                                </div>
+                            </a>
+
+                            <a href="#" title="formula" class="vertical opt_bt">
+                                <div class="opt_bt opt_formula">
                                 </div>
                             </a>
 
@@ -131,9 +138,10 @@
                 </tr>
             {% endfor %}
             </tbody>
-        </div>
+        </table>
 
         <div class="divPaginas">
+
             {% if pagina.has_previous %}
                 <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
                 <a class="linkPagina white"> </a>

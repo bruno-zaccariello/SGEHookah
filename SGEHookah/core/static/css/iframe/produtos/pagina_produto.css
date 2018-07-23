@@ -1,8 +1,3 @@
-input, select {
-	height: 22px;
-	padding: 2px;
-}
-
 .page_content {
 	background-color: #bbb;
 	margin: 30px auto;
@@ -33,30 +28,23 @@ input, select {
 	width: 100%;
 }
 
-textarea {
-	width: 100%;
-	height: 100px;
-	resize: none;
-}
-
-.field_wrapper {
-	width: 28%;
-	height: 50px;
-	margin: 5px 15px;
+.formInput {
+	margin: 5px auto 5px 10px;
+	width: 30%;
 }
 
 div.foto_produto {
 	width: 120px;
 	height: 120px;
-	margin: 10px auto 0;
+	margin: auto;
 	border: 2px dashed gray;
 }
 
 img.foto_produto {
 	object-fit: contain;
-	width: 95%;
-	height: 95%;
-	margin: auto auto;
+	width: 100%;
+	height: 100%;
+	margin: auto;
 }
 
 .foto_wrapper {

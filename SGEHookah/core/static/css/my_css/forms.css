@@ -1,0 +1,89 @@
+/* Forms */
+ 
+label {
+    font-size: 17px;
+    width: 100%;
+}
+
+input, select {
+    border: 1px solid #777;
+    height: auto;
+    font-size: 15px;
+    padding: 3px;
+    width: 100%;
+}
+
+select {
+    padding: 2px;
+}
+
+input:hover, select:hover, textarea:hover {
+    border-color: #444;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    background-color: #eee;
+    border-color: black;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+    width: 100%;
+}
+
+div.label {
+    margin: 0px auto;
+    width: 100%;
+}
+
+div.input {
+    margin: 0px auto;
+    width: 100%;
+}
+
+/* Areas */
+
+.formContainer {
+    background-color: #aaa;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 10px auto;
+    width: 60%;
+}
+
+
+/* Errors */
+
+ul.errorlist {
+    border: 1px solid black;
+    background-color: #f13838;
+    display: none;
+    padding: 10px;
+    position: absolute;
+    margin: 0px;
+    max-width: 250px;
+}
+
+.errorlist {
+    text-decoration: none;
+    list-style: none;
+    font-size: 13px;
+}
+
+ul.errorlist li {
+    color: black;
+}
+
+.formInput:hover .errorlist, .formInput:focus .errorlist,
+.field:hover .errorlist, .field:focus .errorlist
+{
+    display: block;
+}
+
+.error-active, input.error-active:hover, select.error-active:hover, textarea.error-active:hover,
+input.error-active:hover, select.error-active:hover, textarea.error-active:hover
+{
+    border: 1px solid #AD0000;
+}

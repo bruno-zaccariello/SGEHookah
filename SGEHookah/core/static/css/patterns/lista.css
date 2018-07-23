@@ -89,7 +89,7 @@ a.current:hover {
 
 /* Cadastrar Categoria */
 
-.divCadastrarCat {
+.divCadastrar {
 	margin-right: 0px;
 	margin-left: auto;
 	width: 35%;
@@ -164,20 +164,6 @@ a.current:hover {
 	border: 1px solid #333;
 }
 
-/* LEGENDA */
-
-.table_header {
-	border: 3px solid #333;
-	display: flex;
-	flex-flow: row nowrap;
-	font-weight: 600;
-    font-size: 16px;
-	height: 40px;
-	margin: 5px auto;
-	padding: 5px;
-	width: 90%;
-}
-
 /* LISTA */
 
 .pageContainer {
@@ -209,6 +195,11 @@ a.opt_bt {
 
 .opt_delete {
     background-image: url("/static/img/delete.png");
+    background-size: 80%;
+}
+
+.opt_formula {
+	background-image: url("/static/img/formula.svg");
     background-size: 80%;
 }
 

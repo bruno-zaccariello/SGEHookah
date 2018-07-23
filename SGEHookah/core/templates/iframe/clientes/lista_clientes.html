@@ -2,13 +2,14 @@
 
 <head>
 	<title id="iframe_title">SGE - Lista de Clientes</title>
+    
+    <!-- Site defaults -->
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    <!-- Page specific -->
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/navbar.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
 	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_clientes.css"/>
-	<script src="/static/js/iframe/clientes/lista_clientes.js"></script>
+	
+    <script src="/static/js/iframe/clientes/lista_clientes.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
 </head>
 
@@ -88,53 +89,51 @@
 
         </div>
 
-        <div class="table_container">
+        <table>
 
-            <div class="table_header">
-                <div class="tb_col_5 it_id vertical" >Cód.</div>
+            <thead>
+                <tr>
+                    <th>Cód.</th>
 
-                <div class="borda"></div>
+                    <th>Nome do Cliente</th>
 
-                <div class="tb_col_80 it_nome vertical" >Nome do Cliente</div>
+                    <th>Opções</th>
+                </tr>
+            </thead>
 
-                <div class="borda"></div>
 
-                <div class="tb_col_15 it_opcoes vertical">Opções</div>
-            </div>
-
+            <tbody>
             {% for cliente in pagina %}
+                <tr>
 
-                <div class="table_row">
-
-                    <div class="tb_col_5 it_id vertical">
+                    <td class="txt_center">
                         {{ cliente.pkid_pessoa }}
-                    </div>
+                    </td>
 
-                    <div class="borda"></div>
-
-                    <div class="tb_col_80 it_nome vertical">
+                    <td class="lft_padding">
                         {{ cliente.nomecompleto_razaosocial }}
-                    </div>
+                    </td>
+                   
+                    <td>
 
-                    <div class="borda"></div>
+                        <div class="opts_holder flex_row_nw">
+                            <a href="/iframe/clientes/{{ cliente.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
+                                <div class="opt_bt opt_edit">
+                                </div>
+                            </a>
 
-                    <div class="tb_col_15 it_opcoes">
+                            <a href="javascript:confirmaJanelaOn('{{ cliente.pkid_pessoa }}')" title="deletar" class='vertical opt_bt'>
+                                <div class="opt_bt opt_delete">
+                                </div>
+                            </a>
+                        </div>
 
-                        <a href="/iframe/clientes/{{ cliente.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
-                            <div class="opt_bt opt_edit">
-                            </div>
-                        </a>
+                    </td>
 
-                        <a href="javascript:confirmaJanelaOn('{{ cliente.pkid_pessoa }}')" title="deletar" class='vertical opt_bt'>
-                            <div class="opt_bt opt_delete">
-                            </div>
-                        </a>
-
-                    </div>
-
-                </div>
+                </tr>
             {% endfor %}
-        </div>
+            </tbody>
+        </table>
 
         <div class="divPaginas">
             {% if clientes.has_previous %}

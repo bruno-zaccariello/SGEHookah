@@ -22,7 +22,7 @@ from core.funcoes import *
 def cadastrar_produto(request):
 	success = request.GET.get('success', False)
 	if request.POST:
-		form = CadProdutoForm(request.POST, request.FILES)
+		form = CadProdutoForm(request.POST, request.FILES, label_suffix='')
 		if form.is_valid():
 			form = form.save(commit=False)
 
@@ -34,9 +34,19 @@ def cadastrar_produto(request):
 			url = str(request.path_info) + str('?success=True')
 			return HttpResponseRedirect(url)
 	else:
-		form = CadProdutoForm()
+		form = CadProdutoForm(label_suffix='')
+
+	# Slice form for usage in template
+	form_n = [field for field in form]
+	form_col1 = form_n[:6]
+	form_col2 = form_n[6:12]
+	form_other = form_n[12:]
+
 	context = {
 			"form":form,
+			"form_col1":form_col1,
+			"form_col2":form_col2,
+			"form_other":form_other,
 			"success":success
 	}
 	return render(request, "iframe/produtos/cadastrar_produto.html", context)

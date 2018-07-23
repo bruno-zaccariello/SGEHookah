@@ -1,14 +1,64 @@
-textarea {
+.columns_holder {
+	display: flex;
+	flex-flow: row no-wrap;
+	justify-content: space-evenly;
 	width: 100%;
-	height: 100px;
 }
 
-input, select {
-    width: 100%;
-	font-size: 90%;
-	height: 24px;
-	padding: 3px;
-	max-height: 60px;
+.col {
+	width: 50%;
+}
+
+/* Campo foto produto */
+
+.div_foto_preview {
+	border: 1px solid lightgray;
+	height: 50px;
+	margin: 5px 15px;
+	width: 50px;
+}
+
+.img_foto_preview {
+	height: auto;
+	width: 100%;
+	object-fit: contain;
+}
+
+.label_ft {
+	text-align: center;
+}
+
+.label_ft label {
+	background-color: #eee;
+	border: 1px solid gray;
+	border-radius: 5px;
+	height: 30px;
+	line-height: 30px;
+	cursor: pointer;
+	padding: 5px 20px;
+	transition: .3s;
+	text-align: center;
+	width: auto;
+	min-width: 120px;
+}
+
+.label_ft label:hover {
+	background-color: #ccc;
+	border-color: black;
+	transition: .3s;
+}
+
+.label_ft label:active {
+	border-color: yellow;
+	transition: 0s;
+}
+
+.input_ft {
+	display: none;
+}
+
+.FormInput {
+	margin: 0;
 }
 
 .FotoInput:focus {
@@ -16,14 +66,19 @@ input, select {
 	background-color: none;
 }
 
-.Descricao {
-	resize: none;
-}
+/* Extras */
 
 .fieldDiv {
-    width: initial;
-	min-width: 50%;
+	width: 100%;
 	flex: 1 1 auto; 
 	padding: 10px;
 	justify-content: center;
+}
+
+.fotoDiv {
+	display: flex;
+	flex-flow: column no-wrap;
+	padding: 10px;
+	justify-content: center;
+	width: 100%;
 }

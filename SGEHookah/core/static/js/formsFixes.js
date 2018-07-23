@@ -21,3 +21,20 @@ $('input').each(function () {
         $label.addClass('required')
     }
 });
+
+$('.formInput').each(function () {
+  if ($(this).find('ul.errorlist').length > 0) {
+    $(this).find('input').addClass('error-active');
+  } else {
+    $(this).find('input').removeClass('error-active');
+  }
+})
+
+// Para a pagina de alterar senha e info
+$('.field').each(function () {
+  if ($(this).find('ul.errorlist').length > 0) {
+    $(this).find('input').addClass('error-active');
+  } else {
+    $(this).find('input').removeClass('error-active');
+  }
+})

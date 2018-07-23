@@ -38,10 +38,10 @@ class UnidademedidaForm(forms.ModelForm):
 
 class CadProdutoForm(forms.ModelForm):
 	codproduto = forms.CharField(label="Código", max_length=8)
-	nomeproduto = forms.CharField(label="Nome")
+	nomeproduto = forms.CharField(label="Nome", max_length=50)
 	preco = forms.DecimalField(label="Preço", max_digits=10, decimal_places=2)
 	precocusto = forms.DecimalField(label="Preço de Custo", max_digits=10, decimal_places=2, required=False)
-	sabor = forms.CharField(label="Sabor")
+	sabor = forms.CharField(label="Sabor", max_length=45)
 	marca = forms.CharField(label="Marca", required=False)
 	altura = forms.FloatField(label="Altura")
 	largura = forms.FloatField(label="Largura")
@@ -58,11 +58,11 @@ class CadProdutoForm(forms.ModelForm):
 	largura.widget.attrs.update({'placeholder':'Em cm'})
 	profundidade.widget.attrs.update({'placeholder':'Em cm'})
 	peso.widget.attrs.update({'placeholder':'Em kg'})
-	
+
 	class Meta:
 		model = Produto
-		fields = ["codproduto", "nomeproduto", "preco", "precocusto", "sabor",
-		"marca","altura", "largura", "profundidade", "peso","fkid_unidademedida" ,"fkid_categoria",
+		fields = ["codproduto", "preco", "sabor", "altura", "profundidade", "fkid_unidademedida",
+		"nomeproduto", "precocusto", "marca", "largura", "peso", "fkid_categoria",
 		"fotoproduto", "descricao"]
 		
 
