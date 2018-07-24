@@ -22,6 +22,12 @@ $('input').each(function () {
     }
 });
 
+$('select').each(function () {
+    $this = $(this);
+    $label = $('label[for="'+ $this.attr('id') +'"]');
+    $label.addClass('required')
+});
+
 $('.formInput').each(function () {
   if ($(this).find('ul.errorlist').length > 0) {
     $(this).find('input').addClass('error-active');

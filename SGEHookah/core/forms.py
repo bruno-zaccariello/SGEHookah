@@ -14,7 +14,7 @@ from localflavor.br.forms import *
 		fields = ['nome', 'descricao'] '''
 		
 __all__ = ['Teste', 'FreteForm', 'CadProdutoForm', 'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm', 'UnidademedidaForm', 'PessoaForm', 'EnderecoForm', 'TelefoneForm',
-'PessoaRapidoForm']
+'PessoaRapidoForm', 'MateriaPrimaForm']
 
 class CategoriaprodutoForm(forms.ModelForm):
 	nomecategoria = forms.CharField(label="Nome da Categoria", max_length=50)
@@ -43,21 +43,16 @@ class CadProdutoForm(forms.ModelForm):
 	precocusto = forms.DecimalField(label="Preço de Custo", max_digits=10, decimal_places=2, required=False)
 	sabor = forms.CharField(label="Sabor", max_length=45)
 	marca = forms.CharField(label="Marca", required=False)
-	altura = forms.FloatField(label="Altura")
-	largura = forms.FloatField(label="Largura")
-	profundidade = forms.FloatField(label="Profundidade")
-	peso = forms.DecimalField(max_digits=10, decimal_places=3, label="Peso")
+	altura = forms.FloatField(label="Altura (cm)")
+	largura = forms.FloatField(label="Largura (cm)")
+	profundidade = forms.FloatField(label="Profundidade (cm)")
+	peso = forms.DecimalField(max_digits=10, decimal_places=3, label="Peso (Kg)")
 	fkid_categoria = forms.ModelChoiceField(label="Categoria", queryset=Categoriaproduto.objects.filter(hide=False), initial=0)
 	fkid_unidademedida = forms.ModelChoiceField(label="Unidade", queryset=Unidademedida.objects.filter(hide=False), initial=0)
 	fotoproduto = forms.FileField(label="Escolha a Foto", required=False)
 	descricao = forms.CharField(label="Descrição", widget=forms.Textarea, required=False)
 	
-	descricao.widget.attrs.update({'class':'Descricao'})
 	fotoproduto.widget.attrs.update({'class':'FotoInput'})
-	altura.widget.attrs.update({'placeholder':'Em cm'})
-	largura.widget.attrs.update({'placeholder':'Em cm'})
-	profundidade.widget.attrs.update({'placeholder':'Em cm'})
-	peso.widget.attrs.update({'placeholder':'Em kg'})
 
 	class Meta:
 		model = Produto
@@ -95,6 +90,18 @@ class ProdutoForm(forms.ModelForm):
 		fields = ["codproduto", "nomeproduto", "preco", "precocusto", "sabor",
 		"marca","altura", "largura", "profundidade", "peso","fkid_unidademedida" ,"fkid_categoria", "totalestoque",
 		"fotoproduto", "descricao"]
+
+
+class MateriaPrimaForm(forms.ModelForm):
+	materiaprima = forms.CharField(label="Matéria Prima", max_length=60)
+	marca = forms.CharField(label="Marca", max_length=50, required=False)
+	totalestoque = forms.IntegerField(label="Estoque")
+	unidade = forms.ModelChoiceField(label="Unidade", queryset=Unidademedida.objects.filter(hide=False), initial=0)
+
+	class Meta:
+		model = Materiaprima
+		fields = ["materiaprima", "marca", "totalestoque", "unidade"]
+
 
 
 class Teste(forms.Form):

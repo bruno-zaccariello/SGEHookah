@@ -19,6 +19,7 @@ from core.funcoes import *
 from core.my_views.clientes import *
 from core.my_views.produtos import *
 from core.my_views.usuario import *
+from core.my_views.producao import *
 
 # Create your views here.
 	

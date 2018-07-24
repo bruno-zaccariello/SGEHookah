@@ -46,6 +46,11 @@ produtos = [
 	path('unidades/deletar/<int:id_unidade>', deletar_unidade, name="deletar_unidade")
 ]
 
+producao = [
+	path('materia/cadastrar', cadastrar_materia, name="cadastrar_materia"),
+	path('materia/lista', lista_materia, name="lista_materia")
+]
+
 urlpatterns = [
     path('admindjango/', admin.site.urls),
     path('admin/', login, {"template_name":"index.html"}, name="login"),
@@ -56,6 +61,7 @@ urlpatterns = [
 	path('iframe/produtos/', include(produtos)),
 	path('admin/usuario/', include(usuario)),
     path('iframe/clientes/', include(clientes)),
+    path('iframe/producao/', include(producao)),
 	path('iframe/vendas/calcula_frete', calcula_frete, name="calcula_frete")
 ]
 

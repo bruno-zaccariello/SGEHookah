@@ -186,9 +186,11 @@ class Linhavenda(models.Model):
 
 class Materiaprima(models.Model):
     pkid_materiaprima = models.AutoField(primary_key=True)
-    materiaprima = models.CharField('Matéria Prima', max_length=100, blank=True, null=True)
+    materiaprima = models.CharField('Matéria Prima', max_length=60)
     marca = models.CharField('Marca', max_length=50, blank=True, null=True)
-    totalestoque = models.IntegerField('Estoque')
+    totalestoque = models.IntegerField('Qtd. em Estoque')
+    unidade = models.ForeignKey('Unidademedida', on_delete=models.DO_NOTHING, verbose_name='Unidade')
+    hide = models.BooleanField(default=False)
 
     def __str__(self):
         return self.materiaprima
