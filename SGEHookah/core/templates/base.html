@@ -88,7 +88,15 @@
 					<div class="oam_dropdown_content">
 						<a href="{% url 'cadastrar_produto' %}" target="main_frame"><div class="oam_drop_opt">Cadastrar Produto</div></a>
 						<a href="{% url 'lista_produtos' %}" target="main_frame"><div class="oam_drop_opt">Lista de Produtos</div></a>
+
+						<!-- Essa é uma divisória para identificar submenus em um menu -->
 						<div class="cat_div"></div>
+						
+						<a href="{% url 'cadastrar_materia' %}" target="main_frame"><div class="oam_drop_opt">Cadastrar Matéria Prima</div></a>
+						<a href="{% url 'lista_materia' %}" target="main_frame"><div class="oam_drop_opt">Lista de Matéria Prima</div></a>
+
+						<div class="cat_div"></div>
+
 						<a href="{% url 'lista_categorias' %}" target="main_frame"><div class="oam_drop_opt">Categorias</div></a>
 						<a href="{% url 'lista_unidades' %}" target="main_frame"><div class="oam_drop_opt">Unidades</div></a>
 					</div>
@@ -125,8 +133,7 @@
 						</div>
 					</a>
 					<div class="oam_dropdown_content">
-						<a href="{% url 'cadastrar_materia' %}" target="main_frame"><div class="oam_drop_opt">Cadastrar Matéria Prima</div></a>
-						<a href="{% url 'lista_materia' %}" target="main_frame"><div class="oam_drop_opt">Lista de Matérias Prima</div></a>
+						<a href="#" target="main_frame"><div class="oam_drop_opt">Null</div></a>
 					</div>
 				</div>
 				

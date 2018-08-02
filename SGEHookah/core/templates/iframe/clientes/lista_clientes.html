@@ -62,33 +62,16 @@
 	
     <div class="pageContainer">
 
-        <div class="divPaginas">
-            {% if clientes.has_previous %}
-                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
-                <a class="linkPagina white"> </a>
-
-                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.previous_page_number }}"> {{ clientes.previous_page_number }}</a>
-            {% else %}
-                <a class="linkPagina bee" href=""><<</a>
-                <a class="linkPagina white"> </a>
-
-            {% endif %}
-
-            <a class="linkPagina bee current">{{ clientes.number }}</a>
-
-            {% if clientes.has_next %}
-                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.next_page_number }}">{{ clientes.next_page_number }}</a>
-
-                <a class="linkPagina white"> </a>
-                <a class="linkPagina bee" href="{{ url }}&page={{ clientes.paginator.num_pages }}">>></a>
-            {% else %}
-
-                <a class="linkPagina white"> </a>
-                <a class="linkPagina bee" href="">>></a>
-            {% endif %}
-
+        <div class="opt_content">
+            <div class="divCadastrar">
+                <a href="{% url 'cadastrar_materia' %}">
+                    <button class="btMain btCadastrar">
+                    CADASTRAR MATÉRIA
+                    </button>
+                </a>
+            </div>
         </div>
-
+        
         <table>
 
             <thead>

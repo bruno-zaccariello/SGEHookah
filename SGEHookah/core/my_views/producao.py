@@ -15,37 +15,3 @@ from decimal import *
 from core.forms import *
 from core.models import *
 from core.funcoes import *
-
-@login_required(login_url="/admin")
-def cadastrar_materia(request):
-	success = request.GET.get('success', False)
-	if request.POST:
-		form = MateriaPrimaForm(request.POST)
-		if form.is_valid():
-			form.save()
-			url = str(request.path_info) + str('?success=True')
-			return HttpResponseRedirect(url)
-	else:
-		form = MateriaPrimaForm()
-	context = {
-		'form':form,
-		'success':success
-	}
-	return render(request, 'iframe/producao/cadastrar_materia.html', context)
-
-@login_required(login_url="/admin")
-def lista_materia(request):
-	deletado = request.GET.get('deleted', False)
-	page = int(request.GET.get('page', 1))
-
-	lista_materias = Materiaprima.objects.filter(hide=False)
-	paginas = Paginator(lista_materias, 10)
-	materias = paginas.get_page(page)
-
-	url = arruma_url_page(request)
-	context = {
-		"pagina":materias,
-		"deletado":deletado,
-		"url":url,
-	}
-	return render(request, 'iframe/producao/lista_materia.html', context)
