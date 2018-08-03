@@ -66,7 +66,7 @@
 						<div class="formInput">
 							<div class="label">{{field.label_tag}}</div>
 							<div class="input">{{field}}
-								{{ field.errors }}
+								<span id="{{ field.label }}_errors">{{ field.errors }}</span>
 							</div>
 						</div>
 					</div>
