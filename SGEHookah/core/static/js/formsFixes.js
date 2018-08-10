@@ -28,12 +28,19 @@ $('select').each(function () {
     $label.addClass('required')
 });
 
-$('.formInput').each(function () {
-  if ($(this).find('ul.errorlist').length > 0) {
-    $(this).find('input').addClass('error-active');
+function showErrors(field) {
+  if ($(field).find('ul.errorlist').length > 0) {
+    $(field).find('input').addClass('error-active');
   } else {
-    $(this).find('input').removeClass('error-active');
+    $(field).find('input').removeClass('error-active');
   }
+}
+
+// $('.formInput').change(function() {showErrors($(this));})
+// Dinamically find errors (ATM it updates on form send)
+
+$('.formInput').each(function () {
+  showErrors($(this))
 })
 
 // Para a pagina de alterar senha e info

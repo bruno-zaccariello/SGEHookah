@@ -75,4 +75,5 @@ $("#id_cep").blur(function() {
                     limpa_formulário_cep(old_logradouro, old_bairro, old_cidade);
                      $('#CEP_errors').html('');
                 }
+            showErrors($(this).parent());
             });
