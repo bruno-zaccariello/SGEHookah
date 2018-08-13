@@ -14,7 +14,7 @@ from localflavor.br.forms import *
 		fields = ['nome', 'descricao'] '''
 		
 __all__ = ['Teste', 'FreteForm', 'CadProdutoForm', 'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm', 'UnidademedidaForm', 'PessoaForm', 'EnderecoForm', 'TelefoneForm',
-'PessoaRapidoForm', 'MateriaPrimaForm']
+'PessoaRapidoForm', 'MateriaPrimaForm', "FormulaprodutoForm", "Formula_materiaForm"]
 
 class CategoriaprodutoForm(forms.ModelForm):
 	nomecategoria = forms.CharField(label="Nome da Categoria", max_length=50)
@@ -90,6 +90,29 @@ class ProdutoForm(forms.ModelForm):
 		fields = ["codproduto", "nomeproduto", "preco", "precocusto", "sabor",
 		"marca","altura", "largura", "profundidade", "peso","fkid_unidademedida" ,"fkid_categoria", "totalestoque",
 		"fotoproduto", "descricao"]
+
+
+class FormulaprodutoForm(forms.ModelForm):
+	tempomaturacao = forms.TimeField()
+
+	class Meta:
+		model = Formulaproduto
+		fields = ["tempomaturacao"]
+
+
+class Formula_materiaForm(forms.ModelForm):
+	fkid_materiaprima = forms.ModelChoiceField(
+		label="Matéria Prima",
+		queryset=Materiaprima.objects.filter(hide=False))
+	quantidade = forms.FloatField(label="Quantidade")
+	unidade = forms.ModelChoiceField(
+		label="Unidade",
+		queryset=Unidademedida.objects.filter(hide=False))
+
+
+	class Meta:
+		model = Formula_materia
+		fields = ["fkid_materiaprima", "quantidade", "unidade"]
 
 
 class MateriaPrimaForm(forms.ModelForm):

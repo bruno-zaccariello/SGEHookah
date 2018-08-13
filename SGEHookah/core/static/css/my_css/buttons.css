@@ -43,3 +43,31 @@
     color: forestgreen;
 	border-color: forestgreen;
 }
+
+.opt_bt {
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 20px;
+    width: 20px;
+}
+
+a.opt_bt {
+    margin: auto 5px;
+    height: auto;
+    width: 20px;
+}
+
+.opt_edit {
+    background-image: url("/static/img/edit.png");
+    background-size: 80%;
+}
+
+.opt_delete {
+    background-image: url("/static/img/delete.png");
+    background-size: 80%;
+}
+
+.opt_formula {
+    background-image: url("/static/img/formula.svg");
+    background-size: 80%;
+}

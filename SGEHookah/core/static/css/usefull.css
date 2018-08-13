@@ -28,6 +28,10 @@
     justify-content: center;
 }
 
+.row_center {
+	justify-content: center;
+}
+
 .txt_center {
 	text-align: center;
 }

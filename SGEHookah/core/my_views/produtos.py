@@ -83,6 +83,51 @@ def product_page(request, id_produto):
 	return render(request, "iframe/produtos/pagina_produto.html", context)		
 			
 @login_required(login_url="/admin")
+def formula_produto(request, id_produto):
+	produto = Produto.objects.get(pkid_produto=id_produto)
+	try:
+		Formula = Formulaproduto.objects.get(fkid_produto=id_produto)
+	except:
+		Formula = None
+	print(Formula)
+	success = request.GET.get('success', False)
+	formset_materias = inlineformset_factory(
+		Formulaproduto,
+		Formula_materia,
+		extra=1,
+		fields=['fkid_materiaprima','quantidade','unidade'])
+
+	if request.POST:
+		form_formula = FormulaprodutoForm(request.POST)
+		forms_materia = formset_materias(request.POST, instance=Formula)
+
+		if form_formula.is_valid() and forms_materia.is_valid():
+			with transaction.atomic():
+				form_formula = form_formula.save(commit=False)
+				form_formula.fkid_produto = produto
+				form_formula.save()
+				formula = Formulaproduto.objects.filter(pkid_formula=form_formula.pk)
+
+				for form in forms_materia:
+					print(form)
+					form.save(commit=False)
+					form.fkid_formulaproduto = formula
+					form.save()
+
+				url = str(request.path_info) + str('?success=True')
+				return HttpResponseRedirect(url)
+	else:
+		form_formula = FormulaprodutoForm()
+		forms_materia = formset_materias(instance=Formula)
+
+	context = {
+			"form_formula":form_formula,
+			"forms_materia":forms_materia,
+			"success":success
+	}
+	return render(request, "iframe/produtos/formula_produto.html", context)
+
+@login_required(login_url="/admin")
 def lista_produtos(request):
 	# Filtros e adicionais na URL
 	codigo = request.GET.get('search_cod_produto', False)

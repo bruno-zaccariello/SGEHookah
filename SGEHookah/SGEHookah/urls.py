@@ -32,20 +32,21 @@ clientes = [
     path('cadastrar/', cadastrar_cliente, name="cadastrar_cliente"),
     path('cadastrar/cadastro_rapido/', cadastro_rapido_cliente, name="cadastro_rapido_cliente"),
     path('lista/', lista_clientes, name="lista_clientes"),
-    path('deletar/<int:id_cliente>', deletar_cliente, name="deletar_cliente")
+    path('deletar/<int:id_cliente>/', deletar_cliente, name="deletar_cliente")
 ]
 
 produtos = [
 	path('cadastrar/', cadastrar_produto, name="cadastrar_produto"),
-	path('<int:id_produto>', product_page, name="product_page"),
+	path('<int:id_produto>/', product_page, name="product_page"),
+	path('<int:id_produto>/formula/', formula_produto, name="formula_produto"),
 	path('lista/', lista_produtos, name="lista_produtos"),
-	path('deletar/<int:id_produto>', deletar_produto, name="deletar_produto"),
-	path('materia/cadastrar', cadastrar_materia, name="cadastrar_materia"),
-	path('materia/lista', lista_materia, name="lista_materia"),
+	path('deletar/<int:id_produto>/', deletar_produto, name="deletar_produto"),
+	path('materia/cadastrar/', cadastrar_materia, name="cadastrar_materia"),
+	path('materia/lista/', lista_materia, name="lista_materia"),
 	path('categorias/', lista_categorias, name="lista_categorias"),
-	path('categorias/deletar/<int:id_categoria>', deletar_categoria, name="deletar_categoria"),
+	path('categorias/deletar/<int:id_categoria>/', deletar_categoria, name="deletar_categoria"),
 	path('unidades/', lista_unidades, name="lista_unidades"),
-	path('unidades/deletar/<int:id_unidade>', deletar_unidade, name="deletar_unidade")
+	path('unidades/deletar/<int:id_unidade>/', deletar_unidade, name="deletar_unidade")
 ]
 
 producao = [
@@ -63,7 +64,7 @@ urlpatterns = [
 	path('admin/usuario/', include(usuario)),
     path('iframe/clientes/', include(clientes)),
     path('iframe/producao/', include(producao)),
-	path('iframe/vendas/calcula_frete', calcula_frete, name="calcula_frete")
+	path('iframe/vendas/calcula_frete/', calcula_frete, name="calcula_frete")
 ]
 
 if settings.DEBUG is True:

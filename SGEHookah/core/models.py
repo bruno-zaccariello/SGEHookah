@@ -95,11 +95,6 @@ class Formulaproduto(models.Model):
     fkid_produto = models.ForeignKey(
         'Produto', on_delete=models.DO_NOTHING,
         verbose_name='Produto')  # Field name made lowercase.
-    fkid_formula_materia = models.ManyToManyField(
-        'Materiaprima', 
-        through='Formula_materia',
-        verbose_name='Matérias Primas'
-    )
     tempomaturacao = models.TimeField('Tempo de Maturação')  # Field name made lowercase.
     hide = models.BooleanField(default=0)  # Field name made lowercase.
 
@@ -203,7 +198,7 @@ class Materiaprima(models.Model):
 class Formula_materia(models.Model):
     pkid_formula_materia = models.AutoField(primary_key=True)
     fkid_formulaproduto = models.ForeignKey(
-        Formulaproduto, 
+        "Formulaproduto", 
         on_delete=models.DO_NOTHING,
         verbose_name='Fórmula')
     fkid_materiaprima = models.ForeignKey(
@@ -211,6 +206,10 @@ class Formula_materia(models.Model):
         on_delete=models.DO_NOTHING,
         verbose_name='Matéria Prima')
     quantidade = models.FloatField('Quantidade')
+    unidade = models.ForeignKey(
+        "Unidademedida", 
+        on_delete=models.DO_NOTHING,
+        verbose_name='Unidade')
 
     def __str__(self):
         return f'{self.fkid_materiaprima.materiaprima} : {self.fkid_formulaproduto.fkid_produto.nomeproduto}'

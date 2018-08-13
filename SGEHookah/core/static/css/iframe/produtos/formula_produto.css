@@ -1,0 +1,34 @@
+table {
+	margin: auto;
+	width: 90%;
+}
+
+table input:not([type=checkbox]), select {
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid black;
+	height: 100%;
+	width: 100%;
+}
+
+table td * {
+	margin: auto;
+}
+
+.opt_bt {
+	cursor: pointer;
+}
+
+.add_row td {
+	border: 1px solid transparent;
+	border-bottom-color: black;
+	border-top-color: black;
+}
+
+.add_row td:first-child {
+	border-left: 1px solid black;
+}
+
+.add_row td:last-child {
+	border-right: 1px solid black;
+}
