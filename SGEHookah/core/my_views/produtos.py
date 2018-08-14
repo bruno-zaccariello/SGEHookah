@@ -88,41 +88,46 @@ def formula_produto(request, id_produto):
 	try:
 		Formula = Formulaproduto.objects.get(fkid_produto=id_produto)
 	except:
-		Formula = None
-	print(Formula)
+		Formula = False
 	success = request.GET.get('success', False)
 	formset_materias = inlineformset_factory(
 		Formulaproduto,
 		Formula_materia,
 		extra=1,
-		fields=['fkid_materiaprima','quantidade','unidade'])
+		form=Formula_materiaForm)
 
 	if request.POST:
-		form_formula = FormulaprodutoForm(request.POST)
-		forms_materia = formset_materias(request.POST, instance=Formula)
+		with transaction.atomic():
+			form_formula = FormulaprodutoForm(request.POST, instance=Formula)
+			
+			if form_formula.is_valid():
+				if Formula:
+					forms_materia = formset_materias(request.POST, instance=Formula)
+					for form in forms_materia:
+						if form.is_valid():
+							form.save()
+						else:
+							print(form, form.errors)
+				else:
+					formula = form_formula.save(commit=False)
+					formula.fkid_produto = produto
+					formula.save()
 
-		if form_formula.is_valid() and forms_materia.is_valid():
-			with transaction.atomic():
-				form_formula = form_formula.save(commit=False)
-				form_formula.fkid_produto = produto
-				form_formula.save()
-				formula = Formulaproduto.objects.filter(pkid_formula=form_formula.pk)
-
-				for form in forms_materia:
-					print(form)
-					form.save(commit=False)
-					form.fkid_formulaproduto = formula
-					form.save()
+					forms_materia = formset_materias(request.POST, instance=formula)
+					if forms_materia.is_valid():
+						forms_materia.save()
+					
 
 				url = str(request.path_info) + str('?success=True')
 				return HttpResponseRedirect(url)
 	else:
-		form_formula = FormulaprodutoForm()
+		form_formula = FormulaprodutoForm(instance=Formula)
 		forms_materia = formset_materias(instance=Formula)
 
 	context = {
 			"form_formula":form_formula,
 			"forms_materia":forms_materia,
+			"produto":produto,
 			"success":success
 	}
 	return render(request, "iframe/produtos/formula_produto.html", context)

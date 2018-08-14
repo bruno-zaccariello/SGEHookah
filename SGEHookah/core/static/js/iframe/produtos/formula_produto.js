@@ -12,7 +12,7 @@ function cloneMore(selector, prefix) {
     newElement.find(':input').each(function() {
         var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
         var id = 'id_' + name;
-        $(this).attr({'name': name, 'id': id}).val('').prop('checked', false);
+        $(this).attr({'name': name, 'id': id}).val('').prop('checked',false);
     });
     total++;
     $('#id_' + prefix + '-TOTAL_FORMS').val(total);
@@ -22,7 +22,9 @@ function cloneMore(selector, prefix) {
 function deleteForm(prefix, btn) {
     var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
     if (total > 1){
-        btn.closest('.form-row').remove();
+        btn.closest('.form-row').hide();
+        btn.parent().find('input[type=checkbox]').val('on')
+        btn.parent().find('input[type=checkbox]').prop('checked',true)
         var forms = $('.form-row');
         $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
         for (var i=0, formCount=forms.length; i<formCount; i++) {
@@ -50,4 +52,5 @@ $('tr:not(:first-child):not(:last-child) td:last-child').append(
     "<div class='opt_bt opt_delete remove-form-row'></div>"
     )
 
+$('input[type=checkbox]').attr('checked',false)
 $('input[type=checkbox]').hide()

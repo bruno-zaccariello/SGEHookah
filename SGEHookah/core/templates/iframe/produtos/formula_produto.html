@@ -23,7 +23,7 @@
 			<h2 class="overlay_title">PRODUTO CADASTRADO COM SUCESSO</h2>
 			
 			<div class="bt_wrapper">
-				<a href="{% url 'cadastrar_produto' %}"><button class="btMain btConfirmar">Continuar</button></a>
+				<a href="/iframe/produtos/{{ produto.pkid_produto }}/formula"><button class="btMain btConfirmar">Continuar</button></a>
 			</div>
 			
 		</div>
@@ -93,13 +93,10 @@
 
 					</div>
 
-				</div>
-
 				<div class="botaoContainer">
 					<button class="btMain btCancelar" type="reset">Limpar</button>
 					<button class="btMain btConfirmar" type="submit">Cadastrar</button>
 				</div>
-
 			</form>
 		</div>
 	</section>

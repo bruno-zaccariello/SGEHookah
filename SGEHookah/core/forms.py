@@ -103,11 +103,12 @@ class FormulaprodutoForm(forms.ModelForm):
 class Formula_materiaForm(forms.ModelForm):
 	fkid_materiaprima = forms.ModelChoiceField(
 		label="Matéria Prima",
-		queryset=Materiaprima.objects.filter(hide=False))
-	quantidade = forms.FloatField(label="Quantidade")
+		queryset=Materiaprima.objects.filter(hide=False),
+		required=True)
+	quantidade = forms.FloatField(label="Quantidade", required=True)
 	unidade = forms.ModelChoiceField(
 		label="Unidade",
-		queryset=Unidademedida.objects.filter(hide=False))
+		queryset=Unidademedida.objects.filter(hide=False), required=True)
 
 
 	class Meta:
