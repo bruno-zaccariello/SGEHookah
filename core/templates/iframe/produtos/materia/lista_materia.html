@@ -1,21 +1,20 @@
 <html>
 
 <head>
-	<title id="iframe_title">SGE - Lista de Produtos</title>
+	<title id="iframe_title">SGE - Lista de Matérias Prima</title>
     
     <!-- Site defaults -->
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
     <!-- Page specific -->
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
-	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/lista_produtos.css"/>
-
-	<script src="/static/js/iframe/produtos/lista_produtos.js"></script>
+	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_materias.css"/>
+	
     <script src="/static/js/patterns/lista.js"></script>
 </head>
 
 <body>
 
-	<h1> Lista de Produtos </h1>
+	<h1> Lista de Matérias Prima </h1>
 	
 	<!-- ALERTA DE EXCLUIDO COM SUCESSO -->
 	
@@ -25,10 +24,10 @@
 		</div>
 		
 		<div class="overlay_content_success">
-			<h2 class="overlay_title_success">Produto Deletado com Sucesso</h2>
+			<h2 class="overlay_title_success">Matéria Prima Deletada com Sucesso</h2>
 			
 			<div class="bt_wrapper">
-				<a href="{% url 'lista_produtos' %}"><button class="btMain btConfirmar">Continuar</button></a>
+				<a href="{% url 'lista_materia' %}"><button class="btMain btConfirmar">Continuar</button></a>
 			</div>
 			
 		</div>
@@ -44,7 +43,7 @@
 		</div>
 		
 		<div class="overlay_content">
-			<h2 class="overlay_title">Tem certeza que deseja deletar esse produto?</h2>
+			<h2 class="overlay_title">Tem certeza que deseja deletar essa matéria?</h2>
 			
 			<div class="bt_wrapper">
 				<a href="javascript:confirmaJanelaOff()"><button class="btMain btCancelar">Cancelar</button></a>
@@ -56,17 +55,13 @@
 	
 	<!--============================================-->
 	
-	<div class="search_opts_wrapper white">
-		SESSÃO PARA FILTRAR PRODUTOS (EM CONSTRUCAO)
-	</div>
-	
     <div class="pageContainer">
 
         <div class="opt_content">
             <div class="divCadastrar">
-                <a href="/iframe/produtos/cadastrar">
+                <a href="{% url 'cadastrar_materia' %}">
                     <button class="btMain btCadastrar">
-                    CADASTRAR PRODUTO
+                    CADASTRAR MATÉRIA
                     </button>
                 </a>
             </div>
@@ -76,63 +71,53 @@
 
             <thead>
                 <tr>
-                    <th>Foto</th>
+                    <th>Cód.</th>
 
-                    <th>Código</th>
-                    
-                    <th>Preço</th>
-                    
-                    <th>Nome do Produto</th>
-                    
+                    <th>Matéria Prima</th>
+
+                    <th>Marca</th>
+
+                    <th>Estoque</th>
+
                     <th>Opções</th>
                 </tr>
             </thead>
 
-            <tbody>
-            {% for produto in pagina %}
 
+            <tbody>
+            {% for item in pagina %}
                 <tr>
 
-                    <td>
-                        <div class="img_div_produto">
-                            <img class="img_produto" src="{{ produto.fotoproduto.url }}" alt="Foto do Produto"/>
-                        </div>
-                    </td>
-
-                    
                     <td class="txt_center">
-                        {{ produto.codproduto }}
+                        {{ item.pkid_materiaprima }}
                     </td>
 
-                    
-                    <td class="txt_center">
-                        R${{ produto.preco }}
-                    </td>
-
-                    
                     <td class="lft_padding">
-                        {{ produto.nomeproduto }}
+                        {{ item.materiaprima }}
                     </td>
-                    
-                    <td>
-                        <div class="opts_holder flex_row_nw">
 
-                            <a href="/iframe/produtos/{{ produto.pkid_produto }}" title="editar" class='vertical opt_bt'>
+                    <td class="txt_center">
+                        {{ item.marca }}
+                    </td>
+                   
+                    <td class="txt_center">
+                        {{ item.totalestoque }} {{ item.unidade }}
+                    </td>
+
+                    <td>
+
+                        <div class="opts_holder flex_row_nw">
+                            <a href="/iframe/clientes/{{ cliente.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_edit">
                                 </div>
                             </a>
 
-                            <a href="/iframe/produtos/{{ produto.pkid_produto }}/formula" title="formula" class="vertical opt_bt">
-                                <div class="opt_bt opt_formula">
-                                </div>
-                            </a>
-
-                            <a href="javascript:confirmaJanelaOn('{{ produto.pkid_produto }}')" title="deletar" class='vertical opt_bt'>
+                            <a href="javascript:confirmaJanelaOn('{{ item.pkid_materia }}')" title="deletar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_delete">
                                 </div>
                             </a>
-
                         </div>
+
                     </td>
 
                 </tr>
@@ -141,7 +126,6 @@
         </table>
 
         <div class="divPaginas">
-
             {% if pagina.has_previous %}
                 <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
                 <a class="linkPagina white"> </a>

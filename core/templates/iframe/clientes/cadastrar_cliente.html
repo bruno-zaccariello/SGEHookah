@@ -1,8 +1,10 @@
 <html>
 <head>
 	<title id="iframe_title">SGE - Cadastrar Cliente</title>
+
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
+
+	<link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
 	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/cadastrar_cliente.css"/>
 
     <script src="/static/jquery/jquery-3.3.1.min.js"></script>
@@ -39,9 +41,10 @@
 					<div class="fieldDiv">
 						<div class="formInput">
 							<div class="label">{{field.label_tag}}</div>
-							<div class="input">{{field}}</div>
+							<div class="input">{{field}}
+								{{ field.errors }}
+							</div>
 						</div>
-                        <div class="errors_div" id="{{ field.label }}_errors">{{ field.errors }}</div>
 					</div>
 				{% endfor %}
 
@@ -49,9 +52,10 @@
                     <div class="fieldDiv">
                         <div class="formInput">
                             <div class="label">{{field.label_tag}}</div>
-                            <div class="input">{{field}}</div>
+                            <div class="input">{{field}}
+                            	{{ field.errors }}
+                            </div>
                         </div>
-                        <div class="errors_div" id="{{ field.label }}_errors">{{ field.errors }}</div>
                     </div>
                 {% endfor %}
 
@@ -61,9 +65,10 @@
 					<div class="fieldDiv">
 						<div class="formInput">
 							<div class="label">{{field.label_tag}}</div>
-							<div class="input">{{field}}</div>
+							<div class="input">{{field}}
+								<span id="{{ field.label }}_errors">{{ field.errors }}</span>
+							</div>
 						</div>
-                        <div class="errors_div" id="{{ field.label }}_errors">{{ field.errors }}</div>
 					</div>
 				{% endfor %}
 

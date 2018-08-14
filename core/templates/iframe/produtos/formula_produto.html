@@ -1,0 +1,112 @@
+<html>
+<head>
+	<title id="iframe_title">SGE - Cadastrar Produto</title>
+
+	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/dft_table.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/formula_produto.css"/>
+
+    <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+	<h1> Fórmula </h1>
+	
+	{% if success == 'True' %}
+	<div class="overlay" id="overlay">
+		<div class="overlay_bg">
+		</div>
+		
+		<div class="overlay_content">
+			<h2 class="overlay_title">PRODUTO CADASTRADO COM SUCESSO</h2>
+			
+			<div class="bt_wrapper">
+				<a href="/iframe/produtos/{{ produto.pkid_produto }}/formula"><button class="btMain btConfirmar">Continuar</button></a>
+			</div>
+			
+		</div>
+	</div>
+	{% endif %}
+	
+	<section>
+		<div class="formContainer">
+			<form method="POST" autocomplete="off">
+				{% csrf_token %}
+
+					<div>
+
+						<div>
+						
+							{% for field in form_formula %}
+
+							<div class="fieldDiv">
+								<div class="formInput">
+									<div class="label">{{field.label_tag}}</div>
+									<div class="input">{{field}}
+										{{field.errors}}
+									</div>
+								</div>
+							</div>
+
+							{% endfor %}
+
+						</div>
+
+						<table>
+
+							<thead>
+								<tr>
+									<th>Matéria Prima</th>
+									<th>Quantidade</th>
+									<th>Unidade</th>
+									<th>Excluir</th>
+								</tr>
+							</thead>
+
+							<tbody>
+							{{ forms_materia.management_form }}
+							{% for form in forms_materia %}
+								<tr class="form-row">
+									{% for field in form.visible_fields %}
+										<td class="row_center">
+											{{field}}
+											{{field.errors}}
+										</td>
+									{% endfor %}
+								</tr>
+							{% endfor %}
+
+								<tr class="add_row">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td class="row_center">
+										<div class="opt_bt add-form-row">
+											add
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+
+				</div>
+
+				<div class="botaoContainer">
+					<button class="btMain btCancelar" type="reset">Limpar</button>
+					<button class="btMain btConfirmar" type="submit">Cadastrar</button>
+				</div>
+
+			</form>
+		</div>
+	</section>
+
+<script src="/static/js/iframe/produtos/cadastrar_produto.js"></script>
+<script src="/static/js/formsFixes.js"></script>
+<script src="/static/js/iframe/produtos/formula_produto.js"></script>
+
+</body>
+</html>

@@ -3,9 +3,15 @@
 	<title id="iframe_title">SGE - Página do Usuário</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta charset="utf-8" />
+	
 	<link rel="stylesheet" type="text/css" href="/static/css/site.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/usuario/user_main.css">
+
+	<script src="/static/jquery/jquery-3.3.1.min.js"></script>
+	<script src="/static/jquery/jquery.mask.min.js"></script>
+
 	<script src="/static/js/Usuario/user_main.js"></script>
+	
 </head>
 <body id="user_main_body">
 	
@@ -25,7 +31,7 @@
 			<div class="info_margin um_infos">
 				<h3 class="h3_title1">Informações do Usuário</h3>
 			
-				<div class="item_um_info">Nome : {{ user_nome }}</div>
+				<div class="item_um_info">Nome : {{ user_name }}</div>
 				<div class="item_um_info">Email : {{ user_email }}</div>
 				
 				<div class="item_um_info um_infos_alterar"><a href="javascript:jaiDisplayOn()" class="um_dados_alterar"> Alterar </a></div>

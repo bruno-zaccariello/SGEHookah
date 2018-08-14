@@ -2,9 +2,12 @@
 
 <head>
 	<title id="iframe_title">SGE - Cadastrar Categoria</title>
+    <!-- Site defaults -->
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
-	<link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
+    <!-- Page specific -->
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
     <link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/categoria/lista_categorias.css"/>
+
 	<script src="/static/js/iframe/produtos/categoria/lista_categorias.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
 </head>
@@ -53,22 +56,8 @@
     <div class="pageContainer">
 
         <div class="opt_content">
-            <div class="divPaginas">
-                Página :
-                {% for numero in n_paginas %}
-                    {% if numero == pagina %}
 
-                    <a class="linkPagina beeIn"></a>
-
-                    {% else %}
-
-                    <a class="linkPagina bee" href="{{url}}&page={{ numero }}">{{ numero }}</a>
-
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            <div class="divCadastrarCat">
+            <div class="divCadastrar">
                 <button onclick="showOvCad()" class="btMain btCadastrar">CADASTRAR CATEGORIA</button>
 
                 <div id="ov_cad" class="ov_cad">
@@ -101,61 +90,90 @@
 		
 	<!-- Legenda -->	
 	
-        <div class="lista_container flex_column">
+        <table>
 
-            <div class="it_lista_leg flex_row">
+            <thead>
 
-                <div class="it_id vertical">
-                    ID
-                </div>
+                <tr>
 
-                <div class="borda"></div>
+                    <th>
+                        ID
+                    </th>
 
-                <div class="it_nome vertical">
-                    Nome da Categoria
-                </div>
+                    <th>
+                        Nome da Categoria
+                    </th>
 
-                <div class="borda"></div>
+                    <th>
+                        Opções
+                    </th>
 
-                <div class="it_opcoes vertical">
-                    Opções
-                </div>
+                </tr>
 
-            </div>
+            </thead>
 
         <!-- A lista em si -->
 
+            <tbody>
+
             {% for categoria in pagina %}
 
-            <div class="it_lista flex_row">
+                <tr>
+                    <td class="txt_center">
+                        {{ categoria.pkid_categoria }}
+                    </td>
 
-                <div class="it_id vertical">
-                    {{ categoria.pkid_categoria }}
-                </div>
+                    <td class="lft_padding">
+                        {{ categoria.nomecategoria }}
+                    </td>
 
-                <div class="borda"></div>
+                    <td>
+                        <div class="opts_holder flex_row_nw">
+                        
+                        <a href="javascript:confirmaJanelaOn('{{ categoria.pkid_categoria }}')" title="deletar" class='vertical opt_bt'>
+                            <div class='opt_bt opt_delete'>
+                            </div>
+                        </a>
 
-                <div class="it_nome vertical">
-                    {{ categoria.nomecategoria }}
-                </div>
-
-                <div class="borda"></div>
-
-                <div class="it_opcoes vertical">
-
-                    <a href="javascript:confirmaJanelaOn('{{ categoria.pkid_categoria }}')" title="deletar" class='vertical opt_bt'>
-                        <div class='opt_bt opt_delete'>
                         </div>
-                    </a>
-
-                </div>
-
-            </div>
+                    </td>
+                </tr>
 
             {% endfor %}
 
+            </tbody>
+
+        </table>
+
+        <div class="divPaginas">
+            {% if pagina.has_previous %}
+                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                <a class="linkPagina white"> </a>
+
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.previous_page_number }}"> {{ pagina.previous_page_number }}</a>
+            {% else %}
+                <a class="linkPagina bee" href=""><<</a>
+                <a class="linkPagina white"> </a>
+
+            {% endif %}
+
+            <a class="linkPagina bee current">{{ pagina.number }}</a>
+
+            {% if pagina.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.next_page_number }}">{{ pagina.next_page_number }}</a>
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.paginator.num_pages }}">>></a>
+            {% else %}
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="">>></a>
+            {% endif %}
         </div>
+
     </div>
+
+    <script src="/static/js/formsFixes.js"></script>
 
 </body>
 

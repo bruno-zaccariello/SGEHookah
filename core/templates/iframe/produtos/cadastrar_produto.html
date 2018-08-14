@@ -1,9 +1,10 @@
 <html>
 <head>
 	<title id="iframe_title">SGE - Cadastrar Produto</title>
+
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
-    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
     
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
     <link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/cadastrar_produto.css"/>
 
     <script src="/static/jquery/jquery-3.3.1.min.js"></script>
@@ -33,19 +34,73 @@
 			<form method="POST" enctype="multipart/form-data" autocomplete="off">
 				<div class="formInputContainer">
 				{% csrf_token %}
-				{% for field in form %}
-					{{field.errors}}
-					<div class="fieldDiv">
-						<div class="formInput">
-							<div class="label">{{field.label_tag}}</div>
-							<div class="input">{{field}}</div>
+
+					<div class="columns_holder">
+
+						<div class="col">
+						
+							{% for field in form_col1 %}
+
+							<div class="fieldDiv">
+								<div class="formInput">
+									<div class="label">{{field.label_tag}}</div>
+									<div class="input">{{field}}
+										{{field.errors}}
+									</div>
+								</div>
+							</div>
+
+							{% endfor %}
+
+						</div>
+
+						<div class="col">
+
+							{% for field in form_col2 %}
+
+							<div class="fieldDiv">
+								<div class="formInput">
+									<div class="label">{{field.label_tag}}</div>
+									<div class="input">{{field}}
+										{{field.errors}}
+									</div>
+								</div>
+							</div>
+
+							{% endfor %}
+
+						</div>
+
+					</div>
+
+					<div class="fotoDiv">
+						<div class="formInput vertical">
+							<div class="label_ft" id="label_ft_div">{{form.fotoproduto.label_tag}}</div>
+							<div class="input_ft">{{form.fotoproduto}}
+									{{form.fotoproduto.errors}}
+							</div>
+						</div>
+						<div class="div_foto_preview" id="div_foto_preview">
+							<img class="img_foto_preview" id="foto_preview"/>
 						</div>
 					</div>
-				{% endfor %}
+
+					<div class="fieldDiv">
+						<div class="formInput">
+							<div class="label">{{form.descricao.label_tag}}</div>
+							<div class="input">{{form.descricao}}
+								{{form.descricao.errors}}
+							</div>
+						</div>
+					</div>
+
 				</div>
+
 				<div class="botaoContainer">
-					<button class="btMain btLimpar" type="reset">Limpar</button>
-					<button class="btMain btCadastrar" type="submit">Cadastrar</button>
+					<button class="btMain btCancelar" type="reset">Limpar</button>
+					<button class="btMain btConfirmar" type="submit">Cadastrar</button>
+				</div>
+
 				</div>
 			</form>
 		</div>
