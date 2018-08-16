@@ -1,0 +1,68 @@
+table {
+	margin: auto;
+	width: 90%;
+}
+
+table input:not([type=checkbox]), select {
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid black;
+	height: 100%;
+	width: 100%;
+}
+
+table td * {
+	margin: auto;
+}
+
+.opt_bt {
+	cursor: pointer;
+}
+
+.add_row td {
+	border: 1px solid transparent;
+	border-bottom-color: black;
+	border-top-color: black;
+}
+
+.add_row td:first-child {
+	border-left: 1px solid black;
+}
+
+.add_row td:last-child {
+	border-right: 1px solid black;
+}
+
+.formInput {
+	text-align: center;
+	max-height:50px;
+	width: 60%;
+}
+
+.formInput select {
+	height: 25px;
+}
+
+.formInput input, .formInput select {
+	border: 1px solid transparent;
+	background-color: white;
+	background-color: rgba(255,255,255,0.1);
+	text-align: center;
+	transition: .3s;
+	width: 70%;
+}
+
+.formInput input:hover, .formInput input:focus,
+.formInput select:hover, .formInput select:focus {
+	background-color: white;
+	background-color: rgba(255,255,255,0.7);
+}
+
+input:focus, select:focus {
+	border-color: yellow;
+}
+
+.botaoContainer {
+	width: 95%;
+    margin: 15px auto;
+}

@@ -43,7 +43,7 @@ class Cotacaocompra(models.Model):
 class Endereco(models.Model):
     pkid_endereco = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_pessoa = models.ForeignKey(
-        'Pessoa', models.DO_NOTHING, 
+        'Pessoa', models.CASCADE, 
         blank=True, null=True,
         verbose_name='Pessoa')  # Field name made lowercase.
     logradouro = models.CharField('Endereço', max_length=100)  # Field name made lowercase.
@@ -93,7 +93,7 @@ class Formapagamento(models.Model):
 class Formulaproduto(models.Model):
     pkid_formula = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_produto = models.ForeignKey(
-        'Produto', on_delete=models.DO_NOTHING,
+        'Produto', on_delete=models.CASCADE,
         verbose_name='Produto')  # Field name made lowercase.
     tempomaturacao = models.TimeField('Tempo de Maturação')  # Field name made lowercase.
     hide = models.BooleanField(default=0)  # Field name made lowercase.
@@ -184,7 +184,7 @@ class Materiaprima(models.Model):
     materiaprima = models.CharField('Matéria Prima', max_length=60)
     marca = models.CharField('Marca', max_length=50, blank=True, null=True)
     totalestoque = models.IntegerField('Qtd. em Estoque')
-    unidade = models.ForeignKey('Unidademedida', on_delete=models.DO_NOTHING, verbose_name='Unidade')
+    unidade = models.ForeignKey('Unidademedida', on_delete=models.CASCADE, verbose_name='Unidade')
     hide = models.BooleanField(default=False)
 
     def __str__(self):
@@ -199,16 +199,16 @@ class Formulamateria(models.Model):
     pkid_formula_materia = models.AutoField(primary_key=True)
     fkid_formulaproduto = models.ForeignKey(
         "Formulaproduto", 
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         verbose_name='Fórmula')
     fkid_materiaprima = models.ForeignKey(
         "Materiaprima",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         verbose_name='Matéria Prima')
     quantidade = models.FloatField('Quantidade')
     unidade = models.ForeignKey(
         "Unidademedida", 
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         verbose_name='Unidade')
 
     def __str__(self):
@@ -312,11 +312,11 @@ class Produto(models.Model):
     pkid_produto = models.AutoField(primary_key=True, )  # Field name made lowercase.
     fkid_categoria = models.ForeignKey(
         'Categoriaproduto', 
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         verbose_name='Categoria')  # Field name made lowercase.
     fkid_unidademedida = models.ForeignKey(
         'Unidademedida', 
-        on_delete=models.DO_NOTHING, 
+        on_delete=models.CASCADE, 
         verbose_name='Unidade de Medida')  # Field name made lowercase.
     codproduto = models.CharField('Código', unique=True, max_length=8)  # Field name made lowercase.
     nomeproduto = models.CharField('Nome do Produto', max_length=50)  # Field name made lowercase.
@@ -369,7 +369,7 @@ class Statusvenda(models.Model):
 class Telefone(models.Model):
     pkid_telefone = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_pessoa = models.ForeignKey(
-        'Pessoa', on_delete=models.DO_NOTHING, 
+        'Pessoa', on_delete=models.CASCADE, 
         verbose_name='Pessoa')  # Field name made lowercase.
     ddi = models.CharField('DDI', max_length=2, default=55)  # Field name made lowercase.
     ddd = models.CharField('DDD', max_length=2)  # Field name made lowercase.

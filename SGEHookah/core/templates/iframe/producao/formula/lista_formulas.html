@@ -12,6 +12,7 @@
     <link rel="stylesheet"  type="text/css" href="/static/css/iframe/producao/formulas/lista_formula.css"/>
     
     <script src="/static/js/patterns/lista.js"></script>
+    <script src="/static/js/iframe/producao/formulas/lista_formulas.js"></script>
 </head>
 
 <body>
@@ -59,7 +60,7 @@
 
         <div class="opt_content">
             <div class="divCadastrar">
-                <a href="#">
+                <a href="/iframe/producao/formulas/0">
                     <button class="btMain btCadastrar">
                     CADASTRAR FÓRMULA
                     </button>
@@ -108,11 +109,11 @@
                 </td>
 
 
-                <td class="lft_padding">
+                <td class="txt_center">
                     {{ formula.fkid_produto }}
                 </td>
 
-                <td class="lft_padding">
+                <td class="txt_center">
                     {{ formula.tempomaturacao }}
                 </td>
 
@@ -121,6 +122,11 @@
 
                     <div class="opts_holder flex_row_nw">
                     
+                    <a href="/iframe/producao/formulas/{{ formula.pkid_formula }}" class='vertical opt_bt'>
+                        <div class='opt_bt opt_edit'>
+                        </div>
+                    </a>
+
                     <a href="javascript:confirmaJanelaOn('{{ formula.pkid_formula }}')" class='vertical opt_bt'>
                         <div class='opt_bt opt_delete'>
                         </div>
