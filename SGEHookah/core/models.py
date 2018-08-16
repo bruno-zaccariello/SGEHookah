@@ -202,7 +202,7 @@ class Formula_materia(models.Model):
         on_delete=models.DO_NOTHING,
         verbose_name='Fórmula')
     fkid_materiaprima = models.ForeignKey(
-        Materiaprima, 
+        "Materiaprima",
         on_delete=models.DO_NOTHING,
         verbose_name='Matéria Prima')
     quantidade = models.FloatField('Quantidade')
