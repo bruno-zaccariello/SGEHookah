@@ -24,6 +24,7 @@ function deleteForm(prefix, btn) {
     var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
     if (total > 1){
         btn.closest('.form-row').remove();
+        btn.parent().find('input[type=checkbox]').prop('checked', true)
         var forms = $('.form-row');
         $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
         for (var i=0, formCount=forms.length; i<formCount; i++) {
@@ -37,13 +38,13 @@ function deleteForm(prefix, btn) {
 
 $(document).on('click', '.add-form-row', function(e){
     e.preventDefault();
-    cloneMore('.form-row:last', 'formula_materia_set');
+    cloneMore('.form-row:last', 'formulamateria_set');
     return false;
 });
 
 $(document).on('click', '.remove-form-row', function(e){
     e.preventDefault();
-    deleteForm('formula_materia_set', $(this));
+    deleteForm('formulamateria_set', $(this));
     return false;
 });
 

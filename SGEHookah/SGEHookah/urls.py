@@ -50,7 +50,8 @@ produtos = [
 ]
 
 producao = [
-
+	path('formulas/lista/', lista_formula, name="lista_formulas")
+	# path('formulas/<int:id_formula>/', lista_formula, name="lista_formula")
 ]
 
 urlpatterns = [

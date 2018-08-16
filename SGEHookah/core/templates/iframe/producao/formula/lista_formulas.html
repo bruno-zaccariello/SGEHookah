@@ -1,0 +1,172 @@
+<html>
+
+<head>
+	<title id="iframe_title">SGE - Cadastrar Categoria</title>
+    <!-- Site defaults -->
+	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/dft_table.css"/>
+    <!-- Page specific -->
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/iframe/producao/formulas/lista_formula.css"/>
+    
+    <script src="/static/js/patterns/lista.js"></script>
+</head>
+
+<body>
+
+	<h1>Fórmulas</h1>
+	
+	<!-- MENSAGEM DE SUCESSO -->
+	
+	{% if success == 'True' %}
+	
+		<div class="overlay_bg">
+		</div>
+		
+		<div class="overlay_content_success">
+			<h2 class="overlay_title_success">Fórmula Deletada com Sucesso</h2>
+			
+			<div class="bt_wrapper">
+				<a href="{% url 'lista_formulas' %}"><button class="btMain btConfirmar">Continuar</button></a>
+			</div>
+			
+		</div>
+	
+	{% endif %}
+	
+	<!-- JANELA QUE SOBREPÕE PARA CONFIRMAR EXCLUSÃO -->
+	
+	<div class="overlay" id="overlay">
+		<div class="overlay_bg">
+		</div>
+		
+		<div class="overlay_content">
+			<h2 class="overlay_title">Tem certeza que deseja deletar essa fórmula?</h2>
+			
+			<div class="bt_wrapper">
+				<a href="javascript:confirmaJanelaOff()"><button class="btMain btCancelar">Cancelar</button></a>
+				<a id="bt_confirma"><button class="btMain btConfirmar">Confirmar</button></a>
+			</div>
+			
+		</div>
+	</div>
+	
+	<!--============================================-->
+	
+    <div class="pageContainer">
+
+        <div class="opt_content">
+            <div class="divCadastrar">
+                <a href="#">
+                    <button class="btMain btCadastrar">
+                    CADASTRAR FÓRMULA
+                    </button>
+                </a>
+            </div>
+        </div>	
+	
+        <!-- Tabela -->
+
+        <!-- Header -->
+
+        <table class="">
+
+            <thead>
+            <tr class="tb_head">
+
+                <th class="">
+                    ID
+                </th>
+
+
+                <th class="">
+                    Produto
+                </th>
+
+                <th class="">
+                    Tempo Maturação
+                </th>
+
+                <th class="">
+                    Opções
+                </th>
+
+            </tr>
+            </thead>
+
+        <!-- Conteúdo -->
+
+            <tbody>
+            {% for formula in pagina %}
+
+            <tr class="">
+
+                <td class="txt_center">
+                    {{ formula.pkid_formula }}
+                </td>
+
+
+                <td class="lft_padding">
+                    {{ formula.fkid_produto }}
+                </td>
+
+                <td class="lft_padding">
+                    {{ formula.tempomaturacao }}
+                </td>
+
+
+                <td class="">
+
+                    <div class="opts_holder flex_row_nw">
+                    
+                    <a href="javascript:confirmaJanelaOn('{{ formula.pkid_formula }}')" class='vertical opt_bt'>
+                        <div class='opt_bt opt_delete'>
+                        </div>
+                    </a>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+            {% endfor %}
+
+        </table>
+
+        <div class="divPaginas">
+
+                {% if pagina.has_previous %}
+                    <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                    <a class="linkPagina white"> </a>
+
+                    <a class="linkPagina bee" href="{{ url }}&page={{ pagina.previous_page_number }}"> {{ pagina.previous_page_number }}</a>
+                {% else %}
+                    <a class="linkPagina bee" href=""><<</a>
+                    <a class="linkPagina white"> </a>
+
+                {% endif %}
+
+                <a class="linkPagina bee current">{{ pagina.number }}</a>
+
+                {% if pagina.has_next %}
+                    <a class="linkPagina bee" href="{{ url }}&page={{ pagina.next_page_number }}">{{ pagina.next_page_number }}</a>
+
+                    <a class="linkPagina white"> </a>
+                    <a class="linkPagina bee" href="{{ url }}&page={{ pagina.paginator.num_pages }}">>></a>
+                {% else %}
+
+                    <a class="linkPagina white"> </a>
+                    <a class="linkPagina bee" href="">>></a>
+                {% endif %}
+
+            </div>
+
+    </div>
+</body>
+
+</html>

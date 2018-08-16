@@ -7,7 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-__all__ = ["Categoriaproduto", "Produto", "Unidademedida", "Pessoa", "Endereco", "Telefone", "Formulaproduto", "Formula_materia", "Materiaprima"]
+__all__ = ["Categoriaproduto", "Produto", "Unidademedida", "Pessoa", "Endereco", "Telefone", "Formulaproduto", "Formulamateria", "Materiaprima"]
 
 class Categoriaproduto(models.Model):
     pkid_categoria = models.AutoField(primary_key=True)  # Field name made lowercase.
@@ -195,7 +195,7 @@ class Materiaprima(models.Model):
         verbose_name = 'Matéria Prima'
         verbose_name_plural = 'Matérias Primas'
 
-class Formula_materia(models.Model):
+class Formulamateria(models.Model):
     pkid_formula_materia = models.AutoField(primary_key=True)
     fkid_formulaproduto = models.ForeignKey(
         "Formulaproduto", 

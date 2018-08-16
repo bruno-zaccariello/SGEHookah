@@ -15,3 +15,17 @@ from decimal import *
 from core.forms import *
 from core.models import *
 from core.funcoes import *
+
+def lista_formula(request):
+    formulas = Formulaproduto.objects.filter(hide=False)
+    page = int(request.GET.get('page', 1))
+
+    paginas = Paginator(formulas, 10)
+    pagina = paginas.get_page(page)
+
+    url = arruma_url_page(request)
+    context = {
+        "pagina":pagina,
+        "url":url
+    }
+    return render(request, 'iframe/producao/formula/lista_formulas.html', context)

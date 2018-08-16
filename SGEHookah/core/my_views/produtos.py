@@ -89,37 +89,35 @@ def product_page(request, id_produto):
 def formula_produto(request, id_produto):
     produto = Produto.objects.get(pkid_produto=id_produto)
 
+    # Tenta pegar uma formula já existente para aquele produto
     try:
-        Formula = Formulaproduto.objects.get(fkid_produto=id_produto)
+        Formula = Formulaproduto.objects.filter(hide=False).get(fkid_produto=id_produto)
     except:
         Formula = None
 
     success = request.GET.get('success', False)
     formset_materias = inlineformset_factory(
         Formulaproduto,
-        Formula_materia,
+        Formulamateria,
         extra=0,
         min_num=1,
-        form=Formula_materiaForm)
+        exclude=[])
 
     if request.POST:
         with transaction.atomic():
+            # Formulario da formula
             form_formula = FormulaprodutoForm(request.POST, instance=Formula)
+            forms_materia = formset_materias(request.POST, instance=Formula)
 
             if form_formula.is_valid():
                 formula = form_formula.save(commit=False)
                 formula.fkid_produto = produto
                 formula.save()
 
-                if Formula and Formula != None:
-                    forms_materia = formset_materias(request.POST, instance=Formula)
-                else:
-                    forms_materia = formset_materias(request.POST, instance=formula)
+                forms_materia = formset_materias(request.POST, instance=formula)
 
                 if forms_materia.is_valid():
                     forms_materia.save()
-                else:
-                    print('ERRO!!!!!!!!!!', forms_materia.errors)
 
                 url = str(request.path_info) + str('?success=True')
                 return HttpResponseRedirect(url)
