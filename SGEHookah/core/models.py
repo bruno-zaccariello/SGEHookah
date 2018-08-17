@@ -94,6 +94,7 @@ class Formulaproduto(models.Model):
     pkid_formula = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_produto = models.ForeignKey(
         'Produto', on_delete=models.CASCADE,
+        unique=True,
         verbose_name='Produto')  # Field name made lowercase.
     tempomaturacao = models.TimeField('Tempo de Maturação')  # Field name made lowercase.
     hide = models.BooleanField(default=0)  # Field name made lowercase.
