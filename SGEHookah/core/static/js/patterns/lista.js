@@ -9,8 +9,10 @@ function confirmaJanelaOff() {
 
 function showOvCad() {
 	var overlay = document.getElementById("ov_cad");
+	var base = window.parent.document
 	if(overlay) {
 		overlay.style.display = "block"
+		// $(base).find('.overlayBG').removeClass('hidden')
 	}
 }
 

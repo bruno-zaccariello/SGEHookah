@@ -81,7 +81,7 @@ img.foto_produto {
 }
 
 .bt_wrapper {
-	margin: auto auto;
-	width: 62%;
+	margin: 20px auto auto;
+	width: 100%;
 	text-align: end;
 }

@@ -92,7 +92,7 @@ class Formapagamento(models.Model):
 
 class Formulaproduto(models.Model):
     pkid_formula = models.AutoField(primary_key=True)  # Field name made lowercase.
-    fkid_produto = models.ForeignKey(
+    fkid_produto = models.OneToOneField(
         'Produto', on_delete=models.CASCADE,
         unique=True,
         verbose_name='Produto')  # Field name made lowercase.
