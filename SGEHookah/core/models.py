@@ -6,6 +6,7 @@
 #   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+import datetime
 
 __all__ = ["Categoriaproduto", "Produto", "Unidademedida", "Pessoa", "Endereco", "Telefone", "Formulaproduto", "Formulamateria", "Materiaprima"]
 
@@ -256,13 +257,15 @@ class Pedidocompra(models.Model):
 
 
 class Pedidofabricacao(models.Model):
-    pkid_pedidofabri = models.AutoField(primary_key=True)  # Field name made lowercase.
-    fkid_produto = models.IntegerField()  # Field name made lowercase.
-    fkid_usuario_alteracao = models.IntegerField()  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    hide = models.TextField( default=0, blank=True, null=True)  # Field name made lowercase.
+    pkid_pedidofabricacao = models.AutoField(primary_key=True)  # Field name made lowercase.
+    fkid_formula = models.ForeignKey("Formulaproduto", on_delete=models.CASCADE)  # Field name made lowercase.
+    quantidade = models.FloatField("Quantidade")
+    dt_fim_maturacao = models.DateTimeField()
+    hide = models.BooleanField(default=0)  # Field name made lowercase.
     fkid_statusfabricacao = models.IntegerField()  # Field name made lowercase.
+
+    def is_ready(self):
+        return datetime.datetime.now() >= self.dt_fim_maturacao
 
     class Meta:
         managed = True
@@ -350,13 +353,19 @@ class Statuscompra(models.Model):
     class Meta:
         managed = True
 
-
+  # Field name made lowercase.
 class Statusfabricacao(models.Model):
-    pkid_status = models.AutoField(primary_key=True)  # Field name made lowercase.
-    descricaostatus = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
+    pkid_status = models.AutoField(primary_key=True)
+    order = models.IntegerField("Ordem")
+    descricaostatus = models.CharField("Estado", max_length=45, blank=True, null=True)
+
+    def __str__(self):
+        return self.descricaostatus
 
     class Meta:
         managed = True
+        verbose_name = 'Status de Fabricação'
+        verbose_name_plural = 'Status de Fabricação'
 
 
 class Statusvenda(models.Model):
