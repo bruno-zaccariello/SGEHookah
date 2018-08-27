@@ -13,46 +13,46 @@
 
 	<h1>Produto</h1>
 
-	<form method="POST" enctype="multipart/form-data" autocomplete="OFF">
-	
-	{% csrf_token %}
-	
-	<div class="page_content">
-	
-	<div class="foto_wrapper">
-		<div class="foto_produto">
-			<img id="foto_produto" class="foto_produto" alt="{{ produto.nomeproduto }}" src="{{ produto.fotoproduto.url }}"/>		
-			<img style="display:none" id="foto_preview" class="foto_produto"/>
-		</div>
+	<section class="content">
+		<form method="POST" enctype="multipart/form-data" autocomplete="OFF">
 		
-		<label class="label_fotoproduto" for="id_fotoproduto"><div class="foto_label vertical">Alterar Foto</div></label>
-		<input type="file" style="display:none" name="fotoproduto" class="FotoInput" id="id_fotoproduto">
-	</div>
+			{% csrf_token %}
+			
+			<div class="page_content">
 
-	<div class="fields_container">
-		{% for field in form_page %}	
-		<div class="formInput">
-			<div class="label">{{ field.label_tag }}</div>
-			<div class="input">{{ field }}
-				{{ field.errors }}
+				<div class="foto_wrapper">
+					<div class="foto_produto">
+						<img id="foto_produto" class="foto_produto" alt="{{ produto.nomeproduto }}" src="{{ produto.fotoproduto.url }}"/>		
+						<img style="display:none" id="foto_preview" class="foto_produto"/>
+					</div>
+					
+					<label class="label_fotoproduto" for="id_fotoproduto"><div class="foto_label vertical">Alterar Foto</div></label>
+					<input type="file" style="display:none" name="fotoproduto" class="FotoInput" id="id_fotoproduto">
+				</div>
+
+				<div class="fields_container">
+					{% for field in form_page %}	
+					<div class="formInput">
+						<div class="label">{{ field.label_tag }}</div>
+						<div class="input">{{ field }}
+							{{ field.errors }}
+						</div>
+					</div>
+					{% endfor %}
+					
+					<div class="descricao_div">
+						<div>{{ form.descricao.label_tag }}</div>
+						<div>{{ form.descricao }}</div>
+					</div>
+				</div>
+				
+				<div class="bt_wrapper">
+					<button class="BtMain BtCancelar" id="BtClean" type="reset">Limpar</button>
+					<button class="BtMain BtConfirmar" type="submit">Salvar</button>
+				</div>
 			</div>
-		</div>
-		{% endfor %}
-		
-		<div class="descricao_div">
-			<div>{{ form.descricao.label_tag }}</div>
-			<div class="descricao_field">{{ form.descricao }}</div>
-		</div>
-	</div>
-	
-	<div class="bt_wrapper">
-		<button class="BtMain BtCancelar" id="BtClean" type="reset">Limpar</button>
-		<button class="BtMain BtConfirmar" type="submit">Salvar</button>
-	</div>
-
-	</div>
-	
-	</form>
+		</form>
+	</section>
 
 <script src="/static/js/iframe/produtos/pagina_produto.js"></script>
 <script src="/static/js/formsFixes.js"></script>

@@ -1,36 +1,29 @@
 .page_content {
-	background-color: #bbb;
-	margin: 30px auto;
-	width: 70%;
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-evenly;
-	border: 1px dashed #333;
-	border-radius: 10px;
-	padding: 20px;
+
+	margin: auto;
+	width: 80%;
 }
 
 .fields_container {
-	margin: auto auto;
-	width: 80%;
-	padding: 0 20px;
 	display: flex;
-	flex-flow: row wrap;
+	flex-flow: column wrap;
 	justify-content: flex-start;
+	
+	padding: 0 20px;
+	width: 50%;
 }
 
 .descricao_div {
-	margin: 5px 15px;
-	width: 60%;
-}
-
-.descricao_field {
+	margin: 5px auto 5px 10px;
 	width: 100%;
 }
 
 .formInput {
 	margin: 5px auto 5px 10px;
-	width: 30%;
+	width: 100%;
 }
 
 div.foto_produto {

@@ -73,18 +73,6 @@
 	border: 3px double white;
 }
 
-/* extra */
-
-.pageContainer {
-    border-radius: 5px;
-    border: 3px double black;
-    background-color: #aaa;
-    margin: auto;
-    padding: 20px;
-    width: 70%;
-    min-width: 550px;
-}
-
 /* LEGENDA */
 
 .div_legenda {
