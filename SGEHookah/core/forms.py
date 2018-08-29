@@ -1,3 +1,5 @@
+import datetime as dt
+
 from django import forms
 from django.contrib.auth.models import User
 from core.models import *
@@ -236,3 +238,26 @@ class PessoaRapidoForm(forms.ModelForm):
     class Meta:
         model = Pessoa
         fields = ['nomecompleto_razaosocial', 'email', 'cpf_cnpj', 'genero']
+
+class PedidofabricacaoForm(forms.ModelForm):
+	fkid_formula = forms.ModelChoiceField(
+		label="Fórmula", 
+		queryset=Formulaproduto.objects.filter(hide=False))
+	fkid_statusfabricacao = forms.ModelChoiceField(
+		label="Status", 
+		queryset=Statusfabricacao.objects.filter(hide=False).order_by('order'))
+	quantidade = forms.FloatField(label='Quantidade a Produzir')
+	dt_fim_maturacao = forms.DateTimeField(label='Dt. Maturação', widget=forms.HiddenInput())
+
+	def clean_dt_fim_maturacao(self):
+		formula_time = Formulaproduto.objects.get(pkid_formula=fkid_formula).tempomaturacao
+		data = dt.datetime.now() + formula_time
+		return data
+
+	def get_materials(self):
+		materials = Formulamateria.objects.filter(fkid_formulaproduto=self.fkid_formula)
+		return materials
+
+	class Meta:
+		model = Pedidofabricacao
+		fields = ['fkid_formula', 'fkid_statusfabricacao', 'quantidade', 'dt_fim_maturacao']

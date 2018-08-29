@@ -52,7 +52,8 @@ produtos = [
 producao = [
 	path('formulas/lista/', lista_formula, name="lista_formulas"),
 	path('formulas/deletar/<int:id_formula>', deletar_formula, name="deletar_formula"),
-	path('formulas/<int:id_formula>/', pagina_formula, name="pagina_formula")
+	path('formulas/<int:id_formula>/', pagina_formula, name="pagina_formula"),
+	path('pedidos/novo', pedido_fabricacao, name="pedido_fabricacao"),
 ]
 
 urlpatterns = [

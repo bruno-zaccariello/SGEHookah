@@ -8,7 +8,8 @@
 from django.db import models
 import datetime
 
-__all__ = ["Categoriaproduto", "Produto", "Unidademedida", "Pessoa", "Endereco", "Telefone", "Formulaproduto", "Formulamateria", "Materiaprima"]
+__all__ =   ["Categoriaproduto", "Produto", "Unidademedida", "Pessoa", "Endereco", "Telefone", 
+            "Formulaproduto", "Formulamateria", "Materiaprima", "Pedidofabricacao", "Statusfabricacao"]
 
 class Categoriaproduto(models.Model):
     pkid_categoria = models.AutoField(primary_key=True)  # Field name made lowercase.
@@ -101,11 +102,11 @@ class Formulaproduto(models.Model):
     hide = models.BooleanField(default=0)  # Field name made lowercase.
 
     def __str__(self):
-        return f'Fórmula : {self.fkid_produto.nomeproduto}'
+        return f'Fórmula {self.fkid_produto.nomeproduto}'
 
     class Meta:
         managed = True
-        verbose_name = 'Fórmula : Produto'
+        verbose_name = 'Fórmula Produto'
         verbose_name_plural = 'Fórmulas (Produto)'
 
 
@@ -214,7 +215,7 @@ class Formulamateria(models.Model):
         verbose_name='Unidade')
 
     def __str__(self):
-        return f'{self.fkid_materiaprima.materiaprima} : {self.fkid_formulaproduto.fkid_produto.nomeproduto}'
+        return f'{self.fkid_materiaprima.materiaprima} : {self.fkid_formulaproduto}'
 
     class Meta:
         verbose_name = 'Matéria Prima : Fórmula'
@@ -259,16 +260,20 @@ class Pedidocompra(models.Model):
 class Pedidofabricacao(models.Model):
     pkid_pedidofabricacao = models.AutoField(primary_key=True)  # Field name made lowercase.
     fkid_formula = models.ForeignKey("Formulaproduto", on_delete=models.CASCADE)  # Field name made lowercase.
+    fkid_statusfabricacao = models.ForeignKey("Statusfabricacao", on_delete=models.CASCADE)
     quantidade = models.FloatField("Quantidade")
     dt_fim_maturacao = models.DateTimeField()
-    hide = models.BooleanField(default=0)  # Field name made lowercase.
-    fkid_statusfabricacao = models.IntegerField()  # Field name made lowercase.
+    hide = models.BooleanField(default=0)  # Field name made lowercase.  # Field name made lowercase.
 
     def is_ready(self):
         return datetime.datetime.now() >= self.dt_fim_maturacao
 
+    def __str__(self):
+        return f'Pedido nº{self.pkid_pedidofabricacao}'
+
     class Meta:
-        managed = True
+        verbose_name = 'Pedido de Fabricação'
+        verbose_name_plural = 'Pedidos de Fabricação'
 
 
 class Pedidovenda(models.Model):
@@ -353,11 +358,12 @@ class Statuscompra(models.Model):
     class Meta:
         managed = True
 
-  # Field name made lowercase.
+
 class Statusfabricacao(models.Model):
     pkid_status = models.AutoField(primary_key=True)
     order = models.IntegerField("Ordem")
-    descricaostatus = models.CharField("Estado", max_length=45, blank=True, null=True)
+    status = models.CharField("Estado", max_length=45, blank=True, null=True)
+    hide = models.BooleanField(default=0)
 
     def __str__(self):
         return self.descricaostatus
