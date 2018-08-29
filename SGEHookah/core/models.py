@@ -266,7 +266,12 @@ class Pedidofabricacao(models.Model):
     hide = models.BooleanField(default=0)  # Field name made lowercase.  # Field name made lowercase.
 
     def is_ready(self):
-        return datetime.datetime.now() >= self.dt_fim_maturacao
+        if self.fkid_statusfabricacao.order == 1:
+            return datetime.datetime.now(datetime.timezone.utc) >= self.dt_fim_maturacao
+        return False
+
+    def name(self):
+        return f'Pedido nº{self.pkid_pedidofabricacao}'
 
     def __str__(self):
         return f'Pedido nº{self.pkid_pedidofabricacao}'
@@ -366,7 +371,7 @@ class Statusfabricacao(models.Model):
     hide = models.BooleanField(default=0)
 
     def __str__(self):
-        return self.descricaostatus
+        return self.status
 
     class Meta:
         managed = True

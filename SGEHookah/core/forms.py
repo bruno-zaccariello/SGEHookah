@@ -16,7 +16,7 @@ from localflavor.br.forms import *
 		fields = ['nome', 'descricao'] '''
 		
 __all__ = ['Teste', 'FreteForm', 'CadProdutoForm', 'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm', 'UnidademedidaForm', 'PessoaForm', 'EnderecoForm', 'TelefoneForm',
-'PessoaRapidoForm', 'MateriaPrimaForm', "FormulaprodutoForm", "FormulamateriaForm", "FormulaCompletaForm"]
+'PessoaRapidoForm', 'MateriaPrimaForm', "FormulaprodutoForm", "FormulamateriaForm", "FormulaCompletaForm", "PedidofabricacaoForm"]
 
 class CategoriaprodutoForm(forms.ModelForm):
 	nomecategoria = forms.CharField(label="Nome da Categoria", max_length=50)
@@ -247,11 +247,15 @@ class PedidofabricacaoForm(forms.ModelForm):
 		label="Status", 
 		queryset=Statusfabricacao.objects.filter(hide=False).order_by('order'))
 	quantidade = forms.FloatField(label='Quantidade a Produzir')
-	dt_fim_maturacao = forms.DateTimeField(label='Dt. Maturação', widget=forms.HiddenInput())
+	dt_fim_maturacao = forms.DateTimeField(label='Dt. Maturação', widget=forms.HiddenInput(), initial=dt.datetime.now())
 
 	def clean_dt_fim_maturacao(self):
-		formula_time = Formulaproduto.objects.get(pkid_formula=fkid_formula).tempomaturacao
-		data = dt.datetime.now() + formula_time
+		formula_time = str(self.cleaned_data["fkid_formula"].tempomaturacao).split(":")
+		hours = int(formula_time[0])
+		minutes = int(formula_time[1])
+		seconds = int(formula_time[2])
+
+		data = dt.datetime.now() + dt.timedelta(hours=hours, minutes=minutes, seconds=seconds)
 		return data
 
 	def get_materials(self):

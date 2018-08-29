@@ -38,7 +38,17 @@ def redirect_home(request):
 
 @login_required(login_url="/admin")
 def iframe_home(request):
-	return render(request, "iframe/home.html")	
+
+	# Info sobre pedidos de fabricação
+
+	fab_pedidos = Pedidofabricacao.objects.filter(
+			hide=False
+		)
+
+	context = {
+		"fab_pedidos":fab_pedidos
+	}
+	return render(request, "iframe/home.html", context)	
 
 # Frete		
 	
