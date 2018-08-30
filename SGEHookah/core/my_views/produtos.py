@@ -163,8 +163,8 @@ def deletar_produto(request, id_produto):
         produto.hide = True
         produto.save()
     except:
-        return HttpResponseRedirect('/iframe/produtos/lista?deleted=False'), 400
-    return HttpResponseRedirect('/iframe/produtos/lista?deleted=True'), 500
+        return HttpResponseRedirect('/iframe/produtos/lista?deleted=False')
+    return HttpResponseRedirect('/iframe/produtos/lista?deleted=True')
 
 
 @login_required(login_url="/admin")

@@ -239,13 +239,15 @@ class PessoaRapidoForm(forms.ModelForm):
         model = Pessoa
         fields = ['nomecompleto_razaosocial', 'email', 'cpf_cnpj', 'genero']
 
+
 class PedidofabricacaoForm(forms.ModelForm):
 	fkid_formula = forms.ModelChoiceField(
 		label="Fórmula", 
 		queryset=Formulaproduto.objects.filter(hide=False))
 	fkid_statusfabricacao = forms.ModelChoiceField(
 		label="Status", 
-		queryset=Statusfabricacao.objects.filter(hide=False).order_by('order'))
+		queryset=Statusfabricacao.objects.filter(hide=False).order_by('order'),
+		initial=0)
 	quantidade = forms.FloatField(label='Quantidade a Produzir')
 	dt_fim_maturacao = forms.DateTimeField(label='Dt. Maturação', widget=forms.HiddenInput(), initial=dt.datetime.now())
 

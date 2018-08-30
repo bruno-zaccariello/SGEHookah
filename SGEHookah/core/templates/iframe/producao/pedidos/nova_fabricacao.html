@@ -23,7 +23,7 @@
 			<h2 class="overlay_title">PEDIDO DE FABRICAÇÃO REGISTRADO COM SUCESSO</h2>
 			
 			<div class="bt_wrapper">
-				<a href="{% url 'pedido_fabricacao' %}"><button class="btMain btConfirmar">Continuar</button></a>
+				<a href="{% url 'nova_fabricacao' %}"><button class="btMain btConfirmar">Continuar</button></a>
 			</div>
 			
 		</div>
@@ -37,6 +37,13 @@
 				<div class="formInputContainer">
                 
 				{% csrf_token %}
+
+				<div class="hidden">
+					{% for field in fabricaForm.hidden_fields %}
+						{{ field }}
+					{% endfor %}
+				</div>
+
 				{% for field in fabricaForm.visible_fields %}
 					<div class="fieldDiv">
 						<div class="formInput">
@@ -48,6 +55,8 @@
 					</div>
 				{% endfor %}
 
+				{{ materiais }}
+
 				</div>
 				<div class="botaoContainer">
 					<button class="btMain btLimpar" type="reset">Limpar</button>
@@ -55,9 +64,23 @@
 				</div>
 			</form>
 		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Matéria</th>
+					<th>Quantidade</th>
+				</tr>
+			</thead>
+
+			<tbody id="materias">
+			</tbody>
+		</table>
+
 	</section>
 
-    <script src="/static/js/formsFixes.js"></script>
+	<script src="/static/js/formsFixes.js"></script>
+	<script src="/static/js/iframe/producao/pedidos/nova_fabricacao.js"></script>
 
 </body>
 </html>

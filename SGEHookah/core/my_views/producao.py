@@ -85,7 +85,7 @@ def deletar_formula(request, id_formula):
     return HttpResponseRedirect('/iframe/producao/formulas/lista/?deleted=True')
 
 @login_required(login_url="/admin")
-def pedido_fabricacao(request):
+def nova_fabricacao(request):
     success = request.GET.get('success', False)
     if request.POST:
         fabricaForm = PedidofabricacaoForm(request.POST)
@@ -93,12 +93,11 @@ def pedido_fabricacao(request):
             fabricaForm.save()
             url = str(request.path_info) + '?success=True'
             return HttpResponseRedirect(url)
-        else:
-            print(fabricaForm.errors)
     else:
-        pessoaForm = PedidofabricacaoForm()
+        fabricaForm = PedidofabricacaoForm()
     context = {
-    "fabricaForm":PedidofabricacaoForm,
-    "success":success,
+        "fabricaForm":PedidofabricacaoForm,
+        "success":success,
     }
-    return render(request, "iframe/producao/pedidos/pedido_fabricacao.html", context)
+    return render(request, "iframe/producao/pedidos/nova_fabricacao.html", context)
+    

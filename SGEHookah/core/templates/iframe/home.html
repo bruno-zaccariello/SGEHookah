@@ -29,8 +29,12 @@
 
 						<td>{{ pedido.fkid_statusfabricacao }}</td>
 
-						{% if pedido.is_ready %}
-							<td>{{ pedido.dt_fim_maturacao|date:"d/m/Y H:i" }} OK</td>
+						{% if pedido.fkid_statusfabricacao.order == 1 %}
+							{% if pedido.is_ready %}
+								<td>{{ pedido.dt_fim_maturacao|date:"d/m/Y H:i" }} Finalizado!</td>
+							{% else %}
+								<td>{{ pedido.dt_fim_maturacao|date:"d/m/Y H:i" }} Maturando...</td>
+							{% endif %}
 						{% else %}
 							<td>Fora da Maturação</td>
 						{% endif %}

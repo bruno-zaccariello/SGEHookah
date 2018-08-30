@@ -2,7 +2,7 @@ import datetime
 import requests
 
 from django.shortcuts import render, redirect
-from django.http import request, HttpResponse, HttpResponseRedirect
+from django.http import request, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -88,3 +88,35 @@ def calcula_frete(request):
 	"MsgErro":retorno.get('MsgErro')
 	}
 	return render(request, "iframe/vendas/calcula_frete.html", context)
+
+def ajax_nova_fabricacao(request):
+	lista = []
+	if request.GET:
+		rget = request.GET
+
+		try:
+			formula = Formulaproduto.objects.get(pkid_formula=rget.get('pedido_id'))
+		except:
+			formula = False
+
+		if formula:
+			for item in Formulamateria.objects.filter(fkid_formulaproduto=formula).values():
+				materiaprima = item['fkid_materiaprima_id']
+				unidade = item['unidade_id']
+				# Pega o nome da materiaprima invés do id
+				item['fkid_materiaprima_id'] = Materiaprima.objects.get(
+					pkid_materiaprima=materiaprima
+					).materiaprima
+				# Pega o nome da unidademedida invés do id 
+				item['unidade_id'] = Unidademedida.objects.get(
+					pkid_unidademedida=unidade
+					).unidademedida
+
+				lista.append(item)
+	
+	data = {
+		'response': True if formula and len(lista)>0 else False,
+		'lista': lista
+	}
+
+	return JsonResponse(data)

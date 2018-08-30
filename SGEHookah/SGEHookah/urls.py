@@ -53,7 +53,11 @@ producao = [
 	path('formulas/lista/', lista_formula, name="lista_formulas"),
 	path('formulas/deletar/<int:id_formula>', deletar_formula, name="deletar_formula"),
 	path('formulas/<int:id_formula>/', pagina_formula, name="pagina_formula"),
-	path('pedidos/novo', pedido_fabricacao, name="pedido_fabricacao"),
+	path('pedidos/novo', nova_fabricacao, name="nova_fabricacao"),
+]
+
+js = [
+	path('nova_fabricacao/', ajax_nova_fabricacao, name="ajax_nova_fabricacao")
 ]
 
 urlpatterns = [
@@ -67,7 +71,9 @@ urlpatterns = [
 	path('admin/usuario/', include(usuario)),
     path('iframe/clientes/', include(clientes)),
     path('iframe/producao/', include(producao)),
-	path('iframe/vendas/calcula_frete/', calcula_frete, name="calcula_frete")
+	path('iframe/vendas/calcula_frete/', calcula_frete, name="calcula_frete"),
+	
+	path('js/', include(js)),
 ]
 
 if settings.DEBUG is True:

@@ -266,9 +266,24 @@ class Pedidofabricacao(models.Model):
     hide = models.BooleanField(default=0)  # Field name made lowercase.  # Field name made lowercase.
 
     def is_ready(self):
-        if self.fkid_statusfabricacao.order == 1:
-            return datetime.datetime.now(datetime.timezone.utc) >= self.dt_fim_maturacao
-        return False
+        return datetime.datetime.now(datetime.timezone.utc) >= self.dt_fim_maturacao
+
+    def materias(self):
+        lista = []
+        for materia in Formulamateria.objects.filter(fkid_formulaproduto=self.fkid_formula).values():
+            materiaprima = item['fkid_materiaprima_id']
+            unidade = item['unidade_id']
+
+            item['fkid_materiaprima_id'] = Materiaprima.objects.get(
+                pkid_materiaprima=materiaprima
+                ).materiaprima
+
+            item['unidade_id'] = Unidademedida.objects.get(
+                pkid_unidademedida=unidade
+                ).unidademedida
+
+            lista.append(item)
+        return lista
 
     def name(self):
         return f'Pedido nº{self.pkid_pedidofabricacao}'
