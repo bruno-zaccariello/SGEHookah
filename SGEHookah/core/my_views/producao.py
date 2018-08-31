@@ -100,4 +100,24 @@ def nova_fabricacao(request):
         "success":success,
     }
     return render(request, "iframe/producao/pedidos/nova_fabricacao.html", context)
+
+@login_required(login_url="/admin")
+def editar_fabricacao(request, id_fabricacao):
+    success = request.GET.get('success', False)
+    fabricacao = Pedidofabricacao.objects.get(pkid_pedidofabricacao=id_fabricacao)
+
+    if request.POST:
+        fabricaForm = PedidofabricacaoForm(request.POST, instance=fabricacao)
+        if fabricaForm.is_valid():
+            fabricaForm.save()
+            url = str(request.path_info) + '?success=True'
+            return HttpResponseRedirect(url)
+    else:
+        fabricaForm = PedidofabricacaoForm(instance=fabricacao)
+    context = {
+        "fabricaForm":fabricaForm,
+        "pedidoFabricacao":fabricacao,
+        "success":success,
+    }
+    return render(request, "iframe/producao/pedidos/editar_fabricacao.html", context)
     

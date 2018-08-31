@@ -65,6 +65,7 @@
 			</form>
 		</div>
 
+        <button id="BOTAO_CHECA" class="btMain btConfirmar">Checar</button>
 		<table>
 			<thead>
 				<tr>
@@ -74,6 +75,17 @@
 			</thead>
 
 			<tbody id="materias">
+                {% for materia, id_materia in pedidoFabricacao.materias %}
+                    <tr id_materia="{{ id_materia }}">
+                        <td class="lft_padding">{{materia.fkid_materiaprima_id}}</td>
+                        <td class="txt_center">
+                            <span class='materia_qtd' original="{{materia.quantidade}}">
+                                {{materia.quantidade}} 
+                            </span>
+                            {{materia.unidade_id}}
+                        </td>
+                    </tr>
+                {% endfor %}
 			</tbody>
 		</table>
 

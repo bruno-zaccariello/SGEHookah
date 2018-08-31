@@ -271,18 +271,19 @@ class Pedidofabricacao(models.Model):
     def materias(self):
         lista = []
         for materia in Formulamateria.objects.filter(fkid_formulaproduto=self.fkid_formula).values():
-            materiaprima = item['fkid_materiaprima_id']
-            unidade = item['unidade_id']
+            
+            id_materia = materia['fkid_materiaprima_id']
+            unidade = materia['unidade_id']
 
-            item['fkid_materiaprima_id'] = Materiaprima.objects.get(
-                pkid_materiaprima=materiaprima
+            materia['fkid_materiaprima_id'] = Materiaprima.objects.get(
+                pkid_materiaprima=id_materia
                 ).materiaprima
 
-            item['unidade_id'] = Unidademedida.objects.get(
+            materia['unidade_id'] = Unidademedida.objects.get(
                 pkid_unidademedida=unidade
                 ).unidademedida
 
-            lista.append(item)
+            lista.append((materia, id_materia))
         return lista
 
     def name(self):
