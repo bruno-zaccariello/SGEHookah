@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from core.models import *
 
 class Command(BaseCommand):
-	def handle(self, *args, **options):
+	def handle(cls, *args, **options):
 		if User.objects.count() == 0:
 			admin = User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
 			admin.is_active = True
@@ -14,31 +14,34 @@ class Command(BaseCommand):
 		else:
 			print('Admin exists, skipping ...')
 
-		if self.make_unidade():
+		if cls.make_unidade():
 			print('Unidade Criada')
 
-		if self.make_categoria():
+		if cls.make_categoria():
 			print('Categoria Criada')
 		
-		if self.make_materia():
+		if cls.make_materia():
 			print('Matéria Criada')
 		
-		if self.make_product():
+		if cls.make_product():
 			print('Produto Criado')
 
-	def make_unidade(self):
+		if cls.make_status_craft():
+			print('Status de Fabricação Criados')
+
+	def make_unidade(cls):
 		if Unidademedida.objects.count() == 0:
 			Unidademedida.objects.create(unidademedida='ml')
 			return True
 		return False
 
-	def make_categoria(self):
+	def make_categoria(cls):
 		if Categoriaproduto.objects.count() == 0:
 			Categoriaproduto.objects.create(nomecategoria='Juice')
 			return True
 		return False
 
-	def make_materia(self):
+	def make_materia(cls):
 		if Materiaprima.objects.count() == 0:
 			Materiaprima.objects.create(
 				materiaprima='VG', 
@@ -53,7 +56,7 @@ class Command(BaseCommand):
 			return True
 		return False
 
-	def make_product(self):
+	def make_product(cls):
 		if Produto.objects.count() == 0:
 			produto = Produto(
 				fkid_categoria= Categoriaproduto.objects.first(),
@@ -69,5 +72,19 @@ class Command(BaseCommand):
 				fotoproduto= 'default_product.png'
 			)
 			produto.save()
+			return True
+		return False
+
+	def make_status_craft(cls):
+		if Statusfabricacao.objects.count() == 0:
+			status1 = Statusfabricacao(order=0, status='Pedido Criado')
+			status2 = Statusfabricacao(order=1, status='Maturação')
+			status3 = Statusfabricacao(order=2, status='Finalização')
+			status4 = Statusfabricacao(order=3, status='Produção Encerrada')
+
+			status1.save()
+			status2.save()
+			status3.save()
+			status4.save()
 			return True
 		return False

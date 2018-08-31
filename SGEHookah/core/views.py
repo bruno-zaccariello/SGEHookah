@@ -43,6 +43,10 @@ def iframe_home(request):
 
 	fab_pedidos = Pedidofabricacao.objects.filter(
 			hide=False
+		).exclude(
+			fkid_statusfabricacao__order=3
+		).order_by(
+			'-fkid_statusfabricacao', 'dt_fim_maturacao'
 		)
 
 	context = {
