@@ -16,6 +16,7 @@ from core.forms import *
 from core.models import *
 from core.funcoes import *
 
+
 @login_required(login_url="/admin")
 def lista_formula(request):
     formulas = Formulaproduto.objects.filter(hide=False)
@@ -27,16 +28,18 @@ def lista_formula(request):
 
     url = arruma_url_page(request)
     context = {
-        "pagina":pagina,
-        "success":deletado,
-        "url":url,
+        "pagina": pagina,
+        "success": deletado,
+        "url": url,
     }
     return render(request, 'iframe/producao/formula/lista_formulas.html', context)
+
 
 @login_required(login_url="/admin")
 def pagina_formula(request, id_formula):
     try:
-        Formula = Formulaproduto.objects.filter(hide=False).get(pkid_formula=id_formula)
+        Formula = Formulaproduto.objects.filter(
+            hide=False).get(pkid_formula=id_formula)
     except:
         Formula = None
 
@@ -58,7 +61,8 @@ def pagina_formula(request, id_formula):
                 formula = form_formula.save(commit=False)
                 formula.save()
 
-                forms_materia = formset_materias(request.POST, instance=formula)
+                forms_materia = formset_materias(
+                    request.POST, instance=formula)
 
                 if forms_materia.is_valid():
                     forms_materia.save()
@@ -70,12 +74,13 @@ def pagina_formula(request, id_formula):
         forms_materia = formset_materias(instance=Formula)
 
     context = {
-        "Formula":Formula,
+        "Formula": Formula,
         "form_formula": form_formula,
         "forms_materia": forms_materia,
         "success": success
     }
     return render(request, "iframe/producao/formula/pagina_formula.html", context)
+
 
 @login_required(login_url="/admin")
 def deletar_formula(request, id_formula):
@@ -83,6 +88,7 @@ def deletar_formula(request, id_formula):
     formula.hide = True
     formula.save()
     return HttpResponseRedirect('/iframe/producao/formulas/lista/?deleted=True')
+
 
 @login_required(login_url="/admin")
 def nova_fabricacao(request):
@@ -96,15 +102,17 @@ def nova_fabricacao(request):
     else:
         fabricaForm = PedidofabricacaoForm()
     context = {
-        "fabricaForm":PedidofabricacaoForm,
-        "success":success,
+        "fabricaForm": PedidofabricacaoForm,
+        "success": success,
     }
     return render(request, "iframe/producao/pedidos/nova_fabricacao.html", context)
+
 
 @login_required(login_url="/admin")
 def editar_fabricacao(request, id_fabricacao):
     success = request.GET.get('success', False)
-    fabricacao = Pedidofabricacao.objects.get(pkid_pedidofabricacao=id_fabricacao)
+    fabricacao = Pedidofabricacao.objects.get(
+        pkid_pedidofabricacao=id_fabricacao)
 
     if request.POST:
         fabricaForm = PedidofabricacaoForm(request.POST, instance=fabricacao)
@@ -115,9 +123,8 @@ def editar_fabricacao(request, id_fabricacao):
     else:
         fabricaForm = PedidofabricacaoForm(instance=fabricacao)
     context = {
-        "fabricaForm":fabricaForm,
-        "pedidoFabricacao":fabricacao,
-        "success":success,
+        "fabricaForm": fabricaForm,
+        "pedidoFabricacao": fabricacao,
+        "success": success,
     }
     return render(request, "iframe/producao/pedidos/editar_fabricacao.html", context)
-    

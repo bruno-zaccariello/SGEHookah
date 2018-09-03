@@ -91,7 +91,8 @@ def formula_produto(request, id_produto):
 
     # Tenta pegar uma formula já existente para aquele produto
     try:
-        Formula = Formulaproduto.objects.filter(hide=False).get(fkid_produto=id_produto)
+        Formula = Formulaproduto.objects.filter(
+            hide=False).get(fkid_produto=id_produto)
     except:
         Formula = None
 
@@ -114,7 +115,8 @@ def formula_produto(request, id_produto):
                 formula.fkid_produto = produto
                 formula.save()
 
-                forms_materia = formset_materias(request.POST, instance=formula)
+                forms_materia = formset_materias(
+                    request.POST, instance=formula)
 
                 if forms_materia.is_valid():
                     forms_materia.save()
@@ -219,7 +221,8 @@ def lista_categorias(request):
         form = CategoriaprodutoForm()
 
     # Funções para gerar páginas
-    categorias = Categoriaproduto.objects.filter(hide=False).order_by('pkid_categoria')
+    categorias = Categoriaproduto.objects.filter(
+        hide=False).order_by('pkid_categoria')
     paginas = Paginator(categorias, 10)
     categorias = paginas.get_page(page)
     url = arruma_url_page(request)  # função em funcoes.py
@@ -252,7 +255,8 @@ def lista_unidades(request):
         form = UnidademedidaForm(request.POST)
         if form.is_valid():
             try:
-                exists = Unidademedida.objects.get(unidademedida=form.cleaned_data['unidademedida'])
+                exists = Unidademedida.objects.get(
+                    unidademedida=form.cleaned_data['unidademedida'])
                 exists.hide = False
                 exists.save()
             except:
@@ -262,7 +266,8 @@ def lista_unidades(request):
         form = UnidademedidaForm()
 
     # Cria uma lista com as unidades visiveis (hide=False)
-    unidades = Unidademedida.objects.filter(hide=False).order_by('pkid_unidademedida')
+    unidades = Unidademedida.objects.filter(
+        hide=False).order_by('pkid_unidademedida')
     paginas = Paginator(unidades, 10)
     unidades = paginas.get_page(page)
     url = arruma_url_page(request)

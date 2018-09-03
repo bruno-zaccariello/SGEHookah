@@ -1,20 +1,21 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey has `on_delete` set to the desired behavior.
-#   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
+
+
 from django.db import models
 import datetime
 
-__all__ =   ["Categoriaproduto", "Produto", "Unidademedida", "Pessoa", "Endereco", "Telefone", 
-            "Formulaproduto", "Formulamateria", "Materiaprima", "Pedidofabricacao", "Statusfabricacao"]
+__all__ = [
+    "Categoriaproduto", "Produto", "Unidademedida", 
+    "Pessoa", "Endereco", "Telefone",
+    "Formulaproduto", "Formulamateria", "Materiaprima", 
+    "Pedidofabricacao", "Statusfabricacao"
+    ]
+
 
 class Categoriaproduto(models.Model):
-    pkid_categoria = models.AutoField(primary_key=True)  # Field name made lowercase.
-    nomecategoria = models.CharField('Nome da Categoria', unique=True, max_length=100)  # Field name made lowercase.
-    hide = models.BooleanField(default=0)  # Field name made lowercase.
+    pkid_categoria = models.AutoField(primary_key=True)
+    nomecategoria = models.CharField(
+        'Nome da Categoria', unique=True, max_length=100)
+    hide = models.BooleanField(default=0)
 
     def __str__(self):
         return self.nomecategoria
@@ -25,81 +26,83 @@ class Categoriaproduto(models.Model):
         verbose_name_plural = 'Categorias (Produto)'
 
 
-
 class Cotacaocompra(models.Model):
-    pkid_cotacao = models.AutoField(primary_key=True)  # Field name made lowercase.
-    fornecedor = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
-    dt_cotacao = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_entrega = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    formapamento = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
-    pedidocompra_pkid_compra = models.IntegerField()  # Field name made lowercase.
-    statuscotacao_pkid_status = models.IntegerField()  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    hide = models.TextField( default=0, blank=True, null=True)  # Field name made lowercase.
+    pkid_cotacao = models.AutoField(primary_key=True)
+    fornecedor = models.CharField(max_length=100, blank=True, null=True)
+    dt_cotacao = models.DateTimeField(blank=True, null=True)
+    dt_entrega = models.DateTimeField(blank=True, null=True)
+    formapamento = models.CharField(max_length=45, blank=True, null=True)
+    pedidocompra_pkid_compra = models.IntegerField()
+    statuscotacao_pkid_status = models.IntegerField()
+    dt_cadastro = models.DateTimeField(blank=True, null=True)
+    dt_alteracao = models.DateTimeField(blank=True, null=True)
+    hide = models.TextField(default=0, blank=True, null=True)
 
     class Meta:
         managed = True
 
 
 class Endereco(models.Model):
-    pkid_endereco = models.AutoField(primary_key=True)  # Field name made lowercase.
+    pkid_endereco = models.AutoField(primary_key=True)
     fkid_pessoa = models.ForeignKey(
-        'Pessoa', models.CASCADE, 
+        'Pessoa', models.CASCADE,
         blank=True, null=True,
-        verbose_name='Pessoa')  # Field name made lowercase.
-    logradouro = models.CharField('Endereço', max_length=100)  # Field name made lowercase.
-    numero = models.CharField('Número', max_length=7, null=True, blank=True)  # Field name made lowercase.
-    complemento = models.CharField('Complemento', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    cep = models.CharField('CEP', max_length=9)  # Field name made lowercase.
-    bairro = models.CharField('Bairro', max_length=100)  # Field name made lowercase.
-    cidade = models.CharField('Cidade', max_length=150)  # Field name made lowercase.
-    uf = models.CharField('Estado', max_length=2)  # Field name made lowercase.
-    hide = models.BooleanField(default=0)  # Field name made lowercase.
+        verbose_name='Pessoa')
+    logradouro = models.CharField('Endereço', max_length=100)
+    numero = models.CharField('Número', max_length=7, null=True, blank=True)
+    complemento = models.CharField(
+        'Complemento', max_length=45, blank=True, null=True)
+    cep = models.CharField('CEP', max_length=9)
+    bairro = models.CharField('Bairro', max_length=100)
+    cidade = models.CharField('Cidade', max_length=150)
+    uf = models.CharField('Estado', max_length=2)
+    hide = models.BooleanField(default=0)
 
     def __str__(self):
-        return  f'{self.fkid_pessoa.nomecompleto_razaosocial} : {self.cep}'
+        return f'{self.fkid_pessoa.nomecompleto_razaosocial} : {self.cep}'
 
     class Meta:
         managed = True
         verbose_name = 'Endereço (Pessoa : CEP)'
         verbose_name_plural = 'Endereços'
 
+
 class Entrega(models.Model):
-    pkid_entrega = models.AutoField(primary_key=True)  # Field name made lowercase.
-    dataentrega = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    formaentrega = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
-    valorfrete = models.TextField(blank=True, null=True)  # Field name made lowercase.
-    nomecontarecebimento = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
-    fkid_usuario_alteracao = models.IntegerField()  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField()  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField()  # Field name made lowercase.
-    hide = models.TextField( default=0)  # Field name made lowercase.
+    pkid_entrega = models.AutoField(primary_key=True)
+    dataentrega = models.DateTimeField(blank=True, null=True)
+    formaentrega = models.CharField(max_length=100, blank=True, null=True)
+    valorfrete = models.TextField(blank=True, null=True)
+    nomecontarecebimento = models.CharField(
+        max_length=100, blank=True, null=True)
+    fkid_usuario_alteracao = models.IntegerField()
+    dt_cadastro = models.DateTimeField()
+    dt_alteracao = models.DateTimeField()
+    hide = models.TextField(default=0)
 
     class Meta:
         managed = True
 
 
 class Formapagamento(models.Model):
-    pkid_formapag = models.AutoField(primary_key=True)  # Field name made lowercase.
-    formapagamento = models.CharField(max_length=50)  # Field name made lowercase.
-    fkid_usuario_alteracao = models.IntegerField()  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField()  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField()  # Field name made lowercase.
-    hide = models.TextField( default=0)  # Field name made lowercase.
+    pkid_formapag = models.AutoField(primary_key=True)
+    formapagamento = models.CharField(max_length=50)
+    fkid_usuario_alteracao = models.IntegerField()
+    dt_cadastro = models.DateTimeField()
+    dt_alteracao = models.DateTimeField()
+    hide = models.TextField(default=0)
 
     class Meta:
         managed = True
 
 
 class Formulaproduto(models.Model):
-    pkid_formula = models.AutoField(primary_key=True)  # Field name made lowercase.
+    pkid_formula = models.AutoField(primary_key=True)
     fkid_produto = models.OneToOneField(
         'Produto', on_delete=models.CASCADE,
         unique=True,
-        verbose_name='Produto')  # Field name made lowercase.
-    tempomaturacao = models.TimeField('Tempo de Maturação')  # Field name made lowercase.
-    hide = models.BooleanField(default=0)  # Field name made lowercase.
+        verbose_name='Produto')
+    tempomaturacao = models.TimeField('Tempo de Maturação')
+    hide = models.BooleanField(default=0)
 
     def __str__(self):
         return f'Fórmula {self.fkid_produto.nomeproduto}'
@@ -111,18 +114,18 @@ class Formulaproduto(models.Model):
 
 
 class Itemcompra(models.Model):
-    pkid_item = models.AutoField(primary_key=True)  # Field name made lowercase.
-    produto = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
-    descricaoproduto = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
-    quantidade = models.IntegerField(blank=True, null=True)  # Field name made lowercase.
-    precounitario = models.TextField(blank=True, null=True)  # Field name made lowercase.
-    totalvenda = models.TextField(blank=True, null=True)  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    hide = models.TextField(default=0, blank=True, null=True)  # Field name made lowercase.
-    pedidocompra_pkid_compra = models.IntegerField()  # Field name made lowercase.
-    statuscompra_pkid_status = models.IntegerField()  # Field name made lowercase.
-    unidademedidacompra_pkid_unidademedida = models.IntegerField()  # Field name made lowercase.
+    pkid_item = models.AutoField(primary_key=True)
+    produto = models.CharField(max_length=45, blank=True, null=True)
+    descricaoproduto = models.CharField(max_length=45, blank=True, null=True)
+    quantidade = models.IntegerField(blank=True, null=True)
+    precounitario = models.TextField(blank=True, null=True)
+    totalvenda = models.TextField(blank=True, null=True)
+    dt_cadastro = models.DateTimeField(blank=True, null=True)
+    dt_alteracao = models.DateTimeField(blank=True, null=True)
+    hide = models.TextField(default=0, blank=True, null=True)
+    pedidocompra_pkid_compra = models.IntegerField()
+    statuscompra_pkid_status = models.IntegerField()
+    unidademedidacompra_pkid_unidademedida = models.IntegerField()
 
     class Meta:
         managed = True
@@ -130,16 +133,16 @@ class Itemcompra(models.Model):
 
 
 class Itemcotacao(models.Model):
-    pkid_item = models.AutoField(primary_key=True)  # Field name made lowercase.
-    produto = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
-    descricaoproduto = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
-    quantidade = models.IntegerField(blank=True, null=True)  # Field name made lowercase.
-    precounitario = models.TextField(blank=True, null=True)  # Field name made lowercase.
-    totalvenda = models.TextField(blank=True, null=True)  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    hide = models.TextField( default=0, blank=True, null=True)  # Field name made lowercase.
-    cotacaocompra_pkid_cotacao = models.IntegerField()  # Field name made lowercase.
+    pkid_item = models.AutoField(primary_key=True)
+    produto = models.CharField(max_length=45, blank=True, null=True)
+    descricaoproduto = models.CharField(max_length=100, blank=True, null=True)
+    quantidade = models.IntegerField(blank=True, null=True)
+    precounitario = models.TextField(blank=True, null=True)
+    totalvenda = models.TextField(blank=True, null=True)
+    dt_cadastro = models.DateTimeField(blank=True, null=True)
+    dt_alteracao = models.DateTimeField(blank=True, null=True)
+    hide = models.TextField(default=0, blank=True, null=True)
+    cotacaocompra_pkid_cotacao = models.IntegerField()
 
     class Meta:
         managed = True
@@ -147,19 +150,19 @@ class Itemcotacao(models.Model):
 
 
 class Itemvenda(models.Model):
-    pkid_item = models.AutoField(primary_key=True, max_length=45)  # Field name made lowercase.
+    pkid_item = models.AutoField(primary_key=True, max_length=45)
     pedido_venda_idpedido_venda = models.IntegerField()
-    produto = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
-    descricaoproduto = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
-    quantidade = models.IntegerField(blank=True, null=True)  # Field name made lowercase.
-    unidademedida_pkid_unidademedida = models.IntegerField()  # Field name made lowercase.
-    precounitario = models.TextField(blank=True, null=True)  # Field name made lowercase.
-    totalvenda = models.TextField(blank=True, null=True)  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    hide = models.TextField( default=0, blank=True, null=True)  # Field name made lowercase.
-    produtos_idprodutos = models.IntegerField()  # Field name made lowercase.
-    usuario_pkid_usuario = models.IntegerField()  # Field name made lowercase.
+    produto = models.CharField(max_length=45, blank=True, null=True)
+    descricaoproduto = models.CharField(max_length=45, blank=True, null=True)
+    quantidade = models.IntegerField(blank=True, null=True)
+    unidademedida_pkid_unidademedida = models.IntegerField()
+    precounitario = models.TextField(blank=True, null=True)
+    totalvenda = models.TextField(blank=True, null=True)
+    dt_cadastro = models.DateTimeField(blank=True, null=True)
+    dt_alteracao = models.DateTimeField(blank=True, null=True)
+    hide = models.TextField(default=0, blank=True, null=True)
+    produtos_idprodutos = models.IntegerField()
+    usuario_pkid_usuario = models.IntegerField()
 
     class Meta:
         managed = True
@@ -167,15 +170,15 @@ class Itemvenda(models.Model):
 
 
 class Linhavenda(models.Model):
-    pkid_linhavenda = models.AutoField(primary_key=True)  # Field name made lowercase.
-    pedidovenda_pkid_venda = models.IntegerField()  # Field name made lowercase.
-    fkid_produto = models.IntegerField()  # Field name made lowercase.
-    quantidade = models.IntegerField()  # Field name made lowercase.
-    precovenda = models.TextField()  # Field name made lowercase.
-    fkid_usuario_alteracao = models.IntegerField()  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField()  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField()  # Field name made lowercase.
-    hide = models.TextField( default=0)  # Field name made lowercase.
+    pkid_linhavenda = models.AutoField(primary_key=True)
+    pedidovenda_pkid_venda = models.IntegerField()
+    fkid_produto = models.IntegerField()
+    quantidade = models.IntegerField()
+    precovenda = models.TextField()
+    fkid_usuario_alteracao = models.IntegerField()
+    dt_alteracao = models.DateTimeField()
+    dt_cadastro = models.DateTimeField()
+    hide = models.TextField(default=0)
 
     class Meta:
         managed = True
@@ -187,7 +190,8 @@ class Materiaprima(models.Model):
     materiaprima = models.CharField('Matéria Prima', max_length=60)
     marca = models.CharField('Marca', max_length=50, blank=True, null=True)
     totalestoque = models.IntegerField('Qtd. em Estoque')
-    unidade = models.ForeignKey('Unidademedida', on_delete=models.CASCADE, verbose_name='Unidade')
+    unidade = models.ForeignKey(
+        'Unidademedida', on_delete=models.CASCADE, verbose_name='Unidade')
     hide = models.BooleanField(default=False)
 
     def __str__(self):
@@ -198,10 +202,11 @@ class Materiaprima(models.Model):
         verbose_name = 'Matéria Prima'
         verbose_name_plural = 'Matérias Primas'
 
+
 class Formulamateria(models.Model):
     pkid_formula_materia = models.AutoField(primary_key=True)
     fkid_formulaproduto = models.ForeignKey(
-        "Formulaproduto", 
+        "Formulaproduto",
         on_delete=models.CASCADE,
         verbose_name='Fórmula')
     fkid_materiaprima = models.ForeignKey(
@@ -210,7 +215,7 @@ class Formulamateria(models.Model):
         verbose_name='Matéria Prima')
     quantidade = models.FloatField('Quantidade')
     unidade = models.ForeignKey(
-        "Unidademedida", 
+        "Unidademedida",
         on_delete=models.CASCADE,
         verbose_name='Unidade')
 
@@ -223,65 +228,68 @@ class Formulamateria(models.Model):
 
 
 class Movimentacao(models.Model):
-    pkid_movimentacao = models.AutoField(primary_key=True)  # Field name made lowercase.
-    fkid_produto = models.IntegerField()  # Field name made lowercase.
-    tipomovimentacao = models.TextField()  # Field name made lowercase.
-    numentradas = models.IntegerField()  # Field name made lowercase.
-    numsaidas = models.IntegerField()  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField()  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField()  # Field name made lowercase.
-    hide = models.TextField( default=0)  # Field name made lowercase.
-    fkid_linhavenda1 = models.IntegerField(blank=True, null=True)  # Field name made lowercase.
-    fkid_venda = models.IntegerField(blank=True, null=True)  # Field name made lowercase.
-    fkid_pedidofabri = models.IntegerField(blank=True, null=True)  # Field name made lowercase.
-    fkid_estoque = models.IntegerField()  # Field name made lowercase.
+    pkid_movimentacao = models.AutoField(primary_key=True)
+    fkid_produto = models.IntegerField()
+    tipomovimentacao = models.TextField()
+    numentradas = models.IntegerField()
+    numsaidas = models.IntegerField()
+    dt_cadastro = models.DateTimeField()
+    dt_alteracao = models.DateTimeField()
+    hide = models.TextField(default=0)
+    fkid_linhavenda1 = models.IntegerField(blank=True, null=True)
+    fkid_venda = models.IntegerField(blank=True, null=True)
+    fkid_pedidofabri = models.IntegerField(blank=True, null=True)
+    fkid_estoque = models.IntegerField()
 
     class Meta:
         managed = True
 
 
 class Pedidocompra(models.Model):
-    pkid_compra = models.AutoField(primary_key=True)  # Field name made lowercase.
-    fornecedor = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
-    dt_pedido = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_compra = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_pagamento = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_recebimento = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    cotacaocompra_pkid_cotacao = models.IntegerField()  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    hide = models.TextField( default=0, blank=True, null=True)  # Field name made lowercase.
-    statuscompra_pkid_status = models.IntegerField()  # Field name made lowercase.
+    pkid_compra = models.AutoField(primary_key=True)
+    fornecedor = models.CharField(max_length=100, blank=True, null=True)
+    dt_pedido = models.DateTimeField(blank=True, null=True)
+    dt_compra = models.DateTimeField(blank=True, null=True)
+    dt_pagamento = models.DateTimeField(blank=True, null=True)
+    dt_recebimento = models.DateTimeField(blank=True, null=True)
+    cotacaocompra_pkid_cotacao = models.IntegerField()
+    dt_cadastro = models.DateTimeField(blank=True, null=True)
+    dt_alteracao = models.DateTimeField(blank=True, null=True)
+    hide = models.TextField(default=0, blank=True, null=True)
+    statuscompra_pkid_status = models.IntegerField()
 
     class Meta:
         managed = True
 
 
 class Pedidofabricacao(models.Model):
-    pkid_pedidofabricacao = models.AutoField(primary_key=True)  # Field name made lowercase.
-    fkid_formula = models.ForeignKey("Formulaproduto", on_delete=models.CASCADE)  # Field name made lowercase.
-    fkid_statusfabricacao = models.ForeignKey("Statusfabricacao", on_delete=models.CASCADE)
+    pkid_pedidofabricacao = models.AutoField(primary_key=True)
+    fkid_formula = models.ForeignKey(
+        "Formulaproduto", on_delete=models.CASCADE)
+    fkid_statusfabricacao = models.ForeignKey(
+        "Statusfabricacao", on_delete=models.CASCADE)
     quantidade = models.FloatField("Quantidade")
     dt_fim_maturacao = models.DateTimeField()
-    hide = models.BooleanField(default=0)  # Field name made lowercase.  # Field name made lowercase.
+    hide = models.BooleanField(default=0)
 
     def is_ready(self):
-        return datetime.datetime.now(datetime.timezone.utc) >= self.dt_fim_maturacao
+        dt_agora = datetime.datetime.now(datetime.timezone.utc)
+        return dt_agora >= self.dt_fim_maturacao
 
     def materias(self):
         lista = []
         for materia in Formulamateria.objects.filter(fkid_formulaproduto=self.fkid_formula).values():
-            
+
             id_materia = materia['fkid_materiaprima_id']
             unidade = materia['unidade_id']
 
             materia['fkid_materiaprima_id'] = Materiaprima.objects.get(
                 pkid_materiaprima=id_materia
-                ).materiaprima
+            ).materiaprima
 
             materia['unidade_id'] = Unidademedida.objects.get(
                 pkid_unidademedida=unidade
-                ).unidademedida
+            ).unidademedida
 
             lista.append((materia, id_materia))
         return lista
@@ -298,36 +306,43 @@ class Pedidofabricacao(models.Model):
 
 
 class Pedidovenda(models.Model):
-    pkid_venda = models.AutoField(primary_key=True)  # Field name made lowercase.
-    fkid_pessoa = models.IntegerField()  # Field name made lowercase.
-    fkid_usuario = models.IntegerField()  # Field name made lowercase.
-    dt_pedido = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_pagamento = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    dt_entrega = models.DateTimeField(blank=True, null=True)  # Field name made lowercase.
-    fkid_usuarioalteracao = models.IntegerField()  # Field name made lowercase.
-    fkid_formapag = models.IntegerField()  # Field name made lowercase.
-    fkid_entrega = models.IntegerField()  # Field name made lowercase.
-    dt_cadastro = models.DateTimeField()  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField()  # Field name made lowercase.
-    hide = models.TextField( default=0)  # Field name made lowercase.
-    fkid_status = models.IntegerField()  # Field name made lowercase.
+    pkid_venda = models.AutoField(primary_key=True)
+    fkid_pessoa = models.IntegerField()
+    fkid_usuario = models.IntegerField()
+    dt_pedido = models.DateTimeField(blank=True, null=True)
+    dt_pagamento = models.DateTimeField(blank=True, null=True)
+    dt_entrega = models.DateTimeField(blank=True, null=True)
+    fkid_usuarioalteracao = models.IntegerField()
+    fkid_formapag = models.IntegerField()
+    fkid_entrega = models.IntegerField()
+    dt_cadastro = models.DateTimeField()
+    dt_alteracao = models.DateTimeField()
+    hide = models.TextField(default=0)
+    fkid_status = models.IntegerField()
 
     class Meta:
         managed = True
 
 
 class Pessoa(models.Model):
-    pkid_pessoa = models.AutoField(primary_key=True, )  # Field name made lowercase.
-    nomecompleto_razaosocial = models.CharField('Nome / Razão Social', max_length=100)  # Field name made lowercase.
-    apelido_nomefantasia = models.CharField('Apelido / Nome Fantasia', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    email = models.CharField('E-mail', unique=True, max_length=100, blank=True, null=True)  # Field name made lowercase.
-    cpf_cnpj = models.CharField('CPF / CNPJ', unique=True, max_length=19, blank=True, null=True)  # Field name made lowercase.
-    rg_ie = models.CharField('RG / IE', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    genero = models.CharField('Gênero', max_length=1)  # Field name made lowercase.
-    dt_nascimento = models.DateField('Data de Nascimento', blank=True, null=True)  # Field name made lowercase.
-    st_pessoajuridica = models.BooleanField('Pessoa Jurídica', max_length=1, default=0)  # Field name made lowercase.
-    tipopessoa = models.CharField('Tipo da Pessoa', max_length=15, null=False, blank=False)
-    hide = models.BooleanField(default=0)  # Field name made lowercase.
+    pkid_pessoa = models.AutoField(primary_key=True, )
+    nomecompleto_razaosocial = models.CharField(
+        'Nome / Razão Social', max_length=100)
+    apelido_nomefantasia = models.CharField(
+        'Apelido / Nome Fantasia', max_length=100, blank=True, null=True)
+    email = models.CharField('E-mail', unique=True,
+                             max_length=100, blank=True, null=True)
+    cpf_cnpj = models.CharField(
+        'CPF / CNPJ', unique=True, max_length=19, blank=True, null=True)
+    rg_ie = models.CharField('RG / IE', max_length=50, blank=True, null=True)
+    genero = models.CharField('Gênero', max_length=1)
+    dt_nascimento = models.DateField(
+        'Data de Nascimento', blank=True, null=True)
+    st_pessoajuridica = models.BooleanField(
+        'Pessoa Jurídica', max_length=1, default=0)
+    tipopessoa = models.CharField(
+        'Tipo da Pessoa', max_length=15, null=False, blank=False)
+    hide = models.BooleanField(default=0)
 
     def __str__(self):
         return self.nomecompleto_razaosocial
@@ -339,29 +354,32 @@ class Pessoa(models.Model):
 
 
 class Produto(models.Model):
-    pkid_produto = models.AutoField(primary_key=True, )  # Field name made lowercase.
+    pkid_produto = models.AutoField(primary_key=True, )
     fkid_categoria = models.ForeignKey(
-        'Categoriaproduto', 
+        'Categoriaproduto',
         on_delete=models.CASCADE,
-        verbose_name='Categoria')  # Field name made lowercase.
+        verbose_name='Categoria')
     fkid_unidademedida = models.ForeignKey(
-        'Unidademedida', 
-        on_delete=models.CASCADE, 
-        verbose_name='Unidade de Medida')  # Field name made lowercase.
-    codproduto = models.CharField('Código', unique=True, max_length=8)  # Field name made lowercase.
-    nomeproduto = models.CharField('Nome do Produto', max_length=50)  # Field name made lowercase.
-    preco = models.DecimalField('Preço', max_digits=10, decimal_places=2)  # Field name made lowercase. This field type is a guess.
-    precocusto = models.DecimalField('Preço de Custo', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase. This field type is a guess.
-    totalestoque = models.IntegerField('Qtd. em Estoque', default=0)  # Field name made lowercase.
-    descricao = models.CharField('Descrição', max_length=300, blank=True, null=True)  # Field name made lowercase.
-    sabor = models.CharField('Sabor', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    marca = models.CharField('Marca', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    altura = models.IntegerField('Altura')  # Field name made lowercase.
-    largura = models.IntegerField('Largura')  # Field name made lowercase.
-    profundidade = models.IntegerField('Profundidade')  # Field name made lowercase.
-    peso = models.DecimalField('Peso', max_digits=10, decimal_places=3, )  # Field name made lowercase.
-    fotoproduto = models.FileField('Foto do Produto', upload_to='uploads/%Y/%m',max_length=1000, blank=True, null=True)  # Field name made lowercase.
-    hide = models.BooleanField(default=0)  # Field name made lowercase.
+        'Unidademedida',
+        on_delete=models.CASCADE,
+        verbose_name='Unidade de Medida')
+    codproduto = models.CharField('Código', unique=True, max_length=8)
+    nomeproduto = models.CharField('Nome do Produto', max_length=50)
+    preco = models.DecimalField('Preço', max_digits=10, decimal_places=2)
+    precocusto = models.DecimalField(
+        'Preço de Custo', max_digits=10, decimal_places=2, blank=True, null=True)
+    totalestoque = models.IntegerField('Qtd. em Estoque', default=0)
+    descricao = models.CharField(
+        'Descrição', max_length=300, blank=True, null=True)
+    sabor = models.CharField('Sabor', max_length=45, blank=True, null=True)
+    marca = models.CharField('Marca', max_length=50, blank=True, null=True)
+    altura = models.IntegerField('Altura')
+    largura = models.IntegerField('Largura')
+    profundidade = models.IntegerField('Profundidade')
+    peso = models.DecimalField('Peso', max_digits=10, decimal_places=3, )
+    fotoproduto = models.FileField(
+        'Foto do Produto', upload_to='uploads/%Y/%m', max_length=1000, blank=True, null=True)
+    hide = models.BooleanField(default=0)
 
     def __str__(self):
         return self.nomeproduto
@@ -370,11 +388,11 @@ class Produto(models.Model):
         managed = True
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
-		
+
 
 class Statuscompra(models.Model):
-    pkid_status = models.AutoField(primary_key=True)  # Field name made lowercase.
-    descricaostatus = models.CharField(max_length=45, blank=True, null=True)  # Field name made lowercase.
+    pkid_status = models.AutoField(primary_key=True)
+    descricaostatus = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
         managed = True
@@ -396,22 +414,22 @@ class Statusfabricacao(models.Model):
 
 
 class Statusvenda(models.Model):
-    pkid_status = models.AutoField(primary_key=True)  # Field name made lowercase.
-    descricaostatus = models.CharField(max_length=100, blank=True, null=True)  # Field name made lowercase.
+    pkid_status = models.AutoField(primary_key=True)
+    descricaostatus = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = True
 
 
 class Telefone(models.Model):
-    pkid_telefone = models.AutoField(primary_key=True)  # Field name made lowercase.
+    pkid_telefone = models.AutoField(primary_key=True)
     fkid_pessoa = models.ForeignKey(
-        'Pessoa', on_delete=models.CASCADE, 
-        verbose_name='Pessoa')  # Field name made lowercase.
-    ddi = models.CharField('DDI', max_length=2, default=55)  # Field name made lowercase.
-    ddd = models.CharField('DDD', max_length=2)  # Field name made lowercase.
-    numero = models.CharField('Número', max_length=15)  # Field name made lowercase.
-    hide = models.BooleanField(default=0)  # Field name made lowercase.
+        'Pessoa', on_delete=models.CASCADE,
+        verbose_name='Pessoa')
+    ddi = models.CharField('DDI', max_length=2, default=55)
+    ddd = models.CharField('DDD', max_length=2)
+    numero = models.CharField('Número', max_length=15)
+    hide = models.BooleanField(default=0)
 
     def __str__(self):
         return f'{self.fkid_pessoa.nomecompleto_razaosocial} ({self.ddd}){self.numero}'
@@ -423,9 +441,9 @@ class Telefone(models.Model):
 
 
 class Unidademedida(models.Model):
-    pkid_unidademedida = models.AutoField(primary_key=True)  # Field name made lowercase.
-    unidademedida = models.CharField('Unidade', max_length=50)  # Field name made lowercase.
-    hide = models.BooleanField(default=0)  # Field name made lowercase.
+    pkid_unidademedida = models.AutoField(primary_key=True)
+    unidademedida = models.CharField('Unidade', max_length=50)
+    hide = models.BooleanField(default=0)
 
     def __str__(self):
         return self.unidademedida
@@ -434,25 +452,25 @@ class Unidademedida(models.Model):
         managed = True
         verbose_name = 'Unidade de Medida'
         verbose_name_plural = 'Unidades de Medida'
-		
+
 
 class Usuario(models.Model):
-    pkid_usuario = models.AutoField(primary_key=True)  # Field name made lowercase.
-    nomecompleto = models.CharField(max_length=45)  # Field name made lowercase.
-    login = models.CharField(unique=True, max_length=45)  # Field name made lowercase.
-    senha = models.CharField(max_length=45)  # Field name made lowercase.
-    dt_importacao = models.DateTimeField()  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField()  # Field name made lowercase.
-    hide = models.TextField( default=0)  # Field name made lowercase.
+    pkid_usuario = models.AutoField(primary_key=True)
+    nomecompleto = models.CharField(max_length=45)
+    login = models.CharField(unique=True, max_length=45)
+    senha = models.CharField(max_length=45)
+    dt_importacao = models.DateTimeField()
+    dt_alteracao = models.DateTimeField()
+    hide = models.TextField(default=0)
 
     class Meta:
         managed = True
 
 
 class Usuarioalteracao(models.Model):
-    pkid_usuario_alteracao = models.AutoField(primary_key=True)  # Field name made lowercase.
-    dt_alteracao = models.DateTimeField()  # Field name made lowercase.
-    tipo_alteracao = models.TextField()  # Field name made lowercase.
+    pkid_usuario_alteracao = models.AutoField(primary_key=True)
+    dt_alteracao = models.DateTimeField()
+    tipo_alteracao = models.TextField()
 
     class Meta:
         managed = True

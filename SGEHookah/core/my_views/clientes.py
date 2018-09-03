@@ -18,6 +18,7 @@ from core.funcoes import *
 
 # Cliente
 
+
 @login_required(login_url="/admin")
 def cadastrar_cliente(request):
     success = request.GET.get('success', False)
@@ -27,8 +28,8 @@ def cadastrar_cliente(request):
         telefoneForm = TelefoneForm(request.POST)
         if pessoaForm.is_valid() and enderecoForm.is_valid() and telefoneForm.is_valid():
             # Caso aja erro o atomic() irá desfazer as alteração feitas durante o código.
-            with transaction.atomic() :
-            	# Altera o tipo de pessoa no formulario e salva
+            with transaction.atomic():
+                # Altera o tipo de pessoa no formulario e salva
                 pessoaForm = pessoaForm.save(commit=False)
                 pessoaForm.tipopessoa = 'cliente'
                 pessoaForm.save()
@@ -56,65 +57,68 @@ def cadastrar_cliente(request):
         enderecoForm = EnderecoForm()
         telefoneForm = TelefoneForm()
     context = {
-			"pessoaForm":pessoaForm,
-            "enderecoForm":enderecoForm,
-            "telefoneForm":telefoneForm,
-			"success":success
-	}
+        "pessoaForm": pessoaForm,
+        "enderecoForm": enderecoForm,
+        "telefoneForm": telefoneForm,
+        "success": success
+    }
     return render(request, "iframe/clientes/cadastrar_cliente.html", context)
+
 
 @login_required(login_url="/admin")
 def cadastro_rapido_cliente(request):
-	success = request.GET.get('success', False)
-	if request.POST:
-		pessoaForm = PessoaRapidoForm(request.POST)
-		if pessoaForm.is_valid():
-			pessoaForm = pessoaForm.save(commit=False)
-			# Arruma o campo de e-mail para não ter conflito
-			if pessoaForm.email == '':
-				pessoaForm.email = None
+    success = request.GET.get('success', False)
+    if request.POST:
+        pessoaForm = PessoaRapidoForm(request.POST)
+        if pessoaForm.is_valid():
+            pessoaForm = pessoaForm.save(commit=False)
+            # Arruma o campo de e-mail para não ter conflito
+            if pessoaForm.email == '':
+                pessoaForm.email = None
 
-			# Arruma o campo de cpf para não ter conflito
-			if pessoaForm.cpf_cnpj == '':
-				pessoaForm.cpf_cnpj = None
+            # Arruma o campo de cpf para não ter conflito
+            if pessoaForm.cpf_cnpj == '':
+                pessoaForm.cpf_cnpj = None
 
-			pessoaForm.tipopessoa = 'cliente'
-			pessoaForm.save()
-		url = str(request.path_info) + '?success=True'
-		return HttpResponseRedirect(url)
-	else:
-		pessoaForm = PessoaRapidoForm()
-	context = {
-	"pessoaForm":pessoaForm,
-	"success":success,
-	}
-	return render(request, "iframe/clientes/cadastro_rapido_cliente.html", context)
+            pessoaForm.tipopessoa = 'cliente'
+            pessoaForm.save()
+        url = str(request.path_info) + '?success=True'
+        return HttpResponseRedirect(url)
+    else:
+        pessoaForm = PessoaRapidoForm()
+    context = {
+        "pessoaForm": pessoaForm,
+        "success": success,
+    }
+    return render(request, "iframe/clientes/cadastro_rapido_cliente.html", context)
+
 
 @login_required(login_url="/admin")
 def lista_clientes(request):
-	# Pega informações da URL
-	codigo = request.GET.get('search_cod_client', False)
-	nome = request.GET.get('search_name_client', False)
-	deletado = request.GET.get('deleted', False)
-	page = int(request.GET.get('page', 1))
+    # Pega informações da URL
+    codigo = request.GET.get('search_cod_client', False)
+    nome = request.GET.get('search_name_client', False)
+    deletado = request.GET.get('deleted', False)
+    page = int(request.GET.get('page', 1))
 
-	# Filtra lista de clientes e gera páginas
-	lista_clientes = filtra_clientes(codigo, nome) # função em funcoes.py
-	paginas = Paginator(lista_clientes, 10)
-	clientes = paginas.get_page(page)
-	url = arruma_url_page(request) # função em funcoes.py
-	
-	context = {
-		"clientes":clientes,
-		"pagina":clientes,
-		"deletado":deletado,
-		"url":url
-	}
-	return render(request, "iframe/clientes/lista_clientes.html", context)
+    # Filtra lista de clientes e gera páginas
+    lista_clientes = filtra_clientes(codigo, nome)  # função em funcoes.py
+    paginas = Paginator(lista_clientes, 10)
+    clientes = paginas.get_page(page)
+    url = arruma_url_page(request)  # função em funcoes.py
+
+    context = {
+        "clientes": clientes,
+        "pagina": clientes,
+        "deletado": deletado,
+        "url": url
+    }
+    return render(request, "iframe/clientes/lista_clientes.html", context)
+
 
 @login_required(login_url="/admin")
 def deletar_cliente(request, id_cliente):
-	cliente = Pessoa.objects.get(pkid_pessoa=id_cliente)
-	cliente.hide = True
-	cliente.save()
-	return HttpResponseRedirect("/iframe/clientes/lista?deleted=True")
+    cliente = Pessoa.objects.get(pkid_pessoa=id_cliente)
+    cliente.hide = True
+    cliente.save()
+    return HttpResponseRedirect("/iframe/clientes/lista?deleted=True")
