@@ -1,22 +1,19 @@
 import datetime as dt
 
+import localflavor.br.forms as lf
 from django import forms
 from django.contrib.auth.models import User
+
 from core.models import *
-from localflavor.br.forms import *
-#from core.models import Teste
 
-''' class TesteForm(forms.ModelForm):
-	nome = forms.CharField(widget=forms.TextInput(attrs={'class':'codProdutoInput'}))
-	
-	nome.widget.attrs.update({'class':'Descricao'})
-	
-	class Meta:
-		model = Teste
-		fields = ['nome', 'descricao'] '''
-
-__all__ = ['Teste', 'FreteForm', 'CadProdutoForm', 'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm', 'UnidademedidaForm', 'PessoaForm', 'EnderecoForm', 'TelefoneForm',
-           'PessoaRapidoForm', 'MateriaPrimaForm', "FormulaprodutoForm", "FormulamateriaForm", "FormulaCompletaForm", "PedidofabricacaoForm"]
+__all__ = [
+    'Teste', 'FreteForm', 'CadProdutoForm',
+    'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm',
+    'UnidademedidaForm', 'PessoaForm', 'EnderecoForm',
+    'TelefoneForm', 'PessoaRapidoForm', 'MateriaPrimaForm',
+    "FormulaprodutoForm", "FormulamateriaForm", "FormulaCompletaForm",
+    "PedidofabricacaoForm"
+]
 
 
 class CategoriaprodutoForm(forms.ModelForm):
@@ -99,9 +96,13 @@ class ProdutoForm(forms.ModelForm):
 
     class Meta:
         model = Produto
-        fields = ["codproduto", "nomeproduto", "preco", "precocusto", "sabor",
-                  "marca", "altura", "largura", "profundidade", "peso", "fkid_unidademedida", "fkid_categoria", "totalestoque",
-                  "fotoproduto", "descricao"]
+        fields = [
+            "codproduto", "nomeproduto", "preco",
+            "precocusto", "sabor", "marca",
+            "altura", "largura", "profundidade",
+            "peso", "fkid_unidademedida", "fkid_categoria",
+            "totalestoque", "fotoproduto", "descricao"
+        ]
 
 
 class FormulaprodutoForm(forms.ModelForm):
@@ -179,7 +180,7 @@ class FreteForm(forms.Form):
         attrs={'placeholder': 'Largura em cm'}))
     nVlComprimento = forms.FloatField(label="Comprimento", widget=forms.NumberInput(
         attrs={'placeholder': 'Comprimento em cm'}))
-    nVlAltura = forms.FloatField(label="Altura",   widget=forms.NumberInput(
+    nVlAltura = forms.FloatField(label="Altura", widget=forms.NumberInput(
         attrs={'placeholder': 'Altura em cm'}))
     #nVlDiametro = forms.FloatField(label="Diametro")
     # sCdMaoPropria
@@ -220,12 +221,15 @@ class EnderecoForm(forms.ModelForm):
         label="Complemento", max_length=20, required=False)
     bairro = forms.CharField(label="Bairro", max_length=100)
     cidade = forms.CharField(label="Cidade", max_length=150)
-    uf = BRStateChoiceField(label="UF")
+    uf = lf.BRStateChoiceField(label="UF")
 
     class Meta:
         model = Endereco
-        fields = ['cep', 'logradouro', 'numero',
-                  'complemento', 'bairro', 'cidade', 'uf']
+        fields = [
+            'cep', 'logradouro', 'numero',
+            'complemento', 'bairro', 'cidade',
+            'uf'
+        ]
 
 
 class TelefoneForm(forms.ModelForm):
@@ -243,7 +247,7 @@ class PessoaForm(forms.ModelForm):
     apelido_nomefantasia = forms.CharField(
         label="Apelido", required=False, max_length=150)
     email = forms.EmailField(label="E-mail", required=False)
-    cpf_cnpj = BRCPFField(label="CPF")
+    cpf_cnpj = lf.BRCPFField(label="CPF")
     rg_ie = forms.CharField(label="RG", required=False, max_length=50)
     dt_nascimento = forms.DateField(
         label="Nascimento", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
@@ -261,7 +265,7 @@ class PessoaRapidoForm(forms.ModelForm):
 
     nomecompleto_razaosocial = forms.CharField(label="Nome", max_length=150)
     email = forms.EmailField(label="E-mail", required=False)
-    cpf_cnpj = BRCPFField(label="CPF", required=False)
+    cpf_cnpj = lf.BRCPFField(label="CPF", required=False)
     genero = forms.CharField(label="Gênero", widget=forms.Select(
         choices=genero_choices), initial=0)
 

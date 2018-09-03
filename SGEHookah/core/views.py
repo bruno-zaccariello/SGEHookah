@@ -1,5 +1,7 @@
 import datetime
 import requests
+from decimal import *
+from xml.etree import ElementTree
 
 from django.shortcuts import render, redirect
 from django.http import request, HttpResponse, HttpResponseRedirect, JsonResponse
@@ -10,12 +12,10 @@ from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.db import transaction
 from django.forms import formset_factory, modelformset_factory, inlineformset_factory
-from xml.etree import ElementTree
-from decimal import *
+
 from core.forms import *
 from core.models import *
 from core.funcoes import *
-
 from core.my_views.clientes import *
 from core.my_views.produtos import *
 from core.my_views.usuario import *
@@ -77,7 +77,7 @@ def calcula_frete(request):
                 form.cleaned_data['nVlLargura'] = 11
 
             try:
-                retorno = calculoFrete(
+                retorno = calcula_frete(
                     form.cleaned_data['nCdServico'],
                     form.cleaned_data['sCepOrigem'],
                     form.cleaned_data['sCepDestino'],

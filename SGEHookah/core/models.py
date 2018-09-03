@@ -1,14 +1,13 @@
-
+import datetime as dt
 
 from django.db import models
-import datetime
 
 __all__ = [
-    "Categoriaproduto", "Produto", "Unidademedida", 
+    "Categoriaproduto", "Produto", "Unidademedida",
     "Pessoa", "Endereco", "Telefone",
-    "Formulaproduto", "Formulamateria", "Materiaprima", 
+    "Formulaproduto", "Formulamateria", "Materiaprima",
     "Pedidofabricacao", "Statusfabricacao"
-    ]
+]
 
 
 class Categoriaproduto(models.Model):
@@ -273,8 +272,7 @@ class Pedidofabricacao(models.Model):
     hide = models.BooleanField(default=0)
 
     def is_ready(self):
-        dt_agora = datetime.datetime.now(datetime.timezone.utc)
-        return dt_agora >= self.dt_fim_maturacao
+        return dt.datetime.now(dt.timezone.utc) >= self.dt_fim_maturacao
 
     def materias(self):
         lista = []
