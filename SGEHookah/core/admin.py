@@ -1,3 +1,8 @@
+"""
+    Módulo que contém os modelos editáveis no 
+    admin do próprio django
+"""
+
 from django.contrib import admin
 from core.models import *
 

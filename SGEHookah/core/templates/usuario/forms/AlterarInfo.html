@@ -29,7 +29,7 @@
 			
 			{% csrf_token %}
 
-			{% for field in form_userInfo %}
+			{% for field in form_user_info %}
 				<div class="jai_fields_wrapper">
 					<div class="label">{{field.label_tag}}</div>
 					<div class="field">{{field}}

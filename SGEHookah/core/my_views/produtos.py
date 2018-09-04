@@ -1,9 +1,22 @@
-import datetime
+"""
+    Módulo que contem as views de produtos
+"""
 
-# Produto
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db import transaction
+from django.forms import inlineformset_factory
+
+from core.funcoes import arruma_url_page, filtra_produtos
+from core.models import *
+from core.forms import *
+
 
 @login_required(login_url="/admin")
 def cadastrar_produto(request):
+    """ Página para cadastrar um produto novo """
     success = request.GET.get('success', False)
     if request.POST:
         form = CadProdutoForm(request.POST, request.FILES, label_suffix='')
@@ -11,7 +24,7 @@ def cadastrar_produto(request):
             form = form.save(commit=False)
 
             # Define uma imagem padrão caso nenhuma tenha sido escolhida
-            if form.fotoproduto == '' or form.fotoproduto == None:
+            if form.fotoproduto in ('', None):
                 form.fotoproduto = 'default_product.png'
 
             form.save()
@@ -38,26 +51,12 @@ def cadastrar_produto(request):
 
 @login_required(login_url="/admin")
 def product_page(request, id_produto):
+    """ Página do produto """
+
     # Tenta buscar o produto requerido
     # Caso falhe retorna à página inicial
     try:
-        produto = Produto.objects.import datetime
-import requests
-
-from django.shortcuts import render, redirect
-from django.http import request, HttpResponse, HttpResponseRedirect
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib import messages
-from django.core.paginator import Paginator
-from django.contrib.auth import update_session_auth_hash, login, authenticate
-from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
-from django.db import transaction
-from django.forms import formset_factory, modelformset_factory, inlineformset_factory
-from xml.etree import ElementTree
-from decimal import *
-from core.forms import *
-from core.models import *
-from core.funcoes import *et(pkid_produto=id_produto)
+        produto = Produto.objects.get(pkid_produto=id_produto)
     except:
         return HttpResponseRedirect('/admin/home')
 
@@ -86,14 +85,16 @@ from core.funcoes import *et(pkid_produto=id_produto)
 
 @login_required(login_url="/admin")
 def formula_produto(request, id_produto):
+    """ Página da fórmula de um produto """
+
     produto = Produto.objects.get(pkid_produto=id_produto)
 
     # Tenta pegar uma formula já existente para aquele produto
     try:
-        Formula = Formulaproduto.objects.filter(
+        formula = Formulaproduto.objects.filter(
             hide=False).get(fkid_produto=id_produto)
     except:
-        Formula = None
+        formula = None
 
     success = request.GET.get('success', False)
     formset_materias = inlineformset_factory(
@@ -106,16 +107,16 @@ def formula_produto(request, id_produto):
     if request.POST:
         with transaction.atomic():
             # Formulario da formula
-            form_formula = FormulaprodutoForm(request.POST, instance=Formula)
-            forms_materia = formset_materias(request.POST, instance=Formula)
+            form_formula = FormulaprodutoForm(request.POST, instance=formula)
+            forms_materia = formset_materias(request.POST, instance=formula)
 
             if form_formula.is_valid():
-                formula = form_formula.save(commit=False)
-                formula.fkid_produto = produto
-                formula.save()
+                saved_formula = form_formula.save(commit=False)
+                saved_formula.fkid_produto = produto
+                saved_formula.save()
 
                 forms_materia = formset_materias(
-                    request.POST, instance=formula)
+                    request.POST, instance=saved_formula)
 
                 if forms_materia.is_valid():
                     forms_materia.save()
@@ -123,8 +124,8 @@ def formula_produto(request, id_produto):
                 url = str(request.path_info) + str('?success=True')
                 return HttpResponseRedirect(url)
     else:
-        form_formula = FormulaprodutoForm(instance=Formula)
-        forms_materia = formset_materias(instance=Formula)
+        form_formula = FormulaprodutoForm(instance=formula)
+        forms_materia = formset_materias(instance=formula)
 
     context = {
         "form_formula": form_formula,
@@ -137,20 +138,22 @@ def formula_produto(request, id_produto):
 
 @login_required(login_url="/admin")
 def lista_produtos(request):
+    """ Página com a lista de produtos """
+
     # Filtros e adicionais na URL
-    codigo = request.GET.get('search_cod_produto', False)
-    pChave = request.GET.get('search_keyword_prod', False)
+    codigo = request.GET.get('search_cod_produto', '')
+    palavra_chave = request.GET.get('search_keyword_prod', '')
     deletado = request.GET.get('deleted', False)
     page = int(request.GET.get('page', 1))
 
     # Funções para filtrar e gerar páginas
-    lista_produtos = filtra_produtos(codigo, pChave)  # Função em funcoes.py
-    paginas = Paginator(lista_produtos, 10)
-    produtos = paginas.get_page(page)
+    produtos = filtra_produtos(codigo, palavra_chave)  # Função em funcoes.py
+    paginas = Paginator(produtos, 10)
+    pagina = paginas.get_page(page)
 
     url = arruma_url_page(request)  # Função em funcoes.py
     context = {
-        "pagina": produtos,
+        "pagina": pagina,
         "deletado": deletado,
         "url": url
     }
@@ -159,6 +162,8 @@ def lista_produtos(request):
 
 @login_required(login_url="/admin")
 def deletar_produto(request, id_produto):
+    """ API para deletar um produto """
+
     try:
         produto = Produto.objects.get(pkid_produto=id_produto)
         produto.hide = True
@@ -170,6 +175,8 @@ def deletar_produto(request, id_produto):
 
 @login_required(login_url="/admin")
 def cadastrar_materia(request):
+    """ Página para cadastrar uma matéria prima """
+
     success = request.GET.get('success', False)
     if request.POST:
         form = MateriaPrimaForm(request.POST)
@@ -188,6 +195,8 @@ def cadastrar_materia(request):
 
 @login_required(login_url="/admin")
 def lista_materia(request):
+    """ Página com a lista de matérias primas """
+
     deletado = request.GET.get('deleted', False)
     page = int(request.GET.get('page', 1))
 
@@ -206,8 +215,9 @@ def lista_materia(request):
 
 @login_required(login_url="/admin")
 def lista_categorias(request):
+    """ Página com a lista de categorias """
+
     # Pega o numero da pagina e se obteve sucesso deletando da URL
-    num_p = int(request.GET.get('page', 1))
     success = request.GET.get('success', False)
     page = int(request.GET.get('page', 1))
 
@@ -237,6 +247,8 @@ def lista_categorias(request):
 
 @login_required(login_url="/admin")
 def deletar_categoria(request, id_categoria):
+    """ API Para deletar categoria """
+
     categoria = Categoriaproduto.objects.get(pkid_categoria=id_categoria)
     categoria.hide = True
     categoria.save()
@@ -245,8 +257,9 @@ def deletar_categoria(request, id_categoria):
 
 @login_required(login_url="/admin")
 def lista_unidades(request):
+    """ Página com a lista de unidades de medida """
+
     # Pega o numero da pagina e se obteve sucesso deletando da URL
-    num_p = int(request.GET.get('page', 1))
     success = request.GET.get('success', False)
     page = int(request.GET.get('page', 1))
 
@@ -282,6 +295,8 @@ def lista_unidades(request):
 
 @login_required(login_url="/admin")
 def deletar_unidade(request, id_unidade):
+    """ API para deletar uma unidade de medida """
+
     unidade = Unidademedida.objects.get(pkid_unidademedida=id_unidade)
     unidade.hide = True
     unidade.save()

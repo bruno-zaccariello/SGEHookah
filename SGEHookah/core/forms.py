@@ -1,3 +1,7 @@
+"""
+    Módulo que contem fórmularios utilizados no sistema
+"""
+
 import datetime as dt
 
 import localflavor.br.forms as lf
@@ -7,7 +11,7 @@ from django.contrib.auth.models import User
 from core.models import *
 
 __all__ = [
-    'Teste', 'FreteForm', 'CadProdutoForm',
+    'FreteForm', 'CadProdutoForm',
     'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm',
     'UnidademedidaForm', 'PessoaForm', 'EnderecoForm',
     'TelefoneForm', 'PessoaRapidoForm', 'MateriaPrimaForm',
@@ -17,6 +21,8 @@ __all__ = [
 
 
 class CategoriaprodutoForm(forms.ModelForm):
+    """ Formulário de Categoria de Produto """
+
     nomecategoria = forms.CharField(label="Nome da Categoria", max_length=50)
 
     nomecategoria.widget.attrs.update({'placeholder': '...'})
@@ -27,6 +33,8 @@ class CategoriaprodutoForm(forms.ModelForm):
 
 
 class UnidademedidaForm(forms.ModelForm):
+    """ Fórmulário de Unidade de Medida """
+
     unidademedida = forms.CharField(label="Unidade", max_length=50)
 
     unidademedida.widget.attrs.update({'placeholder': '...'})
@@ -37,6 +45,8 @@ class UnidademedidaForm(forms.ModelForm):
 
 
 class CadProdutoForm(forms.ModelForm):
+    """ Formulário para cadastrar um produto """
+
     codproduto = forms.CharField(label="Código", max_length=8)
     nomeproduto = forms.CharField(label="Nome", max_length=50)
     preco = forms.DecimalField(label="Preço", max_digits=10, decimal_places=2)
@@ -67,6 +77,8 @@ class CadProdutoForm(forms.ModelForm):
 
 
 class ProdutoForm(forms.ModelForm):
+    """ Formulário para editar um produto """
+
     codproduto = forms.CharField(label="Código", max_length=8)
     nomeproduto = forms.CharField(label="Nome")
     preco = forms.DecimalField(label="Preço", max_digits=10, decimal_places=2)
@@ -106,6 +118,8 @@ class ProdutoForm(forms.ModelForm):
 
 
 class FormulaprodutoForm(forms.ModelForm):
+    """ Formulário de fórmula de produto para página do produto """
+
     tempomaturacao = forms.TimeField(
         label="Tempo em Maturação", initial='00:00:00')
 
@@ -115,6 +129,8 @@ class FormulaprodutoForm(forms.ModelForm):
 
 
 class FormulaCompletaForm(forms.ModelForm):
+    """ Formulário de fórmula para página individual da formula """
+
     tempomaturacao = forms.TimeField(
         label="Tempo em Maturação", initial='00:00:00')
     fkid_produto = forms.ModelChoiceField(
@@ -126,6 +142,8 @@ class FormulaCompletaForm(forms.ModelForm):
 
 
 class FormulamateriaForm(forms.ModelForm):
+    """ Formulário para linha de matéria prima de uma Fórmula """
+
     fkid_materiaprima = forms.ModelChoiceField(
         label="Matéria Prima",
         queryset=Materiaprima.objects.filter(hide=False),
@@ -141,6 +159,8 @@ class FormulamateriaForm(forms.ModelForm):
 
 
 class MateriaPrimaForm(forms.ModelForm):
+    """ Formulário para matéria-prima """
+
     materiaprima = forms.CharField(label="Matéria Prima", max_length=60)
     marca = forms.CharField(label="Marca", max_length=50, required=False)
     totalestoque = forms.IntegerField(label="Estoque")
@@ -152,18 +172,9 @@ class MateriaPrimaForm(forms.ModelForm):
         fields = ["materiaprima", "marca", "totalestoque", "unidade"]
 
 
-class Teste(forms.Form):
-    nome = forms.CharField(label='Your name', max_length=100)
-    idade = forms.CharField(label='Idade', max_length=100)
-    teste = forms.CharField(label='teste', max_length=100)
-    teste2 = forms.CharField(label='teste2', max_length=100)
-    teste3 = forms.CharField(label='teste3', max_length=100)
-    teste4 = forms.CharField(label='teste4', max_length=100)
-    teste5 = forms.CharField(label='teste5', max_length=100)
-    teste5 = forms.CharField(label='teste5', max_length=100)
-
-
 class FreteForm(forms.Form):
+    """ Formulário para calcular frete """
+
     tipo_choices = (('4014', 'Sedex'), ('4510', 'PAC'))
     nCdServico = forms.CharField(
         label="Serviço", widget=forms.Select(choices=tipo_choices))
@@ -189,6 +200,8 @@ class FreteForm(forms.Form):
 
 
 class UpdateInfoForm(forms.ModelForm):
+    """ Formulário para atualizar informações de um usuário """
+
     email = forms.EmailField(label="E-mail", required=True)
     first_name = forms.CharField(label="Nome", required=True)
     last_name = forms.CharField(label="Sobrenome", required=True)
@@ -198,6 +211,8 @@ class UpdateInfoForm(forms.ModelForm):
         fields = ('email', 'first_name', 'last_name')
 
     def clean_email(self):
+        """ Confirma se o email já existe no banco de dados """
+
         email = self.cleaned_data.get('email')
         if email and User.objects.filter(email=email).count():
             raise forms.ValidationError('Esse e-mail já está em uso.')
@@ -214,6 +229,8 @@ class UpdateInfoForm(forms.ModelForm):
 
 
 class EnderecoForm(forms.ModelForm):
+    """ Formulário de endereço """
+
     cep = forms.CharField(label="CEP", max_length=9)
     logradouro = forms.CharField(label="Endereço", max_length=200)
     numero = forms.IntegerField(label="Número", required=False)
@@ -233,6 +250,8 @@ class EnderecoForm(forms.ModelForm):
 
 
 class TelefoneForm(forms.ModelForm):
+    """ Formulário para Telefone """
+
     numero = forms.CharField(label='Telefone', max_length=15, required=False)
 
     class Meta:
@@ -241,6 +260,8 @@ class TelefoneForm(forms.ModelForm):
 
 
 class PessoaForm(forms.ModelForm):
+    """ Formulário para cadastro de uma nova pessoa """
+
     genero_choices = (('H', 'Homem'), ('M', 'Mulher'), ('O', 'Outro'))
 
     nomecompleto_razaosocial = forms.CharField(label="Nome", max_length=150)
@@ -261,6 +282,8 @@ class PessoaForm(forms.ModelForm):
 
 
 class PessoaRapidoForm(forms.ModelForm):
+    """ Formulário para cadastro rápido de uma pessoa """
+
     genero_choices = (('H', 'Homem'), ('M', 'Mulher'), ('O', 'Outro'))
 
     nomecompleto_razaosocial = forms.CharField(label="Nome", max_length=150)
@@ -275,6 +298,8 @@ class PessoaRapidoForm(forms.ModelForm):
 
 
 class PedidofabricacaoForm(forms.ModelForm):
+    """ Formulário para um novo pedido de fabricação """
+
     fkid_formula = forms.ModelChoiceField(
         label="Fórmula",
         queryset=Formulaproduto.objects.filter(hide=False))
@@ -287,6 +312,8 @@ class PedidofabricacaoForm(forms.ModelForm):
         label='Dt. Maturação', widget=forms.HiddenInput(), initial=dt.datetime.now())
 
     def clean_dt_fim_maturacao(self):
+        """ Realiza o cálculo para quando será o fim da maturação """
+
         formula_time = str(
             self.cleaned_data["fkid_formula"].tempomaturacao).split(":")
         hours = int(formula_time[0])
@@ -298,6 +325,8 @@ class PedidofabricacaoForm(forms.ModelForm):
         return data
 
     def get_materials(self):
+        """ Busca materiais de uma dada fórmula """
+
         materials = Formulamateria.objects.filter(
             fkid_formulaproduto=self.fkid_formula)
         return materials

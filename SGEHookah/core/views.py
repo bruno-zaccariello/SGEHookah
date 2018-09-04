@@ -1,17 +1,10 @@
-import datetime
-import requests
-from decimal import *
-from xml.etree import ElementTree
+"""
+    Contém as views principais do sistema
+    as views especificas estão na pasta my_views e custom
+    Também é utilizado os arquivos funcoes.py
+"""
 
 from django.shortcuts import render, redirect
-from django.http import request, HttpResponse, HttpResponseRedirect, JsonResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib import messages
-from django.core.paginator import Paginator
-from django.contrib.auth import update_session_auth_hash, login, authenticate
-from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
-from django.db import transaction
-from django.forms import formset_factory, modelformset_factory, inlineformset_factory
 
 from core.forms import *
 from core.models import *
@@ -26,6 +19,8 @@ from core.custom.ajax_requests import *
 
 
 def index(request):
+    """ Retorna a página inicial (Login) """
+
     return render(request, "index.html")
 
 # Home e Principais
@@ -33,16 +28,20 @@ def index(request):
 
 @login_required(login_url="/admin")
 def home(request):
+    """ Página Inicial """
+
     return render(request, "base.html")
 
 
 @login_required(login_url="/admin")
 def redirect_home(request):
+    """ Redirect para a Página Inicial """
     return redirect('/admin/home')
 
 
 @login_required(login_url="/admin")
 def iframe_home(request):
+    """ Página inicial do sistema em si """
 
     # Info sobre pedidos de fabricação
 
@@ -64,6 +63,8 @@ def iframe_home(request):
 
 @login_required(login_url="/admin")
 def calcula_frete(request):
+    """ Sem uso no momento """
+
     retorno = {"Valor": "0,00", "PrazoEntrega": 0, "MsgErro": "None"}
     if request.POST:
         form = FreteForm(request.POST)

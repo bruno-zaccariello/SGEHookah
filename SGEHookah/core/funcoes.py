@@ -1,15 +1,20 @@
-from xml.etree import ElementTree
-import requests
+"""
+    Módulo auxiliar com funções para views e outros
+"""
+
+# from xml.etree import ElementTree
+# import requests
 
 from django.db.models import Q
 
 from core.models import Produto, Pessoa
 
 __all__ = ['filtra_produtos', 'filtra_clientes',
-           'paginar', 'calcula_frete', 'arruma_url_page']
+           'paginar', 'arruma_url_page']
 
 
 def arruma_url_page(request):
+    """ Arruma a url de views que possuem paginação e pesquisa  """
     url = str(request.get_full_path())
     if "&page=" in url:
         url = url[:-7]
@@ -19,53 +24,30 @@ def arruma_url_page(request):
 
 
 def filtra_produtos(codigo, palavra_chave):
-    if codigo == '':
-        codigo = None
-    if palavra_chave == '':
-        palavra_chave = None
+    """ Função para fazer a filtragem de produtos """
 
-    if palavra_chave and codigo:
-        return Produto.objects.filter(
-            Q(nomeproduto__icontains=palavra_chave) |
-            Q(descricao__icontains=palavra_chave) |
-            Q(codproduto__icontains=codigo),
-            hide=False
-        ).order_by('codproduto')
-    elif codigo and not palavra_chave:
-        return Produto.objects.filter(hide=False, codproduto=codigo).order_by('codproduto')
-    elif palavra_chave and not codigo:
-        return Produto.objects.filter(
-            Q(nomeproduto__icontains=palavra_chave) |
-            Q(descricao__icontains=palavra_chave),
-            hide=False
-        ).order_by('codproduto')
-    else:
-        return Produto.objects.filter(hide=False).order_by('codproduto')
+    return Produto.objects.filter(
+        Q(nomeproduto__icontains=palavra_chave) |
+        Q(descricao__icontains=palavra_chave),
+        codproduto__icontains=codigo,
+        hide=False
+    ).order_by('codproduto')
 
 
 def filtra_clientes(codigo, nome):
-    if codigo == '':
-        codigo = None
-    if nome == '':
-        nome = None
+    """ Função para fazer a filtragem de clientes """
 
-    if codigo and not nome:
-        return Pessoa.objects.filter(
-            hide=False, pkid_pessoa__icontains=codigo
-        ).order_by('pkid_pessoa')
-    elif nome and not codigo:
-        return Pessoa.objects.filter(hide=False, nome__icontains=nome).order_by('pkid_pessoa')
-    elif nome and codigo:
-        return Pessoa.objects.filter(
-            hide=False,
-            nome__icontains=nome,
-            pkid_pessoa__icontains=codigo
-        ).order_by('pkid_pessoa')
-    else:
-        return Pessoa.objects.filter(hide=False)
+    return Pessoa.objects.filter(
+        Q(nomecompleto_razaosocial__icontains=nome) |
+        Q(apelido_nomefantasia=nome) |
+        Q(email=nome),
+        hide=False,
+        pkid_pessoa__icontains=codigo
+    ).order_by('pkid_pessoa')
 
 
 def paginar(lista):
+    """ Função inutilizada """
     page = 1
     ctrl = 0
     page_content = {1: []}
@@ -81,35 +63,36 @@ def paginar(lista):
     return page_content
 
 
-def calcula_frete(
-        nCdEmpresa='',
-        sDsSenha='',
-        nCdServico="4014",
-        sCepOrigem="",
-        sCepDestino="",
-        nVlPeso="0.5",
-        nCdFormato=1,
-        nVlComprimento=16,
-        nVlAltura=2,
-        nVlLargura=11,
-        nVlDiametro="0",
-    ):
-    url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?'
-    url += f'nCdEmpresa={nCdEmpresa}'
-    url += f'&sDsSenha={sDsSenha}'
-    url += f'&nCdServico={nCdServico}'
-    url += f'&sCepOrigem={sCepOrigem}'
-    url += f'&sCepDestino={sCepDestino}'
-    url += f'&nVlPeso={nVlPeso}'
-    url += f'&nCdFormato={nCdFormato}'
-    url += f'&nVlComprimento={nVlComprimento}'
-    url += f'&nVlAltura={nVlAltura}'
-    url += f'&nVlLargura={nVlLargura}'
-    url += f'&nVlDiametro={nVlDiametro}'
-    retorno = requests.get(url)
-    tree = ElementTree.fromstring(retorno.content)
-    dici = {}
-    for child in tree.iter('*'):
-        tag = child.tag.split('}')[1]
-        dici[tag] = str(child.text)
-    return dici
+# def calcula_frete(
+#     nCdEmpresa='',
+#     sDsSenha='',
+#     nCdServico="4014",
+#     sCepOrigem="",
+#     sCepDestino="",
+#     nVlPeso="0.5",
+#     nCdFormato=1,
+#     nVlComprimento=16,
+#     nVlAltura=2,
+#     nVlLargura=11,
+#     nVlDiametro="0",
+# ):
+#     """ Função para consumir a API do correios """
+#     url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?'
+#     url += f'nCdEmpresa={nCdEmpresa}'
+#     url += f'&sDsSenha={sDsSenha}'
+#     url += f'&nCdServico={nCdServico}'
+#     url += f'&sCepOrigem={sCepOrigem}'
+#     url += f'&sCepDestino={sCepDestino}'
+#     url += f'&nVlPeso={nVlPeso}'
+#     url += f'&nCdFormato={nCdFormato}'
+#     url += f'&nVlComprimento={nVlComprimento}'
+#     url += f'&nVlAltura={nVlAltura}'
+#     url += f'&nVlLargura={nVlLargura}'
+#     url += f'&nVlDiametro={nVlDiametro}'
+#     retorno = requests.get(url)
+#     tree = ElementTree.fromstring(retorno.content)
+#     dici = {}
+#     for child in tree.iter('*'):
+#         tag = child.tag.split('}')[1]
+#         dici[tag] = str(child.text)
+#     return dici

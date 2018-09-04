@@ -1,7 +1,5 @@
 $(document).ready(function() {
-    $('#BOTAO_CHECA').click(function() {
-        checa_materias();
-    })
+    $('#id_quantidade').change(function(){ checa_materias(); })
 })
 
 function checa_materias() {
@@ -16,7 +14,6 @@ function checa_materias() {
         ids.push([id_materia, quantity])
     })
 
-    console.log(ids)
     $.ajax({
         method: "POST",
         url: "/js/checa_materias/",
@@ -27,16 +24,22 @@ function checa_materias() {
             r = JSON.parse(JSON.stringify(data))
             var r_data = r.checks
             
+            var invalid_count = 0
             for (var i = 0; i < r_data.length; i++) {
                 if (r_data[i][1]) {
                     $('[id_materia='+r_data[i][0]+']').css({'background-color':'green', 'color':'green'})
-                    alert(r_data[i][0] + ' eh true')
                 } else {
                     $('[id_materia='+r_data[i][0]+']').css({'background-color':'red', 'color':'red'})
-                    alert(r_data[i][0] + ' eh false')
+                    invalid_count++
                 }
             }
 
+            if (invalid_count > 0) {
+                $('#submitButton').prop('disabled', true)
+            } else {
+                $('#submitButton').prop('disabled', false)
+            }
+            
         } 
     })
 
@@ -72,6 +75,8 @@ $('#id_fkid_formula').change(function() {
             }
         }
     })
+
+    checa_materias();
 
 })
 

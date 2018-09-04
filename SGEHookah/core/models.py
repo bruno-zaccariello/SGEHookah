@@ -1,3 +1,7 @@
+"""
+    Modelos do banco de dados
+"""
+
 import datetime as dt
 
 from django.db import models
@@ -11,6 +15,7 @@ __all__ = [
 
 
 class Categoriaproduto(models.Model):
+    """ Categoria de produto """
     pkid_categoria = models.AutoField(primary_key=True)
     nomecategoria = models.CharField(
         'Nome da Categoria', unique=True, max_length=100)
@@ -26,6 +31,7 @@ class Categoriaproduto(models.Model):
 
 
 class Cotacaocompra(models.Model):
+    """ Cotacação de compras """
     pkid_cotacao = models.AutoField(primary_key=True)
     fornecedor = models.CharField(max_length=100, blank=True, null=True)
     dt_cotacao = models.DateTimeField(blank=True, null=True)
@@ -42,6 +48,7 @@ class Cotacaocompra(models.Model):
 
 
 class Endereco(models.Model):
+    """ Armazena informações sobre um Endereço """
     pkid_endereco = models.AutoField(primary_key=True)
     fkid_pessoa = models.ForeignKey(
         'Pessoa', models.CASCADE,
@@ -67,6 +74,7 @@ class Endereco(models.Model):
 
 
 class Entrega(models.Model):
+    """ Armazena informações sobre alguma entrega """
     pkid_entrega = models.AutoField(primary_key=True)
     dataentrega = models.DateTimeField(blank=True, null=True)
     formaentrega = models.CharField(max_length=100, blank=True, null=True)
@@ -83,6 +91,7 @@ class Entrega(models.Model):
 
 
 class Formapagamento(models.Model):
+    """ Armazena informações sobre formas de pagamento """
     pkid_formapag = models.AutoField(primary_key=True)
     formapagamento = models.CharField(max_length=50)
     fkid_usuario_alteracao = models.IntegerField()
@@ -95,6 +104,11 @@ class Formapagamento(models.Model):
 
 
 class Formulaproduto(models.Model):
+    """
+        Armazena informações sobre a fórmula de um produto
+        Utiliza o modelo Formulamateria como linhas de matérias
+        primas necessárias
+    """
     pkid_formula = models.AutoField(primary_key=True)
     fkid_produto = models.OneToOneField(
         'Produto', on_delete=models.CASCADE,
@@ -113,6 +127,7 @@ class Formulaproduto(models.Model):
 
 
 class Itemcompra(models.Model):
+    """ Linha de compra """
     pkid_item = models.AutoField(primary_key=True)
     produto = models.CharField(max_length=45, blank=True, null=True)
     descricaoproduto = models.CharField(max_length=45, blank=True, null=True)
@@ -132,6 +147,7 @@ class Itemcompra(models.Model):
 
 
 class Itemcotacao(models.Model):
+    """ Item de cotação """
     pkid_item = models.AutoField(primary_key=True)
     produto = models.CharField(max_length=45, blank=True, null=True)
     descricaoproduto = models.CharField(max_length=100, blank=True, null=True)
@@ -149,6 +165,7 @@ class Itemcotacao(models.Model):
 
 
 class Itemvenda(models.Model):
+    """ Item de venda """
     pkid_item = models.AutoField(primary_key=True, max_length=45)
     pedido_venda_idpedido_venda = models.IntegerField()
     produto = models.CharField(max_length=45, blank=True, null=True)
@@ -169,6 +186,7 @@ class Itemvenda(models.Model):
 
 
 class Linhavenda(models.Model):
+    """ Linha de venda """
     pkid_linhavenda = models.AutoField(primary_key=True)
     pedidovenda_pkid_venda = models.IntegerField()
     fkid_produto = models.IntegerField()
@@ -185,6 +203,7 @@ class Linhavenda(models.Model):
 
 
 class Materiaprima(models.Model):
+    """ Armazena informações sobre matérias primas """
     pkid_materiaprima = models.AutoField(primary_key=True)
     materiaprima = models.CharField('Matéria Prima', max_length=60)
     marca = models.CharField('Marca', max_length=50, blank=True, null=True)
@@ -203,6 +222,11 @@ class Materiaprima(models.Model):
 
 
 class Formulamateria(models.Model):
+    """
+        Modelo auxilar do Formulaproduto
+        Armazena informações sobre as matérias primas
+        utilizadas em um fórmula (ManyToOne)
+    """
     pkid_formula_materia = models.AutoField(primary_key=True)
     fkid_formulaproduto = models.ForeignKey(
         "Formulaproduto",
@@ -227,6 +251,7 @@ class Formulamateria(models.Model):
 
 
 class Movimentacao(models.Model):
+    """ Movimentação em estoque de algum produto """
     pkid_movimentacao = models.AutoField(primary_key=True)
     fkid_produto = models.IntegerField()
     tipomovimentacao = models.TextField()
@@ -245,6 +270,8 @@ class Movimentacao(models.Model):
 
 
 class Pedidocompra(models.Model):
+    """ Pedido compra """
+
     pkid_compra = models.AutoField(primary_key=True)
     fornecedor = models.CharField(max_length=100, blank=True, null=True)
     dt_pedido = models.DateTimeField(blank=True, null=True)
@@ -262,6 +289,8 @@ class Pedidocompra(models.Model):
 
 
 class Pedidofabricacao(models.Model):
+    """ Armazena informações sobre um novo pedido de fabricação """
+
     pkid_pedidofabricacao = models.AutoField(primary_key=True)
     fkid_formula = models.ForeignKey(
         "Formulaproduto", on_delete=models.CASCADE)
@@ -272,11 +301,20 @@ class Pedidofabricacao(models.Model):
     hide = models.BooleanField(default=0)
 
     def is_ready(self):
+        """
+            Checa se o pedido já pode ser retirado da maturação
+        """
         return dt.datetime.now(dt.timezone.utc) >= self.dt_fim_maturacao
 
     def materias(self):
+        """
+            Devolve uma lista com as matérias primas necessárias
+            para uma fabricação
+        """
         lista = []
-        for materia in Formulamateria.objects.filter(fkid_formulaproduto=self.fkid_formula).values():
+        materias = Formulamateria.objects.filter(
+            fkid_formulaproduto=self.fkid_formula).values()
+        for materia in materias:
 
             id_materia = materia['fkid_materiaprima_id']
             unidade = materia['unidade_id']
@@ -293,6 +331,7 @@ class Pedidofabricacao(models.Model):
         return lista
 
     def name(self):
+        """ Retorna um nome para o pedido """
         return f'Pedido nº{self.pkid_pedidofabricacao}'
 
     def __str__(self):
@@ -304,6 +343,7 @@ class Pedidofabricacao(models.Model):
 
 
 class Pedidovenda(models.Model):
+    """ Pedido de venda """
     pkid_venda = models.AutoField(primary_key=True)
     fkid_pessoa = models.IntegerField()
     fkid_usuario = models.IntegerField()
@@ -323,6 +363,10 @@ class Pedidovenda(models.Model):
 
 
 class Pessoa(models.Model):
+    """
+        Armazena informações sobre um cliente, fornecedor ou qualquer
+        pessoa que seja preciso registrar no sistema
+    """
     pkid_pessoa = models.AutoField(primary_key=True, )
     nomecompleto_razaosocial = models.CharField(
         'Nome / Razão Social', max_length=100)
@@ -352,6 +396,7 @@ class Pessoa(models.Model):
 
 
 class Produto(models.Model):
+    """ Armazena informações sobre um produto """
     pkid_produto = models.AutoField(primary_key=True, )
     fkid_categoria = models.ForeignKey(
         'Categoriaproduto',
@@ -389,6 +434,8 @@ class Produto(models.Model):
 
 
 class Statuscompra(models.Model):
+    """ Status de uma compra """
+
     pkid_status = models.AutoField(primary_key=True)
     descricaostatus = models.CharField(max_length=45, blank=True, null=True)
 
@@ -397,6 +444,8 @@ class Statuscompra(models.Model):
 
 
 class Statusfabricacao(models.Model):
+    """ Armazena as etapas (status) de pedidos de fabricação"""
+
     pkid_status = models.AutoField(primary_key=True)
     order = models.IntegerField("Ordem")
     status = models.CharField("Estado", max_length=45, blank=True, null=True)
@@ -412,6 +461,8 @@ class Statusfabricacao(models.Model):
 
 
 class Statusvenda(models.Model):
+    """ Status de venda """
+
     pkid_status = models.AutoField(primary_key=True)
     descricaostatus = models.CharField(max_length=100, blank=True, null=True)
 
@@ -420,6 +471,8 @@ class Statusvenda(models.Model):
 
 
 class Telefone(models.Model):
+    """ Armazena informações de um telefone """
+
     pkid_telefone = models.AutoField(primary_key=True)
     fkid_pessoa = models.ForeignKey(
         'Pessoa', on_delete=models.CASCADE,
@@ -439,6 +492,8 @@ class Telefone(models.Model):
 
 
 class Unidademedida(models.Model):
+    """ Armazena Unidades de Medidas utilizadas no sistema """
+
     pkid_unidademedida = models.AutoField(primary_key=True)
     unidademedida = models.CharField('Unidade', max_length=50)
     hide = models.BooleanField(default=0)
@@ -453,6 +508,8 @@ class Unidademedida(models.Model):
 
 
 class Usuario(models.Model):
+    """ Atualmente não está em uso """
+
     pkid_usuario = models.AutoField(primary_key=True)
     nomecompleto = models.CharField(max_length=45)
     login = models.CharField(unique=True, max_length=45)
@@ -466,6 +523,8 @@ class Usuario(models.Model):
 
 
 class Usuarioalteracao(models.Model):
+    """ Futuramente para realizar backups e logs """
+
     pkid_usuario_alteracao = models.AutoField(primary_key=True)
     dt_alteracao = models.DateTimeField()
     tipo_alteracao = models.TextField()
