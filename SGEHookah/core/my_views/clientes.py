@@ -108,7 +108,6 @@ def lista_clientes(request):
     url = arruma_url_page(request)  # função em funcoes.py
 
     context = {
-        "clientes": pagina,
         "pagina": pagina,
         "deletado": deletado,
         "url": url

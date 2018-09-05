@@ -304,13 +304,23 @@ class Pedidofabricacao(models.Model):
         """
             Checa se o pedido já pode ser retirado da maturação
         """
+
         return dt.datetime.now(dt.timezone.utc) >= self.dt_fim_maturacao
+
+    def product(self):
+        """ Devolve o produto a ser fabricado """
+        return self.fkid_formula.fkid_produto.nomeproduto
+
+    def status_string(self):
+        """ Devolve o nome do status atual do Pedido """
+        return self.fkid_statusfabricacao.status
 
     def materias(self):
         """
             Devolve uma lista com as matérias primas necessárias
             para uma fabricação
         """
+
         lista = []
         materias = Formulamateria.objects.filter(
             fkid_formulaproduto=self.fkid_formula).values()
@@ -332,6 +342,7 @@ class Pedidofabricacao(models.Model):
 
     def name(self):
         """ Retorna um nome para o pedido """
+
         return f'Pedido nº{self.pkid_pedidofabricacao}'
 
     def __str__(self):

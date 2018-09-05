@@ -9,13 +9,12 @@
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
 	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_clientes.css"/>
 	
-    <script src="/static/js/iframe/clientes/lista_clientes.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
 </head>
 
 <body>
 
-	<h1> Lista de Clientes </h1>
+	<h1> Pedidos de Fabricação </h1>
 	
 	<!-- ALERTA DE EXCLUIDO COM SUCESSO -->
 	
@@ -25,7 +24,7 @@
 		</div>
 		
 		<div class="overlay_content_success">
-			<h2 class="overlay_title_success">Cliente Deletado com Sucesso</h2>
+			<h2 class="overlay_title_success">Pedido Deletado com Sucesso</h2>
 			
 			<div class="bt_wrapper">
 				<a href="{% url 'lista_clientes' %}"><button class="btMain btConfirmar">Continuar</button></a>
@@ -56,17 +55,13 @@
 	
 	<!--============================================-->
 	
-	<div class="search_opts_wrapper white">
-		SESSÃO PARA FILTRAR CLIENTES (EM CONSTRUCAO)
-	</div>
-	
     <section class="content">
 
         <div class="opt_content">
             <div class="divCadastrar">
-                <a href="{% url 'cadastrar_cliente' %}">
+                <a href="{% url 'nova_fabricacao' %}">
                     <button class="btMain btCadastrar">
-                    CADASTRAR CLIENTE
+                        NOVO PEDIDO
                     </button>
                 </a>
             </div>
@@ -76,9 +71,11 @@
 
             <thead>
                 <tr>
-                    <th>Cód.</th>
+                    <th>Lote</th>
 
-                    <th>Nome do Cliente</th>
+                    <th>Produto</th>
+
+                    <th>Status</th>
 
                     <th>Opções</th>
                 </tr>
@@ -86,21 +83,25 @@
 
 
             <tbody>
-            {% for cliente in pagina %}
+            {% for pedido in pagina %}
                 <tr>
 
                     <td class="txt_center">
-                        {{ cliente.pkid_pessoa }}
+                        {{ pedido.name }}
                     </td>
 
-                    <td class="lft_padding">
-                        {{ cliente.nomecompleto_razaosocial }}
+                    <td class="txt_center">
+                        {{ pedido.product }}
+                    </td>
+
+                    <td class="txt_center">
+                        {{ pedido.status_string }}
                     </td>
                    
                     <td>
 
                         <div class="opts_holder flex_row_nw">
-                            <a href="/iframe/clientes/{{ cliente.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
+                            <a href="{% url 'editar_fabricacao' pedido.pkid_pedidofabricacao %}" title="editar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_edit">
                                 </div>
                             </a>

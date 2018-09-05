@@ -122,7 +122,8 @@ def editar_fabricacao(request, id_fabricacao):
         pkid_pedidofabricacao=id_fabricacao)
 
     if request.POST:
-        form_fabricacao = PedidofabricacaoForm(request.POST, instance=fabricacao)
+        form_fabricacao = PedidofabricacaoForm(
+            request.POST, instance=fabricacao)
         if form_fabricacao.is_valid():
             form_fabricacao.save()
             url = str(request.path_info) + '?success=True'
@@ -135,3 +136,25 @@ def editar_fabricacao(request, id_fabricacao):
         "success": success,
     }
     return render(request, "iframe/producao/pedidos/editar_fabricacao.html", context)
+
+
+@login_required(login_url="/admin")
+def lista_fabricacao(request):
+    """ Página que exibe a lista de pedidos de fabricação """
+
+    # Pega informações da URL
+    deletado = request.GET.get('deleted', False)
+    page = int(request.GET.get('page', 1))
+
+    # Filtra lista de pedidos e gera páginas
+    pedidos = Pedidofabricacao.objects.filter(hide=False)
+    paginas = Paginator(pedidos, 10)
+    pagina = paginas.get_page(page)
+    url = arruma_url_page(request)  # função em funcoes.py
+
+    context = {
+        'pagina': pagina,
+        'deletado': deletado
+    }
+
+    return render(request, "iframe/producao/pedidos/lista_fabricacao.html", context)

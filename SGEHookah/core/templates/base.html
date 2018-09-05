@@ -3,7 +3,7 @@
 	{% load static %}
 	{% block scripts %}
 	
-		<title id="base_title">SGE - Cadastrar Cliente</title>
+		<title id="base_title">SGE - Home Page</title>
 
 		<script src="/static/jquery/jquery-3.3.1.min.js"></script>
 		<script src="/static/jquery/jquery.mask.min.js"></script>
@@ -137,6 +137,7 @@
 					<div class="oam_dropdown_content">
 						<a href="{% url 'lista_formulas' %}" target="main_frame"><div class="oam_drop_opt">Fórmulas</div></a>
 						<a href="{% url 'nova_fabricacao' %}" target="main_frame"><div class="oam_drop_opt">Nova Fabricação</div></a>
+						<a href="{% url 'lista_fabricacao' %}" target="main_frame"><div class="oam_drop_opt">Pedidos de Fabricação</div></a>
 					</div>
 				</div>
 				
