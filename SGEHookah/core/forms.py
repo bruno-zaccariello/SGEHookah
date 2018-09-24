@@ -233,7 +233,7 @@ class EnderecoForm(forms.ModelForm):
 
     cep = forms.CharField(label="CEP", max_length=9)
     logradouro = forms.CharField(label="Endereço", max_length=200)
-    numero = forms.IntegerField(label="Número", required=False)
+    endereco_numero = forms.IntegerField(label="Número", required=False)
     complemento = forms.CharField(
         label="Complemento", max_length=20, required=False)
     bairro = forms.CharField(label="Bairro", max_length=100)
@@ -243,7 +243,7 @@ class EnderecoForm(forms.ModelForm):
     class Meta:
         model = Endereco
         fields = [
-            'cep', 'logradouro', 'numero',
+            'cep', 'logradouro', 'endereco_numero',
             'complemento', 'bairro', 'cidade',
             'uf'
         ]

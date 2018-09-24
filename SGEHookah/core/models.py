@@ -55,7 +55,7 @@ class Endereco(models.Model):
         blank=True, null=True,
         verbose_name='Pessoa')
     logradouro = models.CharField('Endereço', max_length=100)
-    numero = models.CharField('Número', max_length=7, null=True, blank=True)
+    endereco_numero = models.CharField('Número', max_length=7, null=True, blank=True)
     complemento = models.CharField(
         'Complemento', max_length=45, blank=True, null=True)
     cep = models.CharField('CEP', max_length=9)
@@ -487,14 +487,14 @@ class Telefone(models.Model):
     pkid_telefone = models.AutoField(primary_key=True)
     fkid_pessoa = models.ForeignKey(
         'Pessoa', on_delete=models.CASCADE,
-        verbose_name='Pessoa')
-    ddi = models.CharField('DDI', max_length=2, default=55)
-    ddd = models.CharField('DDD', max_length=2)
+        verbose_name='Pessoa', null=True)
+    ddi = models.CharField('DDI', max_length=3, blank=True, null=True, default=55)
+    ddd = models.CharField('DDD', max_length=2, blank=True, null=True, default=11)
     numero = models.CharField('Número', max_length=15)
     hide = models.BooleanField(default=0)
 
     def __str__(self):
-        return f'{self.fkid_pessoa.nomecompleto_razaosocial} ({self.ddd}){self.numero}'
+        return f'{self.numero}'
 
     class Meta:
         managed = True

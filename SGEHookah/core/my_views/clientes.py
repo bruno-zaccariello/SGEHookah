@@ -22,32 +22,28 @@ def cadastrar_cliente(request):
         form_pessoa = PessoaForm(request.POST)
         form_endereco = EnderecoForm(request.POST)
         form_telefone = TelefoneForm(request.POST)
-        if form_pessoa.is_valid() and form_endereco.is_valid() and form_telefone.is_valid():
-            # Caso aja erro o atomic() irá desfazer as alteração feitas durante o código.
-            with transaction.atomic():
-                # Altera o tipo de pessoa no formulario e salva
-                form_pessoa = form_pessoa.save(commit=False)
-                form_pessoa.tipopessoa = 'cliente'
-                form_pessoa.save()
-                pessoa = Pessoa.objects.get(pkid_pessoa=form_pessoa.pk)
+        with transaction.atomic():
+            if form_pessoa.is_valid():
+                pessoa = form_pessoa.save(commit=False)
+                pessoa.tipopessoa = 'cliente'
+                pessoa.save()
 
-                # Atualiza o endereço com a pessoa recém criada e salva
+            if form_endereco.is_valid():
                 form_endereco = form_endereco.save(commit=False)
                 form_endereco.fkid_pessoa = pessoa
                 form_endereco.save()
 
-                # Arruma o campo de telefone e salva
-                form_telefone = form_telefone.save(commit=False)
-                if form_telefone.numero not in ('', None):
-                    form_telefone.fkid_pessoa = pessoa
-                    numero = str(form_telefone.numero)
-                    form_telefone.ddd = numero[1:3]
-                    form_telefone.numero = numero[4:]
-                    form_telefone.save()
+            if form_telefone.is_valid():
+                telefone = form_telefone.save(commit=False)
+                numero = telefone.numero
+                telefone.numero = numero[4:].replace('-','')
+                telefone.ddd = numero[1:3]
+                telefone.fkid_pessoa = pessoa
+                telefone.save()
 
-                # Arruma a url para devolver que foi cadastrado com sucesso
-                url = str(request.path_info) + str('?success=True')
-                return HttpResponseRedirect(url)
+            # Arruma a url para devolver que foi cadastrado com sucesso
+            url = str(request.path_info) + str('?success=True')
+            return HttpResponseRedirect(url)
     else:
         form_pessoa = PessoaForm()
         form_endereco = EnderecoForm()
@@ -123,3 +119,51 @@ def deletar_cliente(request, id_cliente):
     cliente.hide = True
     cliente.save()
     return HttpResponseRedirect("/iframe/clientes/lista?deleted=True")
+
+@login_required(login_url="/admin")
+def editar_cliente(request, id_cliente):
+    
+    try:
+        cliente = Pessoa.objects.get(pkid_pessoa=id_cliente)
+    except:
+        return HttpResponseRedirect('/admin/home')
+
+    try:
+        telefone = Telefone.objects.get(fkid_pessoa=id_cliente)
+        endereco = Endereco.objects.get(fkid_pessoa=id_cliente)
+    except:
+        telefone = Telefone(fkid_pessoa=cliente)
+        endereco = Endereco(fkid_pessoa=cliente)
+
+    success = request.GET.get('success', False)
+    if request.POST:
+        form_pessoa = PessoaForm(request.POST, instance=cliente)
+        form_endereco = EnderecoForm(request.POST, instance=endereco)
+        form_telefone = TelefoneForm(request.POST, instance=telefone)
+
+        with transaction.atomic():
+            if form_pessoa.is_valid() and form_pessoa.has_changed():
+                form_pessoa.save()
+
+            if form_endereco.is_valid() and form_endereco.has_changed():
+                form_endereco.save()
+
+            if form_telefone.is_valid() and form_telefone.has_changed():
+                form_telefone.save()
+
+            return HttpResponseRedirect(request.path_info)
+
+    else:
+        form_pessoa = PessoaForm(instance=cliente)
+        form_endereco = EnderecoForm(instance=endereco)
+        form_telefone = TelefoneForm(instance=telefone)
+
+    context = {
+        "cliente": cliente,
+        "telefone": telefone,
+        "form_pessoa": form_pessoa,
+        "form_endereco": form_endereco,
+        "form_telefone": form_telefone,
+        "success": success
+    }
+    return render(request,"iframe/clientes/editar_cliente.html", context)
