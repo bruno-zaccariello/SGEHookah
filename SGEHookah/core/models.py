@@ -5,12 +5,14 @@
 import datetime as dt
 
 from django.db import models
+from django.contrib.auth.models import User
 
 __all__ = [
     "Categoriaproduto", "Produto", "Unidademedida",
     "Pessoa", "Endereco", "Telefone",
     "Formulaproduto", "Formulamateria", "Materiaprima",
-    "Pedidofabricacao", "Statusfabricacao"
+    "Pedidofabricacao", "Statusfabricacao", "Pedidovenda",
+    "Statusvenda", "Formapagamento"
 ]
 
 
@@ -41,7 +43,7 @@ class Cotacaocompra(models.Model):
     statuscotacao_pkid_status = models.IntegerField()
     dt_cadastro = models.DateTimeField(blank=True, null=True)
     dt_alteracao = models.DateTimeField(blank=True, null=True)
-    hide = models.TextField(default=0, blank=True, null=True)
+    hide = models.BooleanField(default=0)
 
     class Meta:
         managed = True
@@ -84,23 +86,30 @@ class Entrega(models.Model):
     fkid_usuario_alteracao = models.IntegerField()
     dt_cadastro = models.DateTimeField()
     dt_alteracao = models.DateTimeField()
-    hide = models.TextField(default=0)
+    hide = models.BooleanField(default=0)
+
+    def __str__(self):
+        return self.formaentrega
 
     class Meta:
         managed = True
+        verbose_name = 'Forma de Entrega'
+        verbose_name_plural = 'Formas de Entrega'
 
 
 class Formapagamento(models.Model):
     """ Armazena informações sobre formas de pagamento """
     pkid_formapag = models.AutoField(primary_key=True)
     formapagamento = models.CharField(max_length=50)
-    fkid_usuario_alteracao = models.IntegerField()
-    dt_cadastro = models.DateTimeField()
-    dt_alteracao = models.DateTimeField()
-    hide = models.TextField(default=0)
+    hide = models.BooleanField(default=0)
+
+    def __str__(self):
+        return self.formapagamento
 
     class Meta:
         managed = True
+        verbose_name = 'Forma de Pagamento'
+        verbose_name_plural = 'Formas de Pagamento'
 
 
 class Formulaproduto(models.Model):
@@ -136,7 +145,7 @@ class Itemcompra(models.Model):
     totalvenda = models.TextField(blank=True, null=True)
     dt_cadastro = models.DateTimeField(blank=True, null=True)
     dt_alteracao = models.DateTimeField(blank=True, null=True)
-    hide = models.TextField(default=0, blank=True, null=True)
+    hide = models.BooleanField(default=0)
     pedidocompra_pkid_compra = models.IntegerField()
     statuscompra_pkid_status = models.IntegerField()
     unidademedidacompra_pkid_unidademedida = models.IntegerField()
@@ -156,7 +165,7 @@ class Itemcotacao(models.Model):
     totalvenda = models.TextField(blank=True, null=True)
     dt_cadastro = models.DateTimeField(blank=True, null=True)
     dt_alteracao = models.DateTimeField(blank=True, null=True)
-    hide = models.TextField(default=0, blank=True, null=True)
+    hide = models.BooleanField(default=0)
     cotacaocompra_pkid_cotacao = models.IntegerField()
 
     class Meta:
@@ -171,14 +180,10 @@ class Itemvenda(models.Model):
     produto = models.CharField(max_length=45, blank=True, null=True)
     descricaoproduto = models.CharField(max_length=45, blank=True, null=True)
     quantidade = models.IntegerField(blank=True, null=True)
-    unidademedida_pkid_unidademedida = models.IntegerField()
-    precounitario = models.TextField(blank=True, null=True)
+    precounitario = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
     totalvenda = models.TextField(blank=True, null=True)
-    dt_cadastro = models.DateTimeField(blank=True, null=True)
-    dt_alteracao = models.DateTimeField(blank=True, null=True)
-    hide = models.TextField(default=0, blank=True, null=True)
+    hide = models.BooleanField(default=0)
     produtos_idprodutos = models.IntegerField()
-    usuario_pkid_usuario = models.IntegerField()
 
     class Meta:
         managed = True
@@ -195,7 +200,7 @@ class Linhavenda(models.Model):
     fkid_usuario_alteracao = models.IntegerField()
     dt_alteracao = models.DateTimeField()
     dt_cadastro = models.DateTimeField()
-    hide = models.TextField(default=0)
+    hide = models.BooleanField(default=0)
 
     class Meta:
         managed = True
@@ -259,7 +264,7 @@ class Movimentacao(models.Model):
     numsaidas = models.IntegerField()
     dt_cadastro = models.DateTimeField()
     dt_alteracao = models.DateTimeField()
-    hide = models.TextField(default=0)
+    hide = models.BooleanField(default=0)
     fkid_linhavenda1 = models.IntegerField(blank=True, null=True)
     fkid_venda = models.IntegerField(blank=True, null=True)
     fkid_pedidofabri = models.IntegerField(blank=True, null=True)
@@ -281,7 +286,7 @@ class Pedidocompra(models.Model):
     cotacaocompra_pkid_cotacao = models.IntegerField()
     dt_cadastro = models.DateTimeField(blank=True, null=True)
     dt_alteracao = models.DateTimeField(blank=True, null=True)
-    hide = models.TextField(default=0, blank=True, null=True)
+    hide = models.BooleanField(default=0)
     statuscompra_pkid_status = models.IntegerField()
 
     class Meta:
@@ -357,21 +362,23 @@ class Pedidofabricacao(models.Model):
 class Pedidovenda(models.Model):
     """ Pedido de venda """
     pkid_venda = models.AutoField(primary_key=True)
-    fkid_pessoa = models.IntegerField()
-    fkid_usuario = models.IntegerField()
+    fkid_cliente = models.ForeignKey('Pessoa', on_delete=models.CASCADE, null=True)
+    fkid_usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    fkid_status = models.ForeignKey('Statusvenda', on_delete=models.DO_NOTHING)
+    fkid_formapag = models.ForeignKey('Formapagamento', on_delete=models.DO_NOTHING, null=True)
+    fkid_entrega = models.IntegerField(null=True)
     dt_pedido = models.DateTimeField(blank=True, null=True)
     dt_pagamento = models.DateTimeField(blank=True, null=True)
     dt_entrega = models.DateTimeField(blank=True, null=True)
-    fkid_usuarioalteracao = models.IntegerField()
-    fkid_formapag = models.IntegerField()
-    fkid_entrega = models.IntegerField()
-    dt_cadastro = models.DateTimeField()
-    dt_alteracao = models.DateTimeField()
-    hide = models.TextField(default=0)
-    fkid_status = models.IntegerField()
+    hide = models.BooleanField(default=0)
+
+    def __str__(self):
+        return f'Pedido nº{self.pkid_venda}'
 
     class Meta:
         managed = True
+        verbose_name = 'Pedido de Venda'
+        verbose_name_plural = 'Pedidos de Venda'
 
 
 class Pessoa(models.Model):
@@ -477,10 +484,15 @@ class Statusvenda(models.Model):
     """ Status de venda """
 
     pkid_status = models.AutoField(primary_key=True)
-    descricaostatus = models.CharField(max_length=100, blank=True, null=True)
+    descricao = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.descricao
 
     class Meta:
         managed = True
+        verbose_name = 'Status de Venda'
+        verbose_name_plural = 'Status de Venda'
 
 
 class Telefone(models.Model):
@@ -529,7 +541,7 @@ class Usuario(models.Model):
     senha = models.CharField(max_length=45)
     dt_importacao = models.DateTimeField()
     dt_alteracao = models.DateTimeField()
-    hide = models.TextField(default=0)
+    hide = models.BooleanField(default=0)
 
     class Meta:
         managed = True
