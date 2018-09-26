@@ -212,6 +212,29 @@ def lista_materia(request):
     }
     return render(request, 'iframe/produtos/materia/lista_materia.html', context)
 
+@login_required(login_url="/admin")
+def editar_materia(request, id_materia):
+
+    try:
+        materia = Materiaprima.objects.get(pkid_materiaprima = id_materia)
+    except:
+        return HttpResponseRedirect('/admin/home')
+
+    if request.POST:
+        form = MateriaPrimaForm(request.POST, instance=materia)
+
+        if form.is_valid() and form.has_changed():
+            form.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = MateriaPrimaForm(instance=materia)
+
+    context = {
+        "materia": materia,
+        "form": form
+    }
+    return render(request,"iframe/produtos/materia/editar_materia.html", context)
+
 
 @login_required(login_url="/admin")
 def lista_categorias(request):

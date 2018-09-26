@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title id="iframe_title">SGE - Editar Matéria</title>
+    
+        <link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    
+        <link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
+        <link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/materia_prima/editar_materia.css"/>
+    
+        <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+        <script src="/static/jquery/jquery.mask.min.js"></script>
+    </head>
+    
+    <body>
+        <h1> Editar Matéria-prima </h1>
+        
+        {% if success == 'True' %}
+        <div class="overlay" id="overlay">
+            <div class="overlay_bg">
+            </div>
+            
+            <div class="overlay_content">
+                <h2 class="overlay_title">CLIENTE CADASTRADO COM SUCESSO</h2>
+                
+                <div class="bt_wrapper">
+                    <a href="{% url 'editar_cliente' %}"><button class="btMain btConfirmar">Continuar</button></a>
+                </div>
+                
+            </div>
+        </div>
+        {% endif %}
+        
+        <section class="content">
+            <div>
+                <form method="POST" enctype="multipart/form-data" autocomplete="off">
+                    
+                    <div class="formInputContainer">
+                    
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="fieldDiv">
+                            <div class="formInput">
+                                <div class="label">{{field.label_tag}}</div>
+                                <div class="input">{{field}}
+                                    {{ field.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+    
+                    </div>
+                    <div class="botaoContainer">
+                        <button class="btMain btCadastrar" type="submit">Alterar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    
+        <script src="/static/js/formsFixes.js"></script>
+    
+    </body>
+    </html>

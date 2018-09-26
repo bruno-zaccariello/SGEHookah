@@ -292,6 +292,7 @@ class Pedidofabricacao(models.Model):
     """ Armazena informações sobre um novo pedido de fabricação """
 
     pkid_pedidofabricacao = models.AutoField(primary_key=True)
+    lote = models.CharField(max_length=8, blank=True, null=True)
     fkid_formula = models.ForeignKey(
         "Formulaproduto", on_delete=models.CASCADE)
     fkid_statusfabricacao = models.ForeignKey(
@@ -433,6 +434,7 @@ class Produto(models.Model):
     peso = models.DecimalField('Peso', max_digits=10, decimal_places=3, )
     fotoproduto = models.FileField(
         'Foto do Produto', upload_to='uploads/%Y/%m', max_length=1000, blank=True, null=True)
+    vendivel = models.BooleanField(default=1)
     hide = models.BooleanField(default=0)
 
     def __str__(self):

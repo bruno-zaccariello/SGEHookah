@@ -7,7 +7,7 @@
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
     <!-- Page specific -->
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
-	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_materias.css"/>
+	{% comment %} <link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_materias.css"/> {% endcomment %}
 	
     <script src="/static/js/patterns/lista.js"></script>
 </head>
@@ -107,7 +107,7 @@
                     <td>
 
                         <div class="opts_holder flex_row_nw">
-                            <a href="/iframe/clientes/{{ cliente.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
+                            <a href="{% url 'editar_materia' id_materia=item.pkid_materiaprima %}" title="editar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_edit">
                                 </div>
                             </a>
