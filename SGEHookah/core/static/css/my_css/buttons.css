@@ -67,6 +67,11 @@ a.opt_bt {
     background-size: 80%;
 }
 
+.opt_forward {
+    background-image: url("/static/img/forward.svg");
+    background-size: 80%;
+}
+
 .opt_add {
     background-image: url("/static/img/add.svg");
     background-size: 80%;

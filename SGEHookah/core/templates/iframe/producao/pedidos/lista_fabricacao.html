@@ -94,8 +94,15 @@
                         {{ pedido.product }}
                     </td>
 
-                    <td class="txt_center">
+                    <td>
+                        <span class="row_center flex_row_nw">
                         {{ pedido.status_string }}
+                        
+                        <a href="{{ request.path_info }}?update={{pedido.pkid_pedidofabricacao}}" title="próxima etapa" class='vertical opt_bt'>
+                            <div class="opt_bt opt_forward">
+                            </div>
+                        </a>
+                        </span>
                     </td>
                    
                     <td>

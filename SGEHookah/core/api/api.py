@@ -1,6 +1,7 @@
 from json import loads as load_json
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 
 from core.forms import *
 from core.models import *
@@ -8,6 +9,10 @@ from core.funcoes import *
 
 
 def ajax_nova_fabricacao(request):
+    """
+        Função utilizada para atualizar a lista de matérias-primas
+        em uma fabricação (ao alterar o campo de fórmula utilizada)
+    """
     lista = []
     if request.GET:
         rget = request.GET
@@ -42,6 +47,10 @@ def ajax_nova_fabricacao(request):
 
 
 def ajax_checa_materias(request):
+    """
+        Função utilizada para checar a quantidade de materiais
+        em um pedido de fabricação
+    """
     try:
         rdata = []
         if request.body:

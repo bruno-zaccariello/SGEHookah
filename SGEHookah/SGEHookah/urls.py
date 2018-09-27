@@ -65,9 +65,9 @@ producao = [
          editar_fabricacao, name="editar_fabricacao"),
 ]
 
-js = [
+api = [
     path('nova_fabricacao/', ajax_nova_fabricacao, name="ajax_nova_fabricacao"),
-    path('checa_materias/', ajax_checa_materias, name="ajax_checa_materias")
+    path('checa_materias/', ajax_checa_materias, name="ajax_checa_materias"),
 ]
 
 urlpatterns = [
@@ -83,7 +83,7 @@ urlpatterns = [
     path('iframe/producao/', include(producao)),
     path('iframe/vendas/calcula_frete/', calcula_frete, name="calcula_frete"),
 
-    path('js/', include(js)),
+    path('api/', include(api)),
 ]
 
 if settings.DEBUG is True:

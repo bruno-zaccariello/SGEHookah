@@ -145,6 +145,11 @@ def lista_fabricacao(request):
     # Pega informações da URL
     deletado = request.GET.get('deleted', False)
     page = int(request.GET.get('page', 1))
+    update = int(request.GET.get('update', False))
+    print(update)
+    if update:
+        Pedidofabricacao.objects.get(pkid_pedidofabricacao=update).avancar_etapa()
+        return HttpResponseRedirect(request.path_info)
 
     # Filtra lista de pedidos e gera páginas
     pedidos = Pedidofabricacao.objects.filter(hide=False)

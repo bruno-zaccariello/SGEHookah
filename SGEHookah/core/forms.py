@@ -307,6 +307,7 @@ class PedidofabricacaoForm(forms.ModelForm):
         label="Status",
         queryset=Statusfabricacao.objects.filter(hide=False).order_by('order'),
         initial=0)
+    lote = forms.CharField(label='Lote', max_length=8)
     quantidade = forms.FloatField(label='Quantidade a Produzir')
     dt_fim_maturacao = forms.DateTimeField(
         label='Dt. Maturação', widget=forms.HiddenInput(), initial=dt.datetime.now())
@@ -334,4 +335,4 @@ class PedidofabricacaoForm(forms.ModelForm):
     class Meta:
         model = Pedidofabricacao
         fields = ['fkid_formula', 'fkid_statusfabricacao',
-                  'quantidade', 'dt_fim_maturacao']
+                  'quantidade', 'dt_fim_maturacao', 'lote']

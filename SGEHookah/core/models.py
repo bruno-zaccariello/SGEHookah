@@ -12,7 +12,7 @@ __all__ = [
     "Pessoa", "Endereco", "Telefone",
     "Formulaproduto", "Formulamateria", "Materiaprima",
     "Pedidofabricacao", "Statusfabricacao", "Pedidovenda",
-    "Statusvenda", "Formapagamento"
+    "Statusvenda", "Formapagamento", "Itemvenda"
 ]
 
 
@@ -175,36 +175,20 @@ class Itemcotacao(models.Model):
 
 class Itemvenda(models.Model):
     """ Item de venda """
-    pkid_item = models.AutoField(primary_key=True, max_length=45)
-    pedido_venda_idpedido_venda = models.IntegerField()
-    produto = models.CharField(max_length=45, blank=True, null=True)
-    descricaoproduto = models.CharField(max_length=45, blank=True, null=True)
+    pkid_itemvenda = models.AutoField(primary_key=True)
+    fkid_pedidovenda = models.ForeignKey('Pedidovenda', on_delete=models.CASCADE)
+    fkid_produto = models.ForeignKey('Produto', on_delete=models.CASCADE)
     quantidade = models.IntegerField(blank=True, null=True)
-    precounitario = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
-    totalvenda = models.TextField(blank=True, null=True)
+    preco_total = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
     hide = models.BooleanField(default=0)
-    produtos_idprodutos = models.IntegerField()
+
+    def preco_unitario(self):
+        produto = Produto.objects.get(pkid_produto=self.fkid_produto)
+        return produto.preco
 
     class Meta:
         managed = True
-        unique_together = (('pkid_item', 'pedido_venda_idpedido_venda'),)
-
-
-class Linhavenda(models.Model):
-    """ Linha de venda """
-    pkid_linhavenda = models.AutoField(primary_key=True)
-    pedidovenda_pkid_venda = models.IntegerField()
-    fkid_produto = models.IntegerField()
-    quantidade = models.IntegerField()
-    precovenda = models.TextField()
-    fkid_usuario_alteracao = models.IntegerField()
-    dt_alteracao = models.DateTimeField()
-    dt_cadastro = models.DateTimeField()
-    hide = models.BooleanField(default=0)
-
-    class Meta:
-        managed = True
-        unique_together = (('pkid_linhavenda', 'pedidovenda_pkid_venda'),)
+        unique_together = (('pkid_itemvenda', 'fkid_pedidovenda'),)
 
 
 class Materiaprima(models.Model):
@@ -312,6 +296,15 @@ class Pedidofabricacao(models.Model):
         """
 
         return dt.datetime.now(dt.timezone.utc) >= self.dt_fim_maturacao
+
+    def avancar_etapa(self):
+        """ Avança para a próxima etapa """
+        order = self.fkid_statusfabricacao.order + 1
+        try:
+            self.fkid_statusfabricacao = Statusfabricacao.objects.get(order=order)
+            self.save()
+        except:
+            pass
 
     def product(self):
         """ Devolve o produto a ser fabricado """

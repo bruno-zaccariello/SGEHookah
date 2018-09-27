@@ -16,7 +16,7 @@ function checa_materias() {
 
     $.ajax({
         method: "POST",
-        url: "/js/checa_materias/",
+        url: "/api/checa_materias/",
         data: JSON.stringify({materias_ids: ids}),
         async: false,
         success: function(data) {
@@ -49,7 +49,7 @@ $('#id_fkid_formula').change(function() {
 
     $.ajax({
         method: "GET",
-        url: "/js/nova_fabricacao/",
+        url: "/api/nova_fabricacao/",
         data: {formula_id: $(this).val()},
         async: false,
         success: function(data){ 
