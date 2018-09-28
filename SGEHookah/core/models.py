@@ -281,14 +281,28 @@ class Pedidofabricacao(models.Model):
     """ Armazena informações sobre um novo pedido de fabricação """
 
     pkid_pedidofabricacao = models.AutoField(primary_key=True)
-    lote = models.CharField(max_length=8, blank=True, null=True)
+    lote = models.CharField(max_length=8, blank=True, null=True, unique=True)
     fkid_formula = models.ForeignKey(
         "Formulaproduto", on_delete=models.CASCADE)
     fkid_statusfabricacao = models.ForeignKey(
         "Statusfabricacao", on_delete=models.CASCADE)
-    quantidade = models.FloatField("Quantidade")
+    quantidade = models.IntegerField("Quantidade")
     dt_fim_maturacao = models.DateTimeField()
     hide = models.BooleanField(default=0)
+
+    def remover_estoque(self):
+        for materia_formula, id_materia in self.materias():
+            materiaprima = Materiaprima.objects.get(pkid_materiaprima=id_materia)
+            materiaprima.totalestoque -= (materia_formula['quantidade'] * self.quantidade)
+            materiaprima.save()
+        return self
+
+    def voltar_estoque(self):
+        for materia_formula, id_materia in self.materias():
+            materiaprima = Materiaprima.objects.get(pkid_materiaprima=id_materia)
+            materiaprima.totalestoque += (materia_formula['quantidade'] * self.quantidade)
+            materiaprima.save()
+        return self
 
     def is_ready(self):
         """
@@ -341,7 +355,6 @@ class Pedidofabricacao(models.Model):
 
     def name(self):
         """ Retorna um nome para o pedido """
-
         return f'Pedido nº{self.pkid_pedidofabricacao}'
 
     def __str__(self):

@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.forms import inlineformset_factory
+from django.urls import reverse
 
 from core.funcoes import arruma_url_page
 from core.models import *
@@ -97,11 +98,18 @@ def deletar_formula(request, id_formula):
 def nova_fabricacao(request):
     """ Página para criar um novo pedido de fabricação """
 
+    id_fabricacao = 0
     success = request.GET.get('success', False)
     if request.POST:
         form_fabricacao = PedidofabricacaoForm(request.POST)
         if form_fabricacao.is_valid():
+            # Salva em falso para pegar o id
+            form_fabricacao = form_fabricacao.save(commit=False)
             form_fabricacao.save()
+            id_fabricacao = form_fabricacao.pk
+            print(id_fabricacao)
+            # Com o id pego atualiza o estoque das matérias-primas
+            Pedidofabricacao.objects.get(pkid_pedidofabricacao=id_fabricacao).remover_estoque()
             url = str(request.path_info) + '?success=True'
             return HttpResponseRedirect(url)
     else:
@@ -109,17 +117,21 @@ def nova_fabricacao(request):
     context = {
         "fabricaForm": PedidofabricacaoForm,
         "success": success,
+        "id_fabricacao":id_fabricacao
     }
     return render(request, "iframe/producao/pedidos/nova_fabricacao.html", context)
 
 
 @login_required(login_url="/admin")
 def editar_fabricacao(request, id_fabricacao):
-    """ Pgina para editar um pedido de fabricação """
+    """ Pagina para editar um pedido de fabricação """
 
     success = request.GET.get('success', False)
-    fabricacao = Pedidofabricacao.objects.get(
-        pkid_pedidofabricacao=id_fabricacao)
+    try:
+        fabricacao = Pedidofabricacao.objects.get(
+            pkid_pedidofabricacao=id_fabricacao)
+    except:
+        return HttpResponseRedirect(reverse('lista_fabricacao'))
 
     if request.POST:
         form_fabricacao = PedidofabricacaoForm(
@@ -133,6 +145,7 @@ def editar_fabricacao(request, id_fabricacao):
     context = {
         "fabricaForm": form_fabricacao,
         "pedidoFabricacao": fabricacao,
+        "id_fabricacao":id_fabricacao,
         "success": success,
     }
     return render(request, "iframe/producao/pedidos/editar_fabricacao.html", context)
@@ -163,3 +176,13 @@ def lista_fabricacao(request):
     }
 
     return render(request, "iframe/producao/pedidos/lista_fabricacao.html", context)
+
+@login_required(login_url="/admin")
+def deletar_fabricacao(request, id_fabricacao):
+    """ API Para deletar um pedido de fabricação"""
+    try:
+        Pedidofabricacao.objects.get(pkid_pedidofabricacao=id_fabricacao).voltar_estoque().delete()
+        url = reverse('lista_fabricacao') + '?deleted=True'
+        return HttpResponseRedirect(url)
+    except:
+        return HttpResponseRedirect(reverse('lista_fabricacao'))

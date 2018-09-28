@@ -9,6 +9,7 @@
 
     <script src="/static/jquery/jquery-3.3.1.min.js"></script>
     <script src="/static/jquery/jquery.mask.min.js"></script>
+	<script src="/static/js/utils.js"></script>
 </head>
 
 <body>
@@ -23,7 +24,7 @@
 			<h2 class="overlay_title">PEDIDO DE FABRICAÇÃO REGISTRADO COM SUCESSO</h2>
 			
 			<div class="bt_wrapper">
-				<a href="{% url 'nova_fabricacao' %}"><button class="btMain btConfirmar">Continuar</button></a>
+				<a href="{% url 'editar_fabricacao' id_fabricacao %}"><button class="btMain btConfirmar">Continuar</button></a>
 			</div>
 			
 		</div>
@@ -60,7 +61,7 @@
 				</div>
 				<div class="botaoContainer">
 					<button class="btMain btLimpar" type="reset">Limpar</button>
-					<button class="btMain btCadastrar" type="submit">Cadastrar</button>
+					<button class="btMain btCadastrar" id="submitButton" type="submit">Salvar</button>
 				</div>
 			</form>
 		</div>

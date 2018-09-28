@@ -81,3 +81,9 @@ a.opt_bt {
     background-image: url("/static/img/formula.svg");
     background-size: 80%;
 }
+
+button[disabled=true] {
+    background-color: #eee;
+    color: darkred;
+    border-color: darkred;
+}

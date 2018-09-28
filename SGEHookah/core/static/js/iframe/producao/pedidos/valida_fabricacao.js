@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $('#id_quantidade').change(function(){ checa_materias(); })
+    buscar_materias($('#id_fkid_formula').val())
+    alterar_quantidade($('#id_quantidade').val())
 })
 
 function checa_materias() {
@@ -18,7 +19,6 @@ function checa_materias() {
         method: "POST",
         url: "/api/checa_materias/",
         data: JSON.stringify({materias_ids: ids}),
-        async: false,
         success: function(data) {
 
             r = JSON.parse(JSON.stringify(data))
@@ -36,8 +36,12 @@ function checa_materias() {
 
             if (invalid_count > 0) {
                 $('#submitButton').prop('disabled', true)
+                $('#submitButton').removeClass('btConfirmar')
+                $('#submitButton').addClass('btCancelar')
             } else {
                 $('#submitButton').prop('disabled', false)
+                $('#submitButton').removeClass('btCancelar')
+                $('#submitButton').addClass('btConfirmar')
             }
             
         } 
@@ -45,13 +49,11 @@ function checa_materias() {
 
 }
 
-$('#id_fkid_formula').change(function() {
-
+function buscar_materias(id) {
     $.ajax({
         method: "GET",
         url: "/api/nova_fabricacao/",
-        data: {formula_id: $(this).val()},
-        async: false,
+        data: {formula_id: id},
         success: function(data){ 
             
             $('#materias').empty()
@@ -74,14 +76,13 @@ $('#id_fkid_formula').change(function() {
                 )
             }
         }
+    }).then(function() {
+        alterar_quantidade($('#id_quantidade').val())
     })
+}
 
-    checa_materias();
-
-})
-
-$('#id_quantidade').change(function() {
-    var multiplicador = $(this).val()
+function alterar_quantidade(valor) {
+    var multiplicador = valor
 
     $('.materia_qtd').each(function() {
         var valor = parseInt($(this).attr('original'))
@@ -89,7 +90,15 @@ $('#id_quantidade').change(function() {
         
         $(this).text(total)
     })
+    checa_materias()
+}
 
+$('#id_fkid_formula').change(function() {
+    buscar_materias($(this).val());
+})
+
+$('#id_quantidade').change(function() {
+    alterar_quantidade($(this).val());
 })
 
 

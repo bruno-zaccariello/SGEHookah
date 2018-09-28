@@ -7,9 +7,13 @@
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
     <!-- Page specific -->
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
-	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_clientes.css"/>
-	
+    
+    <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/jquery/jquery.mask.min.js"></script>
+
+    <script src="/static/js/iframe/producao/pedidos/lista_pedidos.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
+    <script src="/static/js/utils.js"></script>
 </head>
 
 <body>
@@ -27,7 +31,7 @@
 			<h2 class="overlay_title_success">Pedido Deletado com Sucesso</h2>
 			
 			<div class="bt_wrapper">
-				<a href="{% url 'lista_clientes' %}"><button class="btMain btConfirmar">Continuar</button></a>
+				<a href="{% url 'lista_fabricacao' %}"><button class="btMain btConfirmar">Continuar</button></a>
 			</div>
 			
 		</div>
@@ -43,7 +47,7 @@
 		</div>
 		
 		<div class="overlay_content">
-			<h2 class="overlay_title">Tem certeza que deseja deletar esse cliente?</h2>
+			<h2 class="overlay_title">Tem certeza que deseja deletar esse pedido?</h2>
 			
 			<div class="bt_wrapper">
 				<a href="javascript:confirmaJanelaOff()"><button class="btMain btCancelar">Cancelar</button></a>
@@ -113,7 +117,7 @@
                                 </div>
                             </a>
 
-                            <a href="javascript:confirmaJanelaOn('{{ cliente.pkid_pessoa }}')" title="deletar" class='vertical opt_bt'>
+                            <a href="javascript:confirmaJanelaOn('{{ pedido.pkid_pedidofabricacao }}')" title="deletar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_delete">
                                 </div>
                             </a>

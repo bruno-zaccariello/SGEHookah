@@ -63,6 +63,7 @@ producao = [
     path('pedidos/novo/', nova_fabricacao, name="nova_fabricacao"),
     path('pedidos/<int:id_fabricacao>/',
          editar_fabricacao, name="editar_fabricacao"),
+    path('pedidos/deletar/<int:id_fabricacao>', deletar_fabricacao, name="deletar_fabricacao")
 ]
 
 api = [

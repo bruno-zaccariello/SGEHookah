@@ -8,8 +8,13 @@
     <!-- Page specific -->
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
 	{% comment %} <link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/lista_materias.css"/> {% endcomment %}
-	
+    
+    <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/jquery/jquery.mask.min.js"></script>
+
     <script src="/static/js/patterns/lista.js"></script>
+    <script src="/static/js/iframe/produtos/materia/lista_materia.js"></script>
+    <script src="/static/js/utils.js"></script>
 </head>
 
 <body>
@@ -112,7 +117,7 @@
                                 </div>
                             </a>
 
-                            <a href="javascript:confirmaJanelaOn('{{ item.pkid_materia }}')" title="deletar" class='vertical opt_bt'>
+                            <a href="javascript:confirmaJanelaOn('{{ item.pkid_materiaprima }}')" title="deletar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_delete">
                                 </div>
                             </a>
