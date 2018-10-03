@@ -46,6 +46,7 @@ produtos = [
     path('materia/cadastrar/', cadastrar_materia, name="cadastrar_materia"),
     path('materia/lista/', lista_materia, name="lista_materia"),
     path('materia/<int:id_materia>/', editar_materia, name="editar_materia"),
+    path('materia/deletar/<int:id_materia>', deletar_materia, name="deletar_materia"),
     path('categorias/', lista_categorias, name="lista_categorias"),
     path('categorias/deletar/<int:id_categoria>/',
          deletar_categoria, name="deletar_categoria"),

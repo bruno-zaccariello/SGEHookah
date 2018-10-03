@@ -1,0 +1,110 @@
+<html>
+<head>
+	<title id="iframe_title">SGE - Cadastrar Produto</title>
+
+	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/dft_table.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/iframe/producao/formula/nova_venda.css"/>
+
+	<script src="/static/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/jquery/jquery.mask.min.js"></script>
+
+	<script src="/static/js/utils.js"></script>
+</head>
+
+<body>
+	<h1> Fórmula </h1>
+	
+	{% if success == 'True' %}
+	<div class="overlay" id="overlay">
+		<div class="overlay_bg">
+		</div>
+		
+		<div class="overlay_content">
+			<h2 class="overlay_title">FÓRMULA SALVA COM SUCESSO</h2>
+			
+			<div class="bt_wrapper">
+				<a href="/iframe/producao/formulas/0/"><button class="btMain btConfirmar">Continuar</button></a>
+			</div>
+			
+		</div>
+	</div>
+	{% endif %}
+	
+	<section class="content">
+			<form method="POST" autocomplete="off">
+				{% csrf_token %}
+
+						<h2 class="txt_center">{{ produto.nomeproduto }}</h2>
+						<div class="flex_row_nw row_center">
+						
+							{% for field in form_venda %}
+
+							<div class="fieldDiv">
+								<div class="formInput">
+									<div class="label">{{field.label_tag}}</div>
+									<div class="input">{{field}}
+										{{field.errors}}
+									</div>
+								</div>
+							</div>
+
+							{% endfor %}
+
+						</div>
+
+						<table>
+
+							<thead>
+								<tr>
+									<th>Matéria Prima</th>
+									<th>Quantidade</th>
+									<th>Unidade</th>
+									<th>Excluir</th>
+								</tr>
+							</thead>
+
+							<tbody>
+							{{ item_venda.management_form }}
+							{% for form in item_venda %}
+								<tr class="form-row">
+									{% for field in form.hidden_fields%}
+										<td class="hidden">
+											{{ field }}
+										</td>
+									{% endfor %}
+									{% for field in form.visible_fields %}
+										<td class="row_center">
+											{{field}}
+											{{field.errors}}
+										</td>
+									{% endfor %}
+								</tr>
+							{% endfor %}
+
+								<tr class="add_row">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td class="row_center">
+										<div title="nova linha" class="opt_bt opt_add add-form-row">
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					<div class="botaoContainer">
+						<button class="btMain btCancelar" type="reset">Limpar</button>
+						<button class="btMain btConfirmar" type="submit">Salvar</button>
+					</div>
+
+			</form>
+	</section>
+
+<script src="/static/js/formsFixes.js"></script>
+
+</body>
+</html>

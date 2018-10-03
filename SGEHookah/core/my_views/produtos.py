@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.forms import inlineformset_factory
+from django.urls import reverse
 
 from core.funcoes import arruma_url_page, filtra_produtos
 from core.models import *
@@ -234,6 +235,13 @@ def editar_materia(request, id_materia):
         "form": form
     }
     return render(request,"iframe/produtos/materia/editar_materia.html", context)
+
+@login_required(login_url="/admin")
+def deletar_materia(request, id_materia):
+    materia = Materiaprima.objects.get(pkid_materiaprima=id_materia)
+    materia.hide = True
+    materia.save()
+    return HttpResponseRedirect(reverse('lista_materia'))
 
 
 @login_required(login_url="/admin")
