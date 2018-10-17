@@ -375,7 +375,6 @@ class Pedidovenda(models.Model):
     fkid_entrega = models.IntegerField(null=True)
     dt_pedido = models.DateTimeField(blank=True, null=True)
     dt_pagamento = models.DateTimeField(blank=True, null=True)
-    dt_entrega = models.DateTimeField(blank=True, null=True)
     hide = models.BooleanField(default=0)
 
     def __str__(self):
