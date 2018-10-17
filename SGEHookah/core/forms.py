@@ -336,3 +336,11 @@ class PedidofabricacaoForm(forms.ModelForm):
         model = Pedidofabricacao
         fields = ['fkid_formula', 'fkid_statusfabricacao',
                   'quantidade', 'dt_fim_maturacao', 'lote']
+
+class PedidovendaForm(forms.ModelForm):
+    """ Formulário para um novo pedido de venda """
+
+    class Meta:
+        model = Pedidovenda
+        fields = ['fkid_cliente','fkid_status','fkid_formapag'
+                '','','']
