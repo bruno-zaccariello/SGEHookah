@@ -17,6 +17,7 @@
 		<script src="/static/js/fix_titles.js"></script>
 		<script src="/static/js/logoutCover.js"></script>
 		<script src="/static/js/toggleMenu.js"></script>
+		<script src="/static/js/api.js"></script>
 
 	{% endblock %}
 	
@@ -127,6 +128,7 @@
 						</div>
 					</a>
 					<div class="oam_dropdown_content">
+							<a href="{% url 'nova_venda' %}" target="main_frame"><div class="oam_drop_opt">Nova Venda</div></a>
 						<a href="/iframe/vendas/calcula_frete" target="main_frame"><div class="oam_drop_opt">Calcular Frete</div></a>
 					</div>
 				</div>
@@ -138,9 +140,10 @@
 						</div>
 					</a>
 					<div class="oam_dropdown_content">
-						<a href="{% url 'lista_formulas' %}" target="main_frame"><div class="oam_drop_opt">Fórmulas</div></a>
 						<a href="{% url 'nova_fabricacao' %}" target="main_frame"><div class="oam_drop_opt">Nova Fabricação</div></a>
 						<a href="{% url 'lista_fabricacao' %}" target="main_frame"><div class="oam_drop_opt">Pedidos de Fabricação</div></a>
+						<div class="cat_div"></div>
+						<a href="{% url 'lista_formulas' %}" target="main_frame"><div class="oam_drop_opt">Lista de Fórmulas</div></a>
 					</div>
 				</div>
 				

@@ -4,22 +4,28 @@
 """
 
 from django.contrib import admin
-from core.models import *
+import core.models as models
+import core.forms as forms
+
 
 # register your models here.
 
-admin.site.register(Categoriaproduto)
-admin.site.register(Produto)
-admin.site.register(Unidademedida)
-admin.site.register(Pessoa)
-admin.site.register(Endereco)
-admin.site.register(Telefone)
-admin.site.register(Formulaproduto)
-admin.site.register(Formulamateria)
-admin.site.register(Materiaprima)
-admin.site.register(Pedidofabricacao)
-admin.site.register(Statusfabricacao)
-admin.site.register(Pedidovenda)
-admin.site.register(Statusvenda)
-admin.site.register(Formapagamento)
-admin.site.register(Itemvenda)
+class ItemvendaAdmin(admin.ModelAdmin):
+    form = forms.ItemVendaForm
+
+
+admin.site.register(models.Categoriaproduto)
+admin.site.register(models.Produto)
+admin.site.register(models.Unidademedida)
+admin.site.register(models.Pessoa)
+admin.site.register(models.Endereco)
+admin.site.register(models.Telefone)
+admin.site.register(models.Formulaproduto)
+admin.site.register(models.Formulamateria)
+admin.site.register(models.Materiaprima)
+admin.site.register(models.Pedidofabricacao)
+admin.site.register(models.Statusfabricacao)
+admin.site.register(models.Pedidovenda)
+admin.site.register(models.Statusvenda)
+admin.site.register(models.Formapagamento)
+admin.site.register(models.Itemvenda, ItemvendaAdmin)

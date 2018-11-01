@@ -7,15 +7,6 @@ import datetime as dt
 from django.db import models
 from django.contrib.auth.models import User
 
-__all__ = [
-    "Categoriaproduto", "Produto", "Unidademedida",
-    "Pessoa", "Endereco", "Telefone",
-    "Formulaproduto", "Formulamateria", "Materiaprima",
-    "Pedidofabricacao", "Statusfabricacao", "Pedidovenda",
-    "Statusvenda", "Formapagamento", "Itemvenda"
-]
-
-
 class Categoriaproduto(models.Model):
     """ Categoria de produto """
     pkid_categoria = models.AutoField(primary_key=True)
@@ -74,18 +65,17 @@ class Endereco(models.Model):
         verbose_name = 'Endereço (Pessoa : CEP)'
         verbose_name_plural = 'Endereços'
 
+class TipoEntrega(models.Model):
+    pkid_tipoentrega = models.AutoField(primary_key=True)
+    descricao = models.CharField('TipoEntrega', max_length=30)
 
 class Entrega(models.Model):
     """ Armazena informações sobre alguma entrega """
     pkid_entrega = models.AutoField(primary_key=True)
+    fkid_tipoentrega = models.ForeignKey("TipoEntrega", on_delete=models.CASCADE)
+    fkid_venda = models.ForeignKey("PedidoVenda", on_delete=models.CASCADE)
     dataentrega = models.DateTimeField(blank=True, null=True)
-    formaentrega = models.CharField(max_length=100, blank=True, null=True)
     valorfrete = models.TextField(blank=True, null=True)
-    nomecontarecebimento = models.CharField(
-        max_length=100, blank=True, null=True)
-    fkid_usuario_alteracao = models.IntegerField()
-    dt_cadastro = models.DateTimeField()
-    dt_alteracao = models.DateTimeField()
     hide = models.BooleanField(default=0)
 
     def __str__(self):
@@ -179,7 +169,8 @@ class Itemvenda(models.Model):
     fkid_pedidovenda = models.ForeignKey('Pedidovenda', on_delete=models.CASCADE)
     fkid_produto = models.ForeignKey('Produto', on_delete=models.CASCADE)
     quantidade = models.IntegerField(blank=True, null=True)
-    preco_total = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
+    vl_total = models.DecimalField(decimal_places=2, max_digits=10)
+    vl_unitario = models.DecimalField(decimal_places=2, max_digits=10)
     hide = models.BooleanField(default=0)
 
     def preco_unitario(self):
@@ -369,12 +360,13 @@ class Pedidovenda(models.Model):
     """ Pedido de venda """
     pkid_venda = models.AutoField(primary_key=True)
     fkid_cliente = models.ForeignKey('Pessoa', on_delete=models.CASCADE, null=True)
-    fkid_usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    fkid_status = models.ForeignKey('Statusvenda', on_delete=models.DO_NOTHING)
     fkid_formapag = models.ForeignKey('Formapagamento', on_delete=models.DO_NOTHING, null=True)
-    fkid_entrega = models.IntegerField(null=True)
+    fkid_status = models.ForeignKey('Statusvenda', on_delete=models.DO_NOTHING)
+    fkid_usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     dt_pedido = models.DateTimeField(blank=True, null=True)
     dt_pagamento = models.DateTimeField(blank=True, null=True)
+    dt_preventrega = models.DateTimeField(blank=True, null=True)
+    pago = models.BooleanField(default=0)
     hide = models.BooleanField(default=0)
 
     def __str__(self):

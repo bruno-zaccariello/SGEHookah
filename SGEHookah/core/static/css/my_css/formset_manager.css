@@ -7,7 +7,7 @@ table input:not([type=checkbox]), select {
 	background-color: transparent;
 	border: none;
 	border-bottom: 1px solid black;
-	height: 100%;
+	height: auto;
 	width: 100%;
 }
 
@@ -38,7 +38,7 @@ table td * {
 	width: 60%;
 }
 
-.formInput input {
+.formInput input, .formInput select {
 	border: 1px solid transparent;
 	background-color: white;
 	background-color: rgba(255,255,255,0.1);
@@ -47,7 +47,8 @@ table td * {
 	width: 70%;
 }
 
-.formInput input:hover, .formInput input:focus {
+.formInput input:hover, .formInput input:focus,
+.formInput select:hover, .formInput select:focus {
 	background-color: white;
 	background-color: rgba(255,255,255,0.7);
 }

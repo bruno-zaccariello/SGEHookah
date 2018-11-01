@@ -103,7 +103,8 @@ def formula_produto(request, id_produto):
         Formulamateria,
         extra=0,
         min_num=1,
-        exclude=[])
+        exclude=['hide'],
+        form=FormulamateriaForm)
 
     if request.POST:
         with transaction.atomic():

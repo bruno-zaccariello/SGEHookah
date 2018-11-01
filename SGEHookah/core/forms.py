@@ -8,17 +8,9 @@ import localflavor.br.forms as lf
 from django import forms
 from django.contrib.auth.models import User
 
-from core.models import *
-
-__all__ = [
-    'FreteForm', 'CadProdutoForm',
-    'ProdutoForm', 'UpdateInfoForm', 'CategoriaprodutoForm',
-    'UnidademedidaForm', 'PessoaForm', 'EnderecoForm',
-    'TelefoneForm', 'PessoaRapidoForm', 'MateriaPrimaForm',
-    "FormulaprodutoForm", "FormulamateriaForm", "FormulaCompletaForm",
-    "PedidofabricacaoForm"
-]
-
+import core.models as model
+import ajax_select.fields as custom
+from ajax_select import make_ajax_field
 
 class CategoriaprodutoForm(forms.ModelForm):
     """ Formulário de Categoria de Produto """
@@ -28,7 +20,7 @@ class CategoriaprodutoForm(forms.ModelForm):
     nomecategoria.widget.attrs.update({'placeholder': '...'})
 
     class Meta:
-        model = Categoriaproduto
+        model = model.Categoriaproduto
         fields = ["nomecategoria"]
 
 
@@ -40,7 +32,7 @@ class UnidademedidaForm(forms.ModelForm):
     unidademedida.widget.attrs.update({'placeholder': '...'})
 
     class Meta:
-        model = Unidademedida
+        model = model.Unidademedida
         fields = ["unidademedida"]
 
 
@@ -60,9 +52,9 @@ class CadProdutoForm(forms.ModelForm):
     peso = forms.DecimalField(
         max_digits=10, decimal_places=3, label="Peso (Kg)")
     fkid_categoria = forms.ModelChoiceField(
-        label="Categoria", queryset=Categoriaproduto.objects.filter(hide=False), initial=0)
+        label="Categoria", queryset=model.Categoriaproduto.objects.filter(hide=False), initial=0)
     fkid_unidademedida = forms.ModelChoiceField(
-        label="Unidade", queryset=Unidademedida.objects.filter(hide=False), initial=0)
+        label="Unidade", queryset=model.Unidademedida.objects.filter(hide=False), initial=0)
     fotoproduto = forms.FileField(label="Escolha a Foto", required=False)
     descricao = forms.CharField(
         label="Descrição", widget=forms.Textarea, required=False)
@@ -70,7 +62,7 @@ class CadProdutoForm(forms.ModelForm):
     fotoproduto.widget.attrs.update({'class': 'FotoInput'})
 
     class Meta:
-        model = Produto
+        model = model.Produto
         fields = ["codproduto", "preco", "sabor", "altura", "profundidade", "fkid_unidademedida",
                   "nomeproduto", "precocusto", "marca", "largura", "peso", "fkid_categoria",
                   "fotoproduto", "descricao"]
@@ -91,9 +83,9 @@ class ProdutoForm(forms.ModelForm):
     profundidade = forms.FloatField(label="Profundidade")
     peso = forms.DecimalField(max_digits=10, decimal_places=3, label="Peso")
     fkid_categoria = forms.ModelChoiceField(
-        label="Categoria", queryset=Categoriaproduto.objects.filter(hide=False), initial=0)
+        label="Categoria", queryset=model.Categoriaproduto.objects.filter(hide=False), initial=0)
     fkid_unidademedida = forms.ModelChoiceField(
-        label="Unidade", queryset=Unidademedida.objects.filter(hide=False), initial=0)
+        label="Unidade", queryset=model.Unidademedida.objects.filter(hide=False), initial=0)
     totalestoque = forms.FloatField(label="Estoque")
     fotoproduto = forms.FileField(label="Escolha a Foto", required=False)
     descricao = forms.CharField(
@@ -107,7 +99,7 @@ class ProdutoForm(forms.ModelForm):
     peso.widget.attrs.update({'placeholder': 'Em kg'})
 
     class Meta:
-        model = Produto
+        model = model.Produto
         fields = [
             "codproduto", "nomeproduto", "preco",
             "precocusto", "sabor", "marca",
@@ -124,7 +116,7 @@ class FormulaprodutoForm(forms.ModelForm):
         label="Tempo em Maturação", initial='00:00:00')
 
     class Meta:
-        model = Formulaproduto
+        model = model.Formulaproduto
         fields = ["tempomaturacao"]
 
 
@@ -134,10 +126,10 @@ class FormulaCompletaForm(forms.ModelForm):
     tempomaturacao = forms.TimeField(
         label="Tempo em Maturação", initial='00:00:00')
     fkid_produto = forms.ModelChoiceField(
-        label="Produto", queryset=Produto.objects.filter(hide=False))
+        label="Produto", queryset=model.Produto.objects.filter(hide=False))
 
     class Meta:
-        model = Formulaproduto
+        model = model.Formulaproduto
         fields = ["tempomaturacao", "fkid_produto"]
 
 
@@ -146,15 +138,15 @@ class FormulamateriaForm(forms.ModelForm):
 
     fkid_materiaprima = forms.ModelChoiceField(
         label="Matéria Prima",
-        queryset=Materiaprima.objects.filter(hide=False),
+        queryset=model.Materiaprima.objects.filter(hide=False),
         required=True)
     quantidade = forms.FloatField(label="Quantidade", required=True)
     unidade = forms.ModelChoiceField(
         label="Unidade",
-        queryset=Unidademedida.objects.filter(hide=False), required=True)
+        queryset=model.Unidademedida.objects.filter(hide=False), required=True)
 
     class Meta:
-        model = Formulamateria
+        model = model.Formulamateria
         fields = ["fkid_materiaprima", "quantidade", "unidade"]
 
 
@@ -165,10 +157,10 @@ class MateriaPrimaForm(forms.ModelForm):
     marca = forms.CharField(label="Marca", max_length=50, required=False)
     totalestoque = forms.IntegerField(label="Estoque")
     unidade = forms.ModelChoiceField(
-        label="Unidade", queryset=Unidademedida.objects.filter(hide=False), initial=0)
+        label="Unidade", queryset=model.Unidademedida.objects.filter(hide=False), initial=0)
 
     class Meta:
-        model = Materiaprima
+        model = model.Materiaprima
         fields = ["materiaprima", "marca", "totalestoque", "unidade"]
 
 
@@ -207,7 +199,7 @@ class UpdateInfoForm(forms.ModelForm):
     last_name = forms.CharField(label="Sobrenome", required=True)
 
     class Meta:
-        model = User
+        model = model.User
         fields = ('email', 'first_name', 'last_name')
 
     def clean_email(self):
@@ -241,7 +233,7 @@ class EnderecoForm(forms.ModelForm):
     uf = lf.BRStateChoiceField(label="UF")
 
     class Meta:
-        model = Endereco
+        model = model.Endereco
         fields = [
             'cep', 'logradouro', 'endereco_numero',
             'complemento', 'bairro', 'cidade',
@@ -255,7 +247,7 @@ class TelefoneForm(forms.ModelForm):
     numero = forms.CharField(label='Telefone', max_length=15, required=False)
 
     class Meta:
-        model = Telefone
+        model = model.Telefone
         fields = ['numero']
 
 
@@ -276,7 +268,7 @@ class PessoaForm(forms.ModelForm):
         choices=genero_choices), initial=0)
 
     class Meta:
-        model = Pessoa
+        model = model.Pessoa
         fields = ['nomecompleto_razaosocial', 'apelido_nomefantasia',
                   'email', 'cpf_cnpj', 'rg_ie', 'dt_nascimento', 'genero']
 
@@ -293,7 +285,7 @@ class PessoaRapidoForm(forms.ModelForm):
         choices=genero_choices), initial=0)
 
     class Meta:
-        model = Pessoa
+        model = model.Pessoa
         fields = ['nomecompleto_razaosocial', 'email', 'cpf_cnpj', 'genero']
 
 
@@ -302,10 +294,10 @@ class PedidofabricacaoForm(forms.ModelForm):
 
     fkid_formula = forms.ModelChoiceField(
         label="Fórmula",
-        queryset=Formulaproduto.objects.filter(hide=False))
+        queryset=model.Formulaproduto.objects.filter(hide=False))
     fkid_statusfabricacao = forms.ModelChoiceField(
         label="Status",
-        queryset=Statusfabricacao.objects.filter(hide=False).order_by('order'),
+        queryset=model.Statusfabricacao.objects.filter(hide=False).order_by('order'),
         initial=0)
     lote = forms.CharField(label='Lote', max_length=8)
     quantidade = forms.FloatField(label='Quantidade a Produzir')
@@ -333,24 +325,35 @@ class PedidofabricacaoForm(forms.ModelForm):
         return materials
 
     class Meta:
-        model = Pedidofabricacao
+        model = model.Pedidofabricacao
         fields = ['fkid_formula', 'fkid_statusfabricacao',
                   'quantidade', 'dt_fim_maturacao', 'lote']
 
-<<<<<<< HEAD
-class PedidovendaForm(forms.ModelForm):
-    """ Formulário para um novo pedido de venda """
-
-    class Meta:
-        model = Pedidovenda
-        fields = ['fkid_cliente','fkid_status','fkid_formapag'
-                '','','']
-=======
 class PedidoVendaForm(forms.ModelForm):
     """ Formulário do pedido de venda """
 
+    fkid_cliente =make_ajax_field(
+        model.Pessoa, 
+        'nomecompleto_razaosocial', 
+        'cliente',
+        required=True)
+    dt_pedido = forms.DateTimeField()
+    dt_pagamento = forms.DateTimeField()
+    dt_preventrega = forms.DateTimeField()
+    pago = forms.BooleanField()
+
     class Meta:
-        model = Pedidovenda
+        model = model.Pedidovenda
         fields = ['fkid_cliente', 'fkid_status', 'fkid_formapag',
-         'fkid_entrega', 'dt_pedido', 'dt_pagamento']
->>>>>>> 570c003f37f059b12c6f607a3788d3a18eeb9b91
+         'dt_pagamento', 'dt_preventrega' ,'pago']
+
+class ItemVendaForm(forms.ModelForm):
+    """ Formulário de item de venda """
+
+    # fkid_produto = custom.AutoCompleteSelectField('produto', help_text=None)
+    fkid_produto = make_ajax_field(model.Produto, 'nomeproduto', 'produto')
+
+    class Meta:
+        model = model.Itemvenda
+        fields = ['fkid_produto', 'quantidade', 'vl_unitario',
+                'vl_total']

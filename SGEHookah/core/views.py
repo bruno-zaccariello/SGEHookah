@@ -6,8 +6,9 @@
 
 from django.shortcuts import render, redirect
 
-from core.forms import *
-from core.models import *
+import core.forms as forms
+import core.models as model
+
 from core.funcoes import *
 from core.my_views.clientes import *
 from core.my_views.produtos import *
@@ -29,7 +30,7 @@ def index(request):
 @login_required(login_url="/admin")
 def home(request):
     """ Página Inicial """
-
+    
     return render(request, "base.html")
 
 
@@ -45,7 +46,7 @@ def iframe_home(request):
 
     # Info sobre pedidos de fabricação
 
-    fab_pedidos = Pedidofabricacao.objects.filter(
+    fab_pedidos = model.Pedidofabricacao.objects.filter(
         hide=False
     ).exclude(
         fkid_statusfabricacao__order=3
@@ -67,7 +68,7 @@ def calcula_frete(request):
 
     retorno = {"Valor": "0,00", "PrazoEntrega": 0, "MsgErro": "None"}
     if request.POST:
-        form = FreteForm(request.POST)
+        form = forms.FreteForm(request.POST)
         if form.is_valid():
             # Arruma os campos de altura, comprimento e largura para não dar erro.
             if form.cleaned_data['nVlAltura'] < 2:
@@ -91,7 +92,7 @@ def calcula_frete(request):
             except:
                 print("Você está sem internet")
     else:
-        form = FreteForm()
+        form = forms.FreteForm()
     context = {
         "form": form,
         "Valor": retorno.get('Valor'),

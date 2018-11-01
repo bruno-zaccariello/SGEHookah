@@ -52,12 +52,12 @@ def pagina_formula(request, id_formula):
         Formulamateria,
         extra=0,
         min_num=1,
-        exclude=[])
+        exclude=[],
+        form=FormulamateriaForm)
 
     if request.POST:
         with transaction.atomic():
             form_formula = FormulaCompletaForm(request.POST, instance=formula)
-            forms_materia = formset_materias(request.POST, instance=formula)
 
             if form_formula.is_valid():
                 saved_formula = form_formula.save(commit=False)
