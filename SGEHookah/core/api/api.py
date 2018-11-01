@@ -2,9 +2,11 @@ from json import loads as load_json
 
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.core.serializers import serialize
+from django.forms.models import model_to_dict
 
-from core.forms import *
-from core.models import *
+import core.forms as forms
+import core.models as models
 from core.funcoes import *
 
 
@@ -18,13 +20,13 @@ def ajax_nova_fabricacao(request):
         rget = request.GET
 
         try:
-            formula = Formulaproduto.objects.get(
+            formula = models.Formulaproduto.objects.get(
                 pkid_formula=rget.get('formula_id'))
         except:
             formula = False
 
         if formula:
-            for item in Formulamateria.objects.filter(fkid_formulaproduto=formula).values():
+            for item in models.Formulamateria.objects.filter(fkid_formulaproduto=formula).values():
                 id_materia = item['fkid_materiaprima_id']
                 unidade = item['unidade_id']
                 # Pega o nome da materiaprima invés do id
@@ -57,7 +59,7 @@ def ajax_checa_materias(request):
             rget = load_json(request.body)
 
             for id_materia, quantity in rget.get('materias_ids'):
-                materia = Materiaprima.objects.get(
+                materia = models.Materiaprima.objects.get(
                     pkid_materiaprima=id_materia)
                 if materia.totalestoque >= quantity:
                     rdata.append((id_materia, True))
@@ -75,3 +77,22 @@ def ajax_checa_materias(request):
         }
     print(data)
     return JsonResponse(data)
+
+def get_produto(request):
+    data = {'produto':False}
+    if request.body:
+        rget = load_json(request.body)
+        produto = models.Produto.objects.filter(
+                pkid_produto = rget.get('produto')
+            )
+        data = serialize(
+            'json',
+            produto
+        )
+        return JsonResponse(data, safe=False)
+
+def get_clientes(request):
+    clientes = models.Pessoa.objects.filter(
+        hide=False
+    ).values()
+    return JsonResponse(clientes, safe=False)
