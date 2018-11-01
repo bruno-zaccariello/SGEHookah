@@ -1,4 +1,4 @@
-call c:\"program files"\python36\python.exe -m pip install --user -r requirements.txt
+call python -m pip install --user -r requirements.txt
 call python ./manage.py makemigrations --noinput
 call python ./manage.py migrate
 call python ./manage.py initadmin
