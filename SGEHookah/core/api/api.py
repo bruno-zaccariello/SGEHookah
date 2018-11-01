@@ -91,6 +91,19 @@ def get_produto(request):
         )
         return JsonResponse(data, safe=False)
 
+def search_produto(request):
+    data = {'produto':False}
+    if request.body:
+        rget = load_json(request.body)
+        produto = models.Produto.objects.filter(
+                nomeproduto = rget.get('produto')
+            )
+        data = serialize(
+            'json',
+            produto
+        )
+        return JsonResponse(data, safe=False)
+
 def get_clientes(request):
     clientes = models.Pessoa.objects.filter(
         hide=False

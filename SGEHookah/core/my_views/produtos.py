@@ -5,22 +5,43 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.forms import inlineformset_factory
 from django.urls import reverse
+from django.views import View
+from django.views.generic import TemplateView
 
 from core.funcoes import arruma_url_page, filtra_produtos
-from core.models import *
-from core.forms import *
+import core.models as models
+import core.forms as forms
 
+class CadastrarProduto(TemplateView):
+    """ Página de Cadastro de Produto """
 
-@login_required(login_url="/admin")
-def cadastrar_produto(request):
-    """ Página para cadastrar um produto novo """
-    success = request.GET.get('success', False)
-    if request.POST:
-        form = CadProdutoForm(request.POST, request.FILES, label_suffix='')
+    template = "iframe/produtos/cadastrar_produto.html"
+
+    @method_decorator(login_required)
+    def get(self, request):
+        success = request.GET.get('success', False)
+        form = forms.CadProdutoForm(label_suffix='')
+        form_n = [field for field in form]
+        form_col1 = form_n[:6]
+        form_col2 = form_n[6:12]
+        form_other = form_n[12:]
+        context = {
+            "form": form,
+            "form_col1": form_col1,
+            "form_col2": form_col2,
+            "form_other": form_other,
+            "success": success
+        }
+        return render(request, self.template, context)
+
+    @method_decorator(login_required)
+    def post(self, request):
+        form = forms.CadProdutoForm(request.POST, request.FILES, label_suffix='')
         if form.is_valid():
             form = form.save(commit=False)
 
@@ -31,57 +52,50 @@ def cadastrar_produto(request):
             form.save()
             url = str(request.path_info) + str('?success=True')
             return HttpResponseRedirect(url)
-    else:
-        form = CadProdutoForm(label_suffix='')
-
-    # Slice form for usage in template
-    form_n = [field for field in form]
-    form_col1 = form_n[:6]
-    form_col2 = form_n[6:12]
-    form_other = form_n[12:]
-
-    context = {
-        "form": form,
-        "form_col1": form_col1,
-        "form_col2": form_col2,
-        "form_other": form_other,
-        "success": success
-    }
-    return render(request, "iframe/produtos/cadastrar_produto.html", context)
 
 
-@login_required(login_url="/admin")
-def product_page(request, id_produto):
-    """ Página do produto """
+class PaginaProduto(TemplateView):
+    """ Página Produto """
 
-    # Tenta buscar o produto requerido
-    # Caso falhe retorna à página inicial
-    try:
-        produto = Produto.objects.get(pkid_produto=id_produto)
-    except:
-        return HttpResponseRedirect('/admin/home')
+    template = "iframe/produtos/pagina_produto.html"
+    
+    def produto(self, id_produto=int):
+        try:
+            return models.Produto.objects.get(pkid_produto=id_produto)
+        except:
+            return False
 
-    if request.POST:
-        form = ProdutoForm(request.POST, request.FILES, instance=produto)
+    def success(self, request):
+        return request.GET.get('success', 'False')
+
+    def get(self, request, id_produto):
+        produto = self.produto(id_produto)
+        form = forms.ProdutoForm(instance=produto)
+
+        # For Custom Form fields
+        form_page = []
+        for field in form:
+            form_page.append(field)
+        self.context = {
+            "produto": produto,
+            "form": form,
+            "form_page": form_page[:-2],
+            "success": success(request)
+        }
+        return render(request, self.template, self.context)
+
+    def post(self, request, id_produto):
+        produto = self.produto(id_produto)
+        form = forms.ProdutoForm(
+            request.POST, 
+            request.FILES, 
+            instance=produto)
 
         # Checa se o formulário é valido e se foi alterado
         if form.is_valid() and form.has_changed():
             form.save()
             return HttpResponseRedirect(request.path_info)
-    else:
-        form = ProdutoForm(instance=produto)
-
-    # For Custom Form fields
-    form_page = []
-    for field in form:
-        form_page.append(field)
-
-    context = {
-        "produto": produto,
-        "form": form,
-        "form_page": form_page[:-2]
-    }
-    return render(request, "iframe/produtos/pagina_produto.html", context)
+        return HttpResponseRedirect(request.path_info)
 
 
 @login_required(login_url="/admin")

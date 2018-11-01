@@ -3,14 +3,19 @@
 """
 
 import datetime as dt
-
 import localflavor.br.forms as lf
+import ajax_select.fields as custom
+
+from django.forms.models import modelformset_factory
+from django.forms.models import BaseModelFormSet
 from django import forms
 from django.contrib.auth.models import User
 
-import core.models as model
-import ajax_select.fields as custom
 from ajax_select import make_ajax_field
+from ajax_select.fields import AutoCompleteSelectMultipleField, AutoCompleteSelectField
+
+
+import core.models as model
 
 class CategoriaprodutoForm(forms.ModelForm):
     """ Formulário de Categoria de Produto """
@@ -357,3 +362,15 @@ class ItemVendaForm(forms.ModelForm):
         model = model.Itemvenda
         fields = ['fkid_produto', 'quantidade', 'vl_unitario',
                 'vl_total']
+
+# # create a superclass
+# class ItemVendaFormSet(BaseModelFormSet):
+#     class Meta:
+#         model = model.Itemvenda
+#         fields = ['fkid_produto', 'quantidade', 'vl_unitario',
+#                 'vl_total']
+
+#     # that adds the field in, overwriting the previous default field
+#     def add_fields(self, form, index):
+#         super(ItemVendaFormSet, self).add_fields(form, index)
+#         form.fields["fkid_produto"] = make_ajax_field(model.Produto, 'nomeproduto', 'produto')

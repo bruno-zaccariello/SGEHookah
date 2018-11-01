@@ -15,6 +15,7 @@ import core.forms as forms
 
 class NovaVenda(TemplateView):
     template_name = 'iframe/vendas/nova_venda.html'
+    url = '/iframe/vendas/nova'
     formset_itemsVenda = inlineformset_factory(
         models.Pedidovenda,
         models.Itemvenda,
@@ -44,5 +45,5 @@ class NovaVenda(TemplateView):
                 itemsForms = self.formset_itemsVenda(request.POST, instance=vendaForm)
                 if itemsForms.is_valid():
                     itemsForms = itemsForms.save()
-                    return render(request, self.template_name, context)
+                    return HttpResponseRedirect(request.path_info)
         return render(request, self.template_name)

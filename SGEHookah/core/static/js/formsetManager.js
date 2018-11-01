@@ -52,8 +52,10 @@ $(document).on('click', '.remove-form-row', function(e){
     return false;
 });
 
-$('tr:not(:first-child):not(:last-child) td:last-child').append(
-    "<div title='remover linha' class='opt_bt opt_delete remove-form-row'></div>"
+$(document).ready(function() {
+    $('tr:not(:first-child):not(:last-child) td:last-child').append(
+        "<div title='remover linha' class='opt_bt opt_delete remove-form-row'></div>"
     )
 
-$('input[type=checkbox]').hide()
+    $('input[type=checkbox]').hide()
+})
