@@ -36,14 +36,25 @@ class NovaVenda(TemplateView):
 
     def post(self, request):
         vendaForm = forms.PedidoVendaForm(request.POST)
+        itemsForms = self.formset_itemsVenda(request.POST)
         with transaction.atomic():
+            print('mec')
             if vendaForm.is_valid():
+                print('valido')
                 vendaForm = vendaForm.save(commit=False)
                 vendaForm.dt_pedido = datetime.datetime.now()
-                vendaForm.fkid_usuario = request.user.id
+                vendaForm.fkid_usuario = request.user
+                print('quase salvo')
                 vendaForm.save()
+                print('salvo')
                 itemsForms = self.formset_itemsVenda(request.POST, instance=vendaForm)
+                print('itemsforms')
                 if itemsForms.is_valid():
+                    print('validou')
                     itemsForms = itemsForms.save()
                     return HttpResponseRedirect(request.path_info)
-        return render(request, self.template_name)
+        context = {
+            'vendaForm':vendaForm,
+            'itemsForms':itemsForms
+        }
+        return render(request, self.template_name, context)

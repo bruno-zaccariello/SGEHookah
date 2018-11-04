@@ -1,17 +1,3 @@
-$('[name*=fkid_produto]').on('change', function(){
-    let row = $(this).parent().parent();
-    postAPI(
-        '/api/search_produto/',
-        {'produto':this.value},
-        function(data) {
-            data = JSON.parse(data);
-            $(row).prop('prodid', data[0]['pk']);
-            updatePreco(id = $(row).prop('prodid'), row);
-        }
-    )
-    
-})
-
 function updatePreco(id, row) {
     postAPI(
         '/api/get_produto/',
@@ -24,3 +10,17 @@ function updatePreco(id, row) {
         }
         )
 }
+
+$('[name*=fkid_produto]').on('change', function(){
+    let row = $(this).parent().parent();
+    updatePreco(this.value, row);
+})
+
+$('[name*=quantidade]').keyup(function() {
+    let row = $(this).parent().parent();
+    let multiplier = this.value
+    let unit = $(row).find('[name*=vl_unitario]').val()
+    $(row).find('[name*=vl_total]').val(
+        (multiplier*unit).toFixed(2)
+    )
+})

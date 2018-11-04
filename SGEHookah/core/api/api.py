@@ -30,11 +30,11 @@ def ajax_nova_fabricacao(request):
                 id_materia = item['fkid_materiaprima_id']
                 unidade = item['unidade_id']
                 # Pega o nome da materiaprima invés do id
-                item['fkid_materiaprima_id'] = Materiaprima.objects.get(
+                item['fkid_materiaprima_id'] = models.Materiaprima.objects.get(
                     pkid_materiaprima=id_materia
                 ).materiaprima
                 # Pega o nome da unidademedida invés do id
-                item['unidade_id'] = Unidademedida.objects.get(
+                item['unidade_id'] = models.Unidademedida.objects.get(
                     pkid_unidademedida=unidade
                 ).unidademedida
 

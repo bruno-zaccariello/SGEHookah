@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title id="iframe_title">SGE - Cadastrar Produto</title>
+	<title id="iframe_title">SGE - Registrar Venda</title>
 
 	<link rel="stylesheet" type="text/css" href="/static/css/site.css" />
 
@@ -10,18 +10,17 @@
 	<!-- <link rel="stylesheet"  type="text/css" href="/static/css/iframe/producao/formula/nova_venda.css"/> -->
 	<link rel="stylesheet" type="text/css" href="/static/css/my_css/formset_manager.css" />
 
-	<script type="text/javascript" src="/static/ajax_select/js/bootstrap.js"></script>
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="/static/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/jquery/jquery.mask.min.js"></script>
+
 	<script src="/static/js/api.js"></script>
 	<script src="/static/js/utils.js"></script>
 	<script src="/static/js/formsetManager.js"></script>
 
-	<script src="/static/jquery/jquery.mask.min.js"></script>
 </head>
 
 <body>
-	<h1> Fórmula </h1>
+	<h1> Pedido de Venda </h1>
 
 	{% if success == 'True' %}
 	<div class="overlay" id="overlay">
@@ -29,10 +28,10 @@
 		</div>
 
 		<div class="overlay_content">
-			<h2 class="overlay_title">FÓRMULA SALVA COM SUCESSO</h2>
+			<h2 class="overlay_title">VENDA REGISTRADA COM SUCESSO</h2>
 
 			<div class="bt_wrapper">
-				<a href="/iframe/producao/formulas/0/"><button class="btMain btConfirmar">Continuar</button></a>
+				<a href="{% url 'nova_venda' %}"><button class="btMain btConfirmar">Continuar</button></a>
 			</div>
 
 		</div>
@@ -114,7 +113,6 @@
 
 	<script src="/static/js/formsFixes.js"></script>
 	<script src="/static/js/iframe/vendas/nova_venda.js"></script>
-	<script type="text/javascript" src="/static/ajax_select/js/ajax_select.js"></script>
 
 </body>
 

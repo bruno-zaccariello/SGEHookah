@@ -102,28 +102,28 @@ class PaginaProduto(TemplateView):
 def formula_produto(request, id_produto):
     """ Página da fórmula de um produto """
 
-    produto = Produto.objects.get(pkid_produto=id_produto)
+    produto = models.Produto.objects.get(pkid_produto=id_produto)
 
     # Tenta pegar uma formula já existente para aquele produto
     try:
-        formula = Formulaproduto.objects.filter(
+        formula = models.Formulaproduto.objects.filter(
             hide=False).get(fkid_produto=id_produto)
     except:
         formula = None
 
     success = request.GET.get('success', False)
     formset_materias = inlineformset_factory(
-        Formulaproduto,
-        Formulamateria,
+        models.Formulaproduto,
+        models.Formulamateria,
         extra=0,
         min_num=1,
         exclude=['hide'],
-        form=FormulamateriaForm)
+        form=forms.FormulamateriaForm)
 
     if request.POST:
         with transaction.atomic():
             # Formulario da formula
-            form_formula = FormulaprodutoForm(request.POST, instance=formula)
+            form_formula = forms.FormulaprodutoForm(request.POST, instance=formula)
             forms_materia = formset_materias(request.POST, instance=formula)
 
             if form_formula.is_valid():
@@ -140,7 +140,7 @@ def formula_produto(request, id_produto):
                 url = str(request.path_info) + str('?success=True')
                 return HttpResponseRedirect(url)
     else:
-        form_formula = FormulaprodutoForm(instance=formula)
+        form_formula = forms.FormulaprodutoForm(instance=formula)
         forms_materia = formset_materias(instance=formula)
 
     context = {
@@ -181,7 +181,7 @@ def deletar_produto(request, id_produto):
     """ API para deletar um produto """
 
     try:
-        produto = Produto.objects.get(pkid_produto=id_produto)
+        produto = models.Produto.objects.get(pkid_produto=id_produto)
         produto.hide = True
         produto.save()
     except:
@@ -195,13 +195,13 @@ def cadastrar_materia(request):
 
     success = request.GET.get('success', False)
     if request.POST:
-        form = MateriaPrimaForm(request.POST)
+        form = forms.MateriaPrimaForm(request.POST)
         if form.is_valid():
             form.save()
             url = str(request.path_info) + str('?success=True')
             return HttpResponseRedirect(url)
     else:
-        form = MateriaPrimaForm()
+        form = forms.MateriaPrimaForm()
     context = {
         'form': form,
         'success': success
@@ -216,7 +216,7 @@ def lista_materia(request):
     deletado = request.GET.get('deleted', False)
     page = int(request.GET.get('page', 1))
 
-    lista_materias = Materiaprima.objects.filter(hide=False)
+    lista_materias = models.Materiaprima.objects.filter(hide=False)
     paginas = Paginator(lista_materias, 10)
     materias = paginas.get_page(page)
 
@@ -232,18 +232,18 @@ def lista_materia(request):
 def editar_materia(request, id_materia):
 
     try:
-        materia = Materiaprima.objects.get(pkid_materiaprima = id_materia)
+        materia = models.Materiaprima.objects.get(pkid_materiaprima = id_materia)
     except:
         return HttpResponseRedirect('/admin/home')
 
     if request.POST:
-        form = MateriaPrimaForm(request.POST, instance=materia)
+        form = forms.MateriaPrimaForm(request.POST, instance=materia)
 
         if form.is_valid() and form.has_changed():
             form.save()
             return HttpResponseRedirect(request.path_info)
     else:
-        form = MateriaPrimaForm(instance=materia)
+        form = forms.MateriaPrimaForm(instance=materia)
 
     context = {
         "materia": materia,
@@ -253,7 +253,7 @@ def editar_materia(request, id_materia):
 
 @login_required(login_url="/admin")
 def deletar_materia(request, id_materia):
-    materia = Materiaprima.objects.get(pkid_materiaprima=id_materia)
+    materia = models.Materiaprima.objects.get(pkid_materiaprima=id_materia)
     materia.hide = True
     materia.save()
     return HttpResponseRedirect(reverse('lista_materia'))
@@ -268,15 +268,15 @@ def lista_categorias(request):
     page = int(request.GET.get('page', 1))
 
     if request.POST:
-        form = CategoriaprodutoForm(request.POST)
+        form = forms.CategoriaprodutoForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(request.path_info)
     else:
-        form = CategoriaprodutoForm()
+        form = forms.CategoriaprodutoForm()
 
     # Funções para gerar páginas
-    categorias = Categoriaproduto.objects.filter(
+    categorias = models.Categoriaproduto.objects.filter(
         hide=False).order_by('pkid_categoria')
     paginas = Paginator(categorias, 10)
     categorias = paginas.get_page(page)
@@ -295,7 +295,7 @@ def lista_categorias(request):
 def deletar_categoria(request, id_categoria):
     """ API Para deletar categoria """
 
-    categoria = Categoriaproduto.objects.get(pkid_categoria=id_categoria)
+    categoria = models.Categoriaproduto.objects.get(pkid_categoria=id_categoria)
     categoria.hide = True
     categoria.save()
     return HttpResponseRedirect('/iframe/produtos/categorias?success=True')
@@ -310,10 +310,10 @@ def lista_unidades(request):
     page = int(request.GET.get('page', 1))
 
     if request.POST:
-        form = UnidademedidaForm(request.POST)
+        form = forms.UnidademedidaForm(request.POST)
         if form.is_valid():
             try:
-                exists = Unidademedida.objects.get(
+                exists = models.Unidademedida.objects.get(
                     unidademedida=form.cleaned_data['unidademedida'])
                 exists.hide = False
                 exists.save()
@@ -321,10 +321,10 @@ def lista_unidades(request):
                 form.save()
             return HttpResponseRedirect(request.path_info)
     else:
-        form = UnidademedidaForm()
+        form = forms.UnidademedidaForm()
 
     # Cria uma lista com as unidades visiveis (hide=False)
-    unidades = Unidademedida.objects.filter(
+    unidades = models.Unidademedida.objects.filter(
         hide=False).order_by('pkid_unidademedida')
     paginas = Paginator(unidades, 10)
     unidades = paginas.get_page(page)
@@ -343,7 +343,7 @@ def lista_unidades(request):
 def deletar_unidade(request, id_unidade):
     """ API para deletar uma unidade de medida """
 
-    unidade = Unidademedida.objects.get(pkid_unidademedida=id_unidade)
+    unidade = models.Unidademedida.objects.get(pkid_unidademedida=id_unidade)
     unidade.hide = True
     unidade.save()
     return HttpResponseRedirect('/iframe/produtos/unidades?success=True')

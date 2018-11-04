@@ -3,7 +3,6 @@
 certifi==2018.10.15
 chardet==3.0.4
 Django==2.1.2
-django-ajax-selects==1.7.1
 django-localflavor==2.1
 idna==2.7
 pytz==2018.7

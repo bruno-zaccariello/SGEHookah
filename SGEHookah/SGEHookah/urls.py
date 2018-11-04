@@ -16,7 +16,6 @@ Including another URLconf
 
 from django.conf import settings
 from django.conf.urls.static import static
-from ajax_select import urls as ajax_select_urls
 
 from django.contrib import admin
 from django.urls import include, path
@@ -95,7 +94,6 @@ urlpatterns = [
     path('iframe/vendas/calcula_frete/', view.calcula_frete, name="calcula_frete"),
 
     path('api/', include(api)),
-    path('ajax_select/', include(ajax_select_urls))
 ]
 
 if settings.DEBUG is True:

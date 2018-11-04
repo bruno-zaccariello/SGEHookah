@@ -363,7 +363,7 @@ class Pedidovenda(models.Model):
     fkid_formapag = models.ForeignKey('Formapagamento', on_delete=models.DO_NOTHING, null=True)
     fkid_status = models.ForeignKey('Statusvenda', on_delete=models.DO_NOTHING)
     fkid_usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    dt_pedido = models.DateTimeField(blank=True, null=True)
+    dt_pedido = models.DateTimeField(default=dt.datetime.now())
     dt_pagamento = models.DateTimeField(blank=True, null=True)
     dt_preventrega = models.DateTimeField(blank=True, null=True)
     pago = models.BooleanField(default=0)
