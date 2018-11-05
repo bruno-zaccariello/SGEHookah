@@ -35,7 +35,7 @@ class CadastrarProduto(TemplateView):
             "form_col1": form_col1,
             "form_col2": form_col2,
             "form_other": form_other,
-            "success": success
+            "success": request.GET.get('success'),
         }
         return render(request, self.template, context)
 
@@ -50,8 +50,18 @@ class CadastrarProduto(TemplateView):
                 form.fotoproduto = 'default_product.png'
 
             form.save()
-            url = str(request.path_info) + str('?success=True')
-            return HttpResponseRedirect(url)
+            return HttpResponseRedirect(request.path_info+'?success=True')
+        form_n = [field for field in form]
+        form_col1 = form_n[:6]
+        form_col2 = form_n[6:12]
+        form_other = form_n[12:]
+        context = {
+            "form": form,
+            "form_col1": form_col1,
+            "form_col2": form_col2,
+            "form_other": form_other
+        }
+        return render(request, self.template, context)
 
 
 class PaginaProduto(TemplateView):

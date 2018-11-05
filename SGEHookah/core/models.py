@@ -173,6 +173,9 @@ class Itemvenda(models.Model):
     vl_unitario = models.DecimalField(decimal_places=2, max_digits=10)
     hide = models.BooleanField(default=0)
 
+    def produto(self):
+        return self.fkid_produto.nomeproduto
+
     def preco_unitario(self):
         produto = Produto.objects.get(pkid_produto=self.fkid_produto)
         return produto.preco
@@ -368,6 +371,19 @@ class Pedidovenda(models.Model):
     dt_preventrega = models.DateTimeField(blank=True, null=True)
     pago = models.BooleanField(default=0)
     hide = models.BooleanField(default=0)
+
+    def cliente(self):
+        return self.fkid_cliente.nomecompleto_razaosocial
+
+    def items(self):
+        return Itemvenda.objects.filter(fkid_pedidovenda=self.pkid_venda)
+
+    def detalhe(self):
+        produtos = [(x.produto, x.quantidade) for x in self.items()]
+        return produtos
+
+    def total(self):
+        return sum([x.vl_total for x in self.items()])
 
     def __str__(self):
         return f'Pedido nº{self.pkid_venda}'

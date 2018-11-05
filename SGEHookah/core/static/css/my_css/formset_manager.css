@@ -47,6 +47,10 @@ table td * {
 	width: 70%;
 }
 
+.formInput input.error-active, .formInput select.error-active {
+	border-color: #AD0000;
+}
+
 .formInput input:hover, .formInput input:focus,
 .formInput select:hover, .formInput select:focus {
 	background-color: white;

@@ -28,22 +28,22 @@ def cadastrar_cliente(request):
                 pessoa.tipopessoa = 'cliente'
                 pessoa.save()
 
-            if form_endereco.is_valid():
-                form_endereco = form_endereco.save(commit=False)
-                form_endereco.fkid_pessoa = pessoa
-                form_endereco.save()
+                if form_endereco.is_valid():
+                    form_endereco = form_endereco.save(commit=False)
+                    form_endereco.fkid_pessoa = pessoa
+                    form_endereco.save()
 
-            if form_telefone.is_valid():
-                telefone = form_telefone.save(commit=False)
-                numero = telefone.numero
-                telefone.numero = numero[4:].replace('-','')
-                telefone.ddd = numero[1:3]
-                telefone.fkid_pessoa = pessoa
-                telefone.save()
+                if form_telefone.is_valid():
+                    telefone = form_telefone.save(commit=False)
+                    numero = telefone.numero
+                    telefone.numero = numero[4:].replace('-','')
+                    telefone.ddd = numero[1:3]
+                    telefone.fkid_pessoa = pessoa
+                    telefone.save()
 
-            # Arruma a url para devolver que foi cadastrado com sucesso
-            url = str(request.path_info) + str('?success=True')
-            return HttpResponseRedirect(url)
+                    # Arruma a url para devolver que foi cadastrado com sucesso
+                    url = str(request.path_info) + str('?success=True')
+                    return HttpResponseRedirect(url)
     else:
         form_pessoa = PessoaForm()
         form_endereco = EnderecoForm()
@@ -76,8 +76,8 @@ def cadastro_rapido_cliente(request):
 
             form_pessoa.tipopessoa = 'cliente'
             form_pessoa.save()
-        url = str(request.path_info) + '?success=True'
-        return HttpResponseRedirect(url)
+            url = str(request.path_info) + '?success=True'
+            return HttpResponseRedirect(url)
     else:
         form_pessoa = PessoaRapidoForm()
     context = {

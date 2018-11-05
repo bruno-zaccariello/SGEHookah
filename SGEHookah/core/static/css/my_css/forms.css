@@ -73,7 +73,8 @@ ul.errorlist li {
 }
 
 .error-active, input.error-active:hover, select.error-active:hover, textarea.error-active:hover,
-input.error-active:hover, select.error-active:hover, textarea.error-active:hover
+input.error-active:hover, select.error-active:hover, textarea.error-active:hover,
+*.error-active, * > .error-active
 {
     border: 1px solid #AD0000;
 }
