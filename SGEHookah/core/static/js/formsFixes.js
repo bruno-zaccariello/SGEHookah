@@ -18,29 +18,32 @@ $('input').each(function () {
     $this = $(this);
     $label = $('label[for="'+ $this.attr('id') +'"]');
     if($this.prop('required')) {
-        $label.addClass('required')
+        $label.addClass('required');
     }
 });
 
 $('select').each(function () {
     $this = $(this);
     $label = $('label[for="'+ $this.attr('id') +'"]');
-    $label.addClass('required')
+    $label.addClass('required');
 });
 
 function showErrors(field) {
   if ($(field).find('ul.errorlist').length > 0) {
     $(field).find('input').addClass('error-active');
+    $(field).find('select').addClass('error-active');
   } else {
     $(field).find('input').removeClass('error-active');
+    $(field).find('select').removeClass('error-active');
   }
 }
+
 
 // $('.formInput').change(function() {showErrors($(this));})
 // Dinamically find errors (ATM it updates on form send)
 
 $('.formInput').each(function () {
-  showErrors($(this))
+  showErrors($(this));
 })
 
 // Para a pagina de alterar senha e info
@@ -50,4 +53,14 @@ $('.field').each(function () {
   } else {
     $(this).find('input').removeClass('error-active');
   }
+})
+
+$('input').change(function() {
+  $(this).removeClass('error-active');
+  $(this).parent().find('ul.errorlist').hide();
+})
+
+$('select').change(function() {
+  $(this).removeClass('error-active');
+  $(this).parent().find('ul.errorlist').hide();
 })

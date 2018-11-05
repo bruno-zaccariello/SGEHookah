@@ -1,0 +1,169 @@
+<html>
+
+<head>
+	<title id="iframe_title">SGE - Lista de Clientes</title>
+    
+    <!-- Site defaults -->
+    <link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    
+    <!-- Page specific -->
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/iframe/vendas/lista_vendas.css"/>
+    
+    <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/jquery/jquery.mask.min.js"></script>
+
+    <script src="/static/js/patterns/lista.js"></script>
+    <script src="/static/js/utils.js"></script>
+</head>
+
+<body>
+
+	<h1> Lista de Clientes </h1>
+	
+	<!-- ALERTA DE EXCLUIDO COM SUCESSO -->
+	
+	{% if deletado == 'True' %}
+		
+		<div class="bg">
+		</div>
+		
+		<div class="overlay_content_success">
+			<h2 class="overlay_title_success">Pedido Deletado com Sucesso</h2>
+			
+			<div class="bt_wrapper">
+				<a href="{% url 'lista_vendas' %}"><button class="btMain btConfirmar">Continuar</button></a>
+			</div>
+			
+		</div>
+	
+	{% endif %}
+	
+	<!--================================-->
+	
+	<!-- JANELA QUE SOBREPÕE PARA CONFIRMAR EXCLUSÃO -->
+	
+	<div class="overlay" id="overlay">
+		<div class="overlay_bg">
+		</div>
+		
+		<div class="overlay_content">
+			<h2 class="overlay_title">Tem certeza que deseja deletar esse pedido?</h2>
+			
+			<div class="bt_wrapper">
+				<a href="javascript:confirmaJanelaOff()"><button class="btMain btCancelar">Cancelar</button></a>
+				<a id="bt_confirma"><button class="btMain btConfirmar">Confirmar</button></a>
+			</div>
+			
+		</div>
+	</div>
+	
+	<!--============================================-->
+	
+	<div class="search_opts_wrapper white">
+		SESSÃO PARA FILTRAR PEDIDO (EM CONSTRUCAO)
+	</div>
+	
+    <section class="content">
+
+        <div class="opt_content">
+            <div class="divCadastrar">
+                <a href="{% url 'nova_venda' %}">
+                    <button class="btMain btCadastrar">
+                    NOVO PEDIDO
+                    </button>
+                </a>
+            </div>
+        </div>
+        
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Pedido</th>
+
+                    <th>Cliente</th>
+
+                    <th>Detalhes</th>
+
+                    <th>Opções</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+            {% for pedido in pagina %}
+                <tr>
+
+                    <td class="txt_center">
+                        {{ pedido.pkid_venda }}
+                    </td>
+
+                    <td class="lft_padding">
+                        {{ pedido.cliente }}
+                    </td>
+
+                    <td class="lft_padding">
+                        <ul class="detail self-scroller">
+                        {% for item, quantidade in pedido.detalhe %}
+                            <li class="detail">
+                                {{ item }} x {{ quantidade }}
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        <div class="total">{{ pedido.total }}</div>
+                    </td>
+                   
+                    <td>
+
+                        <div class="opts_holder flex_row_nw">
+                            <a href="/iframe/clientes/{{ cliente. }}" title="editar" class='vertical opt_bt'>
+                                <div class="opt_bt opt_edit">
+                                </div>
+                            </a>
+
+                            <a href="javascript:confirmaJanelaOn('{{ cliente.pkid_pessoa }}')" title="deletar" class='vertical opt_bt'>
+                                <div class="opt_bt opt_delete">
+                                </div>
+                            </a>
+                        </div>
+
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="divPaginas">
+            {% if pagina.has_previous %}
+                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                <a class="linkPagina white"> </a>
+
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.previous_page_number }}"> {{ pagina.previous_page_number }}</a>
+            {% else %}
+                <a class="linkPagina bee" href=""><<</a>
+                <a class="linkPagina white"> </a>
+
+            {% endif %}
+
+            <a class="linkPagina bee current">{{ pagina.number }}</a>
+
+            {% if pagina.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.next_page_number }}">{{ pagina.next_page_number }}</a>
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ pagina.paginator.num_pages }}">>></a>
+            {% else %}
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="">>></a>
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

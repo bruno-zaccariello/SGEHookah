@@ -69,6 +69,7 @@ urls_producao = [
 ]
 
 urls_vendas = [
+    path('', vendas.ListaVendas.as_view(), name="lista_vendas"),
     path('nova/', vendas.NovaVenda.as_view(), name="nova_venda"),
 ]
 
