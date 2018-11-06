@@ -90,7 +90,7 @@ class PaginaProduto(TemplateView):
             "produto": produto,
             "form": form,
             "form_page": form_page[:-2],
-            "success": success(request)
+            "success": self.success(request)
         }
         return render(request, self.template, self.context)
 
