@@ -13,10 +13,8 @@ function updateElementIndex(el, prefix, ndx) {
 function cloneMore(selector, prefix) {
     var newElement = $(selector).clone(true);
     var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
-    console.log(newElement)
     newElement.show()
     newElement.find(':input').each(function() {
-        console.log(this)
         if ($(this).attr('data-select2-id') && $(this).attr('tabindex')) {
             $(this).removeAttr('data-select2-id');
             $(this).removeAttr('tabindex');
@@ -24,7 +22,6 @@ function cloneMore(selector, prefix) {
         var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
         var id = 'id_' + name;
         $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-        console.log(this)
     });
     total++;
     $('#id_' + prefix + '-TOTAL_FORMS').val(total);
