@@ -5,9 +5,10 @@ $(document).ready(function() {
     $('[name*=fkid_produto]').attr('select2', 'True').select2({
         width: '200px'
     });
-    $('[name=fkid_cliente]').select2({
-        width: 'resolve'
-    });
+    
+    $('[name=fkid_cliente]').select2().parent().find(
+        'span:first'
+    ).removeAttr('style');
 
 })
 
