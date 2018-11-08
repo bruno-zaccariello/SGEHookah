@@ -332,19 +332,38 @@ class PedidofabricacaoForm(forms.ModelForm):
 class PedidoVendaForm(forms.ModelForm):
     """ Formulário do pedido de venda """
 
-    dt_pedido = forms.DateTimeField()
-    dt_pagamento = forms.DateTimeField()
-    dt_preventrega = forms.DateTimeField()
+    fkid_cliente = forms.ModelChoiceField(
+        label="Cliente",
+        queryset=model.Pessoa.objects.filter(hide=False),
+    )
+    fkid_formapag = forms.ModelChoiceField(
+        label="Forma de Pagamento",
+        queryset=model.Formapagamento.objects.all(),
+        initial=0
+    )
+    fkid_status = forms.ModelChoiceField(
+        label="Status do Pedido",
+        queryset=model.Statusvenda.objects.all(),
+        initial=0
+    )
+    dt_preventrega = forms.DateTimeField(
+        label="Previsão de entrega",
+        required=False
+    )
     pago = forms.BooleanField(
         label="Pago",
         required=False,
-        initial=False,
+        initial=False
+    )
+    dt_pagamento = forms.DateTimeField(
+        label="Data de Pgto.",
+        required=False
     )
 
     class Meta:
         model = model.Pedidovenda
         fields = ['fkid_cliente', 'fkid_status', 'fkid_formapag',
-         'dt_pagamento', 'dt_preventrega' ,'pago']
+         'dt_preventrega', 'pago', 'dt_pagamento']
 
 class ItemVendaForm(forms.ModelForm):
     """ Formulário de item de venda """

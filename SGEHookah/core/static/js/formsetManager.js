@@ -68,5 +68,5 @@ $(document).ready(function() {
         "<div title='remover linha' class='opt_bt opt_delete remove-form-row'></div>"
     )
 
-    $('input[type=checkbox]').hide()
+    $('.form-row').find($('input[type=checkbox]')).hide()
 })

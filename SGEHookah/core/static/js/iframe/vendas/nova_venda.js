@@ -10,6 +10,10 @@ $(document).ready(function() {
         'span:first'
     ).removeAttr('style');
 
+    $('#id_pago').parent().css({'width':'10%', 'margin':'0 0 auto auto'})
+    $('#id_pago').parent().parent().css('text-align', 'right')
+    checkPagamento();
+
 })
 
 function updatePreco(id, row) {
@@ -26,6 +30,14 @@ function updatePreco(id, row) {
                 )
             }
             )
+    }
+}
+
+function checkPagamento() {
+    if ($('#id_pago').prop('checked')) {
+        $('#id_dt_pagamento').prop('disabled', false);
+    } else {
+        $('#id_dt_pagamento').prop('disabled', true);
     }
 }
 
@@ -51,3 +63,10 @@ $('[name*=vl_unitario]').keyup(function() {
         (multiplier*unit).toFixed(2)
     )
 })
+
+$('#id_pago').click(function() {
+    checkPagamento();
+})
+
+var tomate = 0;
+console.log(tomate)

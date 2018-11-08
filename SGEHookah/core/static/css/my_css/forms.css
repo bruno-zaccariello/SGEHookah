@@ -80,7 +80,7 @@ input.error-active:hover, select.error-active:hover, textarea.error-active:hover
 }
 
 .select2-container {
-    width: 70%;
+    width: 200px;
 }
 
 .form-row td .select2-container {

@@ -3,7 +3,7 @@ table {
 	width: 90%;
 }
 
-table input:not([type=checkbox]), select {
+table input:not([type=checkbox]), table select {
 	background-color: transparent;
 	border: none;
 	border-bottom: 1px solid black;
@@ -33,12 +33,12 @@ table td * {
 	border-right: 1px solid black;
 }
 
-.formInput {
+.form-row .formInput {
 	text-align: center;
 	width: 60%;
 }
 
-.formInput input, .formInput select {
+.form-row .formInput, .form-row .formInput {
 	border: 1px solid transparent;
 	background-color: white;
 	background-color: rgba(255,255,255,0.1);
@@ -47,17 +47,17 @@ table td * {
 	width: 70%;
 }
 
-.formInput input.error-active, .formInput select.error-active {
+.form-row .formInput input.error-active, .form-row .formInput select.error-active {
 	border-color: #AD0000;
 }
 
-.formInput input:hover, .formInput input:focus,
-.formInput select:hover, .formInput select:focus {
+.form-row .formInput input:hover, .form-row .formInput input:focus,
+.form-row .formInput select:hover, .form-row .formInput select:focus {
 	background-color: white;
 	background-color: rgba(255,255,255,0.7);
 }
 
-input:focus, select:focus {
+.form-row input:focus, .form-row select:focus {
 	border-color: yellow;
 }
 
