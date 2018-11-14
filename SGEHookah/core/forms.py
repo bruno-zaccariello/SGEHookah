@@ -348,7 +348,9 @@ class PedidoVendaForm(forms.ModelForm):
     )
     dt_preventrega = forms.DateTimeField(
         label="Previsão de entrega",
-        required=False
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        initial=str(dt.date.today())
     )
     pago = forms.BooleanField(
         label="Pago",
@@ -357,8 +359,17 @@ class PedidoVendaForm(forms.ModelForm):
     )
     dt_pagamento = forms.DateTimeField(
         label="Data de Pgto.",
-        required=False
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        initial=str(dt.date.today())
     )
+
+    def clean_dt_pagamento(self):
+        pago = self.cleaned_data['pago']
+        data = self.cleaned_data['dt_pagamento']
+        if not pago:
+            return None
+        return data
 
     class Meta:
         model = model.Pedidovenda

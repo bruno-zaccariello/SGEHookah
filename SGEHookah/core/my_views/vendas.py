@@ -6,8 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.forms import inlineformset_factory
 from django.views import View
-from django.views.generic import TemplateView
 from django.core.paginator import Paginator
+
+from django.views.generic import TemplateView
 
 from core.funcoes import arruma_url_page
 
@@ -25,6 +26,13 @@ class NovaVenda(TemplateView):
         exclude=['hide'],
         form=forms.ItemVendaForm
         )
+
+    def removeStock(self, productsFormset):
+        for form in productsFormset:
+            produto = form['fkid_produto']
+            produto.totalestoque -= form['quantidade']
+            produto.save()
+        print('estoque atualizado com sucesso')
 
     def get(self, request):
         vendaForm = forms.PedidoVendaForm()
@@ -45,7 +53,10 @@ class NovaVenda(TemplateView):
                 vendaForm.fkid_usuario = request.user
                 vendaForm.save()
                 itemsForms = self.formset_itemsVenda(request.POST, instance=vendaForm)
+                print(itemsForms.cleaned_data)
+                vendaForm = forms.PedidoVendaForm(request.POST)
                 if itemsForms.is_valid():
+                    self.removeStock(itemsForms.cleaned_data)
                     itemsForms = itemsForms.save()
                     return HttpResponseRedirect(self.url+'?success=True')
         context = {
@@ -69,3 +80,15 @@ class ListaVendas(TemplateView):
             'pagina':pagina,
         }
         return render(request, self.template_name, context)
+
+class DeletarVenda(View):
+    reverse_url = '/iframe/vendas/?deleted='
+
+    def get(self, request, id_venda):
+        try:
+            venda = models.Pedidovenda.objects.get(pkid_venda=id_venda)
+            venda.on_delete_updateStock()
+            venda.delete()
+        except:
+            return HttpResponseRedirect(self.reverse_url + 'False')
+        return HttpResponseRedirect(self.reverse_url + 'True')

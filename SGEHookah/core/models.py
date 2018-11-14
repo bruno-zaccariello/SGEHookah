@@ -372,6 +372,15 @@ class Pedidovenda(models.Model):
     pago = models.BooleanField(default=0)
     hide = models.BooleanField(default=0)
 
+    def on_delete_updateStock(self):
+        items = Itemvenda.objects.filter(fkid_pedidovenda__pkid_venda=self.pk)
+        for item in items:
+            produto = item.fkid_produto
+            produto.totalestoque += item.quantidade
+            produto.save()
+        print('estoque recuperado com sucesso')
+        return self
+
     def cliente(self):
         return self.fkid_cliente.nomecompleto_razaosocial
 
