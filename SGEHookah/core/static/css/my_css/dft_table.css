@@ -11,8 +11,8 @@ thead * {
 }
 
 tbody th, tbody td {
-	border-left: 1px solid #555;
-	border-right: 1px solid #555;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
 }
 
 table {
@@ -41,7 +41,7 @@ td.lft_padding {
 	padding-left: 25px;
 }
 
-tr:hover td {
+tr:hover:not(:last-child) td {
 	background-color: #fff333;
 }
 

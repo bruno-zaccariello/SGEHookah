@@ -179,6 +179,10 @@ a.bee:hover {
 
 /* Extras */
 
+.warning {
+    color: red;
+}
+
 .required {
     color: #810000;
 }
