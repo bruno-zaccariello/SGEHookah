@@ -13,7 +13,6 @@ $(document).ready(function() {
 
 
     function scroll(elem) {
-        console.log($(elem).scrollTop())
         $(elem).animate({
             scrollTop: amount
         }, 100, 'linear', function() {
@@ -42,3 +41,12 @@ $(document).ready(function() {
     })
 
 })
+
+function confirmaJanelaOn(url) {
+	var telaConfirma = document.getElementById("overlay");
+	var bt_confirma = document.getElementById("bt_confirma");
+	if(telaConfirma) {
+		telaConfirma.style.display = "block";
+		bt_confirma.href = url;
+	}
+}

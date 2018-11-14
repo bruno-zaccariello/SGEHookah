@@ -13,7 +13,6 @@
     <script src="/static/jquery/jquery.mask.min.js"></script>
 
     <script src="/static/js/patterns/lista.js"></script>
-    <script src="/static/js/iframe/produtos/materia/lista_materia.js"></script>
     <script src="/static/js/utils.js"></script>
 </head>
 
@@ -117,7 +116,8 @@
                                 </div>
                             </a>
 
-                            <a href="javascript:confirmaJanelaOn('{{ item.pkid_materiaprima }}')" title="deletar" class='vertical opt_bt'>
+                            {% url 'deletar_materia' item.pkid_materiaprima as url %}
+                            <a href="javascript:confirmaJanelaOn('{{ url }}')" title="deletar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_delete">
                                 </div>
                             </a>

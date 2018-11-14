@@ -14,7 +14,6 @@
     <script src="/static/jquery/jquery.mask.min.js"></script>
 
     <script src="/static/js/patterns/lista.js"></script>
-    <script src="/static/js/iframe/producao/formulas/lista_formulas.js"></script>
     <script src="/static/js/utils.js"></script>
 </head>
 
@@ -130,7 +129,8 @@
                         </div>
                     </a>
 
-                    <a href="javascript:confirmaJanelaOn('{{ formula.pkid_formula }}')" class='vertical opt_bt'>
+                    {% url 'deletar_formula' id_formula=formula.pkid_formula as url %}
+                    <a href="javascript:confirmaJanelaOn('{{ url }}')" class='vertical opt_bt'>
                         <div class='opt_bt opt_delete'>
                         </div>
                     </a>

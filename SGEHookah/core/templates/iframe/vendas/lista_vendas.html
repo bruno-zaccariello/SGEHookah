@@ -117,12 +117,13 @@
                     <td>
 
                         <div class="opts_holder flex_row_nw">
-                            <a href="/iframe/clientes/{{ cliente. }}" title="editar" class='vertical opt_bt'>
+                            <a href="/iframe/clientes/" title="editar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_edit">
                                 </div>
                             </a>
 
-                            <a href="javascript:confirmaJanelaOn('{{ cliente.pkid_pessoa }}')" title="deletar" class='vertical opt_bt'>
+                            {% url 'deletar_venda' pedido.pkid_venda as url %}
+                            <a href="javascript:confirmaJanelaOn('{{ url }}')" title="deletar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_delete">
                                 </div>
                             </a>

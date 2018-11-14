@@ -14,7 +14,6 @@
     <script src="/static/jquery/jquery-3.3.1.min.js"></script>
     <script src="/static/jquery/jquery.mask.min.js"></script>
 
-	<script src="/static/js/iframe/produtos/unidade/lista_unidade.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
     <script src="/static/js/utils.js"></script>
 </head>
@@ -142,7 +141,8 @@
 
                     <div class="opts_holder flex_row_nw">
                     
-                    <a href="javascript:confirmaJanelaOn('{{ unidade.pkid_unidademedida }}')" class='vertical opt_bt'>
+                    {% url 'deletar_unidade' unidade.pkid_unidademedida as url %}
+                    <a href="javascript:confirmaJanelaOn('{{ url }}')" class='vertical opt_bt'>
                         <div class='opt_bt opt_delete'>
                         </div>
                     </a>
