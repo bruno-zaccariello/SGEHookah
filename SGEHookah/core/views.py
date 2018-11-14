@@ -14,6 +14,7 @@ from core.my_views.clientes import *
 from core.my_views.produtos import *
 from core.my_views.usuario import *
 from core.my_views.producao import *
+import core.my_views.home as hp
 from core.api.api import *
 
 # Create your views here.
@@ -45,8 +46,7 @@ def iframe_home(request):
     """ Página inicial do sistema em si """
 
     # Info sobre pedidos de fabricação
-
-    fab_pedidos = model.Pedidofabricacao.objects.filter(
+    pedidosFabricacao = models.Pedidofabricacao.objects.filter(
         hide=False
     ).exclude(
         fkid_statusfabricacao__order=3
@@ -55,7 +55,8 @@ def iframe_home(request):
     )
 
     context = {
-        "fab_pedidos": fab_pedidos
+        "fabricacaoPiece":"iframe/homePieces/fabricacaoDetail.html",
+        "pedidosFabricacao":pedidosFabricacao
     }
     return render(request, "iframe/home.html", context)
 

@@ -60,3 +60,15 @@
 	pointer-events: none;
 	z-index: 1;
 }
+
+.warning {
+    color: red;
+}
+
+.success {
+	color: forestgreen;
+}
+
+.white {
+	color: white;
+}

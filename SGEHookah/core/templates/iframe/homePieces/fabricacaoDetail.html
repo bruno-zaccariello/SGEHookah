@@ -1,0 +1,28 @@
+<table>
+    <thead>
+        <tr>
+            <th> Cód. Pedido </th>
+            <th> Status </th>
+            <th> Data Final </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pedido in pedidosFabricacao %}
+        <tr>
+            <td class="txt_center">{{ pedido.pkid_pedidofabricacao }}</td>
+
+            <td>{{ pedido.fkid_statusfabricacao }}</td>
+
+            {% if pedido.fkid_statusfabricacao.order == 1 %}
+                {% if pedido.is_ready %}
+                    <td class="success">Finalizado!</td>
+                {% else %}
+                    <td>{{ pedido.dt_fim_maturacao|date:"d/m/Y H:i" }}</td>
+                 {% endif %}
+            {% else %}
+                <td>Fora da Maturação</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
