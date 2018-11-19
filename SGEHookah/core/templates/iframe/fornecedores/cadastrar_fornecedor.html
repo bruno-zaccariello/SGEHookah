@@ -1,0 +1,88 @@
+<html>
+<head>
+	<title id="iframe_title">SGE - Cadastrar Fornecedor</title>
+
+	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+
+	<link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
+	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/clientes/cadastrar_cliente.css"/>
+
+    <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/jquery/jquery.mask.min.js"></script>
+</head>
+
+<body>
+	<h1> Cadastrar Fornecedor </h1>
+	
+	{% if success == 'True' %}
+	<div class="overlay" id="overlay">
+		<div class="overlay_bg">
+		</div>
+		
+		<div class="overlay_content">
+			<h2 class="overlay_title">FORNECEDOR CADASTRADO COM SUCESSO</h2>
+			
+			<div class="bt_wrapper">
+				<a href="{% url 'cadastrar_fornecedor' %}"><button class="btMain btConfirmar">Continuar</button></a>
+			</div>
+			
+		</div>
+	</div>
+	{% endif %}
+	
+	<section class="content">
+		<div class="formContainer">
+			<form method="POST" enctype="multipart/form-data" autocomplete="off">
+                
+				<div class="formInputContainer">
+                
+				{% csrf_token %}
+				{% for field in fornecedorForm %}
+					<div class="fieldDiv">
+						<div class="formInput">
+							<div class="label">{{field.label_tag}}</div>
+							<div class="input">{{field}}
+								{{ field.errors }}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+
+                {% for field in telefoneForm %}
+                    <div class="fieldDiv">
+                        <div class="formInput">
+                            <div class="label">{{field.label_tag}}</div>
+                            <div class="input">{{field}}
+                            	{{ field.errors }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <span class="divisor"></span>
+
+                {% for field in enderecoForm %}
+					<div class="fieldDiv">
+						<div class="formInput">
+							<div class="label">{{field.label_tag}}</div>
+							<div class="input">{{field}}
+								<span id="{{ field.label }}_errors">{{ field.errors }}</span>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+
+				</div>
+				<div class="botaoContainer">
+					<button class="btMain btLimpar" type="reset">Limpar</button>
+					<button class="btMain btCadastrar" type="submit">Cadastrar</button>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<script src="/static/js/iframe/fornecedores/cadastrar_fornecedor.js"></script>
+    <script src="/static/js/formsFixes.js"></script>
+
+</body>
+</html>

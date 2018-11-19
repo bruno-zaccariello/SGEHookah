@@ -14,7 +14,7 @@ from core.my_views.clientes import *
 from core.my_views.produtos import *
 from core.my_views.usuario import *
 from core.my_views.producao import *
-import core.my_views.home as hp
+from core.my_views.fornecedores import *
 from core.api.api import *
 
 # Create your views here.

@@ -1,0 +1,152 @@
+<html>
+
+<head>
+	<title id="iframe_title">SGE - Lista de Fornecedores</title>
+    
+    <!-- Site defaults -->
+	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    <!-- Page specific -->
+    <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
+	
+    <script src="/static/js/patterns/lista.js"></script>
+    <script src="/static/js/utils.js"></script>
+</head>
+
+<body>
+
+	<h1> Lista de Fornecedores </h1>
+	
+	<!-- ALERTA DE EXCLUIDO COM SUCESSO -->
+	
+	{% if deletado == 'True' %}
+		
+		<div class="bg">
+		</div>
+		
+		<div class="overlay_content_success">
+			<h2 class="overlay_title_success">Fornecedor Deletado com Sucesso</h2>
+			
+			<div class="bt_wrapper">
+				<a href="{% url 'lista_fornecedores' %}"><button class="btMain btConfirmar">Continuar</button></a>
+			</div>
+			
+		</div>
+	
+	{% endif %}
+	
+	<!--================================-->
+	
+	<!-- JANELA QUE SOBREPÕE PARA CONFIRMAR EXCLUSÃO -->
+	
+	<div class="overlay" id="overlay">
+		<div class="overlay_bg">
+		</div>
+		
+		<div class="overlay_content">
+			<h2 class="overlay_title">Tem certeza que deseja deletar esse fornecedor?</h2>
+			
+			<div class="bt_wrapper">
+				<a href="javascript:confirmaJanelaOff()"><button class="btMain btCancelar">Cancelar</button></a>
+				<a id="bt_confirma"><button class="btMain btConfirmar">Confirmar</button></a>
+			</div>
+			
+		</div>
+	</div>
+	
+	<!--============================================-->
+	
+	<div class="search_opts_wrapper white">
+		SESSÃO PARA FILTRAR FORNECEDORES (EM CONSTRUCAO)
+	</div>
+	
+    <div class="pageContainer">
+
+        <div class="opt_content">
+            <div class="divCadastrar">
+                <a href="{% url 'cadastrar_fornecedor' %}">
+                    <button class="btMain btCadastrar">
+                    CADASTRAR FORNECEDOR
+                    </button>
+                </a>
+            </div>
+        </div>
+        
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Cód.</th>
+
+                    <th>Nome do Fornecedor</th>
+
+                    <th>Opções</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+            {% for fornecedor in pagina %}
+                <tr>
+
+                    <td class="txt_center">
+                        {{ fornecedor.pkid_pessoa }}
+                    </td>
+
+                    <td class="lft_padding">
+                        {{ fornecedor.nomecompleto_razaosocial }}
+                    </td>
+                   
+                    <td>
+
+                        <div class="opts_holder flex_row_nw">
+                            <a href="/iframe/fornecedores/{{ fornecedor.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
+                                <div class="opt_bt opt_edit">
+                                </div>
+                            </a>
+
+                            {% url "deletar_fornecedor" fornecedor.pkid_pessoa as url %}
+                            <a href="javascript:confirmaJanelaOn('{{ url }}')" title="deletar" class='vertical opt_bt'>
+                                <div class="opt_bt opt_delete">
+                                </div>
+                            </a>
+                        </div>
+
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="divPaginas">
+            {% if fornecedores.has_previous %}
+                <a class="linkPagina bee" href="{{ url }}&page=1"><<</a>
+                <a class="linkPagina white"> </a>
+
+                <a class="linkPagina bee" href="{{ url }}&page={{ fornecedores.previous_page_number }}"> {{ fornecedores.previous_page_number }}</a>
+            {% else %}
+                <a class="linkPagina bee" href=""><<</a>
+                <a class="linkPagina white"> </a>
+
+            {% endif %}
+
+            <a class="linkPagina bee current">{{ fornecedores.number }}</a>
+
+            {% if fornecedores.has_next %}
+                <a class="linkPagina bee" href="{{ url }}&page={{ fornecedores.next_page_number }}">{{ fornecedores.next_page_number }}</a>
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="{{ url }}&page={{ fornecedores.paginator.num_pages }}">>></a>
+            {% else %}
+
+                <a class="linkPagina white"> </a>
+                <a class="linkPagina bee" href="">>></a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

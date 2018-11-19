@@ -74,6 +74,13 @@ urls_vendas = [
     path('deletar/<int:id_venda>', vendas.DeletarVenda.as_view(), name="deletar_venda"),
 ]
 
+urls_fornecedores = [
+    path('cadastrar/', view.cadastrar_fornecedor, name="cadastrar_fornecedor"),
+    path('cadastrar/cadastro_rapido/', view.cadastro_rapido_fornecedor, name="cadastro_rapido_fornecedor"),
+    path('lista/', view.lista_fornecedores, name="lista_fornecedores"),
+    path('deletar/<int:id_fornecedor>/', view.deletar_fornecedor, name="deletar_fornecedor")
+]
+
 api = [
     path('nova_fabricacao/', view.ajax_nova_fabricacao, name="ajax_nova_fabricacao"),
     path('checa_materias/', view.ajax_checa_materias, name="ajax_checa_materias"),
@@ -90,6 +97,7 @@ urlpatterns = [
     path('iframe/home/', view.iframe_home, name="iframe_home"),
     path('iframe/produtos/', include(urls_produtos)),
     path('admin/usuario/', include(urls_usuario)),
+	path('iframe/fornecedores/', include(urls_fornecedores)),
     path('iframe/clientes/', include(urls_clientes)),
     path('iframe/producao/', include(urls_producao)),
     path('iframe/vendas/', include(urls_vendas)),

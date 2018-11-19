@@ -34,13 +34,13 @@ def filtra_produtos(codigo, palavra_chave):
     ).order_by('codproduto')
 
 
-def filtra_clientes(codigo, nome):
+def filtra_clientes(codigo, palavraChave):
     """ Função para fazer a filtragem de clientes """
 
     return Pessoa.objects.filter(
-        Q(nomecompleto_razaosocial__icontains=nome) |
-        Q(apelido_nomefantasia=nome) |
-        Q(email=nome),
+        Q(nomecompleto_razaosocial__icontains=palavraChave) |
+        Q(apelido_nomefantasia=palavraChave) |
+        Q(email=palavraChave),
         hide=False,
         pkid_pessoa__icontains=codigo
     ).order_by('pkid_pessoa')
