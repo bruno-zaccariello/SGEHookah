@@ -76,7 +76,6 @@ urls_vendas = [
 
 urls_fornecedores = [
     path('cadastrar/', view.cadastrar_fornecedor, name="cadastrar_fornecedor"),
-    path('cadastrar/cadastro_rapido/', view.cadastro_rapido_fornecedor, name="cadastro_rapido_fornecedor"),
     path('lista/', view.lista_fornecedores, name="lista_fornecedores"),
     path('deletar/<int:id_fornecedor>/', view.deletar_fornecedor, name="deletar_fornecedor")
 ]

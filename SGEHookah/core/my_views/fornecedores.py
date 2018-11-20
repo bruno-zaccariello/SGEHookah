@@ -25,7 +25,7 @@ def cadastrar_fornecedor(request):
             with transaction.atomic() :
                 # Altera o tipo de pessoa no formulario e salva
                 fornecedorForm = fornecedorForm.save(commit=False)
-                fornecedorForm.tipopessoa = 'fornecedor'
+                fornecedorForm.fornecedor = True
                 fornecedorForm.save()
                 pessoa = models.Pessoa.objects.get(pkid_pessoa=fornecedorForm.pk)
 
@@ -59,33 +59,6 @@ def cadastrar_fornecedor(request):
     return render(request, "iframe/fornecedores/cadastrar_fornecedor.html", context)
 
 @login_required(login_url="/admin")
-def cadastro_rapido_fornecedor(request):
-    success = request.GET.get('success', False)
-    if request.POST:
-        fornecedorForm = PessoaRapidoForm(request.POST)
-        if fornecedorForm.is_valid():
-            fornecedorForm = fornecedorForm.save(commit=False)
-            # Arruma o campo de e-mail para não ter conflito
-            if fornecedorForm.email == '':
-                fornecedorForm.email = None
-
-            # Arruma o campo de cpf para não ter conflito
-            if fornecedorForm.cpf_cnpj == '':
-                fornecedorForm.cpf_cnpj = None
-
-                fornecedorForm.tipopessoa = 'fornecedor'
-                fornecedorForm.save()
-        url = str(request.path_info) + '?success=True'
-        return HttpResponseRedirect(url)
-    else:
-        fornecedorForm = PessoaRapidoForm()
-    context = {
-    "fornecedorForm":fornecedorForm,
-    "success":success,
-    }
-    return render(request, "iframe/fornecedores/cadastro_rapido_fornecedor.html", context)
-
-@login_required(login_url="/admin")
 def lista_fornecedores(request):
     # Pega informações da URL
     codigo = request.GET.get('search_cod_fornec', '')
@@ -94,8 +67,8 @@ def lista_fornecedores(request):
     page = int(request.GET.get('page', 1))
 
     # Filtra lista de clientes e gera páginas
-    lista_fornecedores = filtra_clientes(codigo, nome).filter(
-        tipopessoa='fornecedor'
+    lista_fornecedores = filtra_pessoas(codigo, nome).filter(
+        fornecedor=True
     )
     # função em funcoes.py
     paginas = Paginator(lista_fornecedores, 10)

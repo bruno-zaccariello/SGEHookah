@@ -423,8 +423,12 @@ class Pessoa(models.Model):
         'Data de Nascimento', blank=True, null=True)
     st_pessoajuridica = models.BooleanField(
         'Pessoa Jurídica', max_length=1, default=0)
-    tipopessoa = models.CharField(
-        'Tipo da Pessoa', max_length=15, null=False, blank=False)
+    cliente = models.BooleanField(
+        'Cliente', default=0
+    )
+    fornecedor = models.BooleanField(
+        'Fornecedor', default=0
+    )
     hide = models.BooleanField(default=0)
 
     def __str__(self):

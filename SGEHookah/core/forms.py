@@ -337,7 +337,10 @@ class PedidoVendaForm(forms.ModelForm):
 
     fkid_cliente = forms.ModelChoiceField(
         label="Cliente",
-        queryset=model.Pessoa.objects.filter(hide=False),
+        queryset=model.Pessoa.objects.filter(
+            hide=False,
+            cliente=True
+        ),
     )
     fkid_formapag = forms.ModelChoiceField(
         label="Forma de Pagamento",

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
 
-from core.funcoes import arruma_url_page, filtra_clientes
+from core.funcoes import arruma_url_page, filtra_pessoas
 from core.models import *
 from core.forms import *
 
@@ -25,7 +25,7 @@ def cadastrar_cliente(request):
         with transaction.atomic():
             if form_pessoa.is_valid():
                 pessoa = form_pessoa.save(commit=False)
-                pessoa.tipopessoa = 'cliente'
+                pessoa.cliente = True
                 pessoa.save()
 
                 if form_endereco.is_valid():
@@ -74,7 +74,7 @@ def cadastro_rapido_cliente(request):
             if form_pessoa.cpf_cnpj == '':
                 form_pessoa.cpf_cnpj = None
 
-            form_pessoa.tipopessoa = 'cliente'
+            form_pessoa.cliente = True
             form_pessoa.save()
             url = str(request.path_info) + '?success=True'
             return HttpResponseRedirect(url)
@@ -98,7 +98,9 @@ def lista_clientes(request):
     page = int(request.GET.get('page', 1))
 
     # Filtra lista de clientes e gera páginas
-    clientes = filtra_clientes(codigo, nome)  # função em funcoes.py
+    clientes = filtra_pessoas(codigo, nome).filter(
+        cliente=True
+    )
     paginas = Paginator(clientes, 10)
     pagina = paginas.get_page(page)
     url = arruma_url_page(request)  # função em funcoes.py

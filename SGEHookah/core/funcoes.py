@@ -9,7 +9,7 @@ from django.db.models import Q
 
 from core.models import Produto, Pessoa
 
-__all__ = ['filtra_produtos', 'filtra_clientes',
+__all__ = ['filtra_produtos', 'filtra_pessoas',
            'paginar', 'arruma_url_page']
 
 
@@ -34,7 +34,7 @@ def filtra_produtos(codigo, palavra_chave):
     ).order_by('codproduto')
 
 
-def filtra_clientes(codigo, palavraChave):
+def filtra_pessoas(codigo, palavraChave):
     """ Função para fazer a filtragem de clientes """
 
     return Pessoa.objects.filter(
