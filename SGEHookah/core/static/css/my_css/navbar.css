@@ -211,6 +211,10 @@
     order: 0;
 }
 
+.opt_fornecedores {
+    background-image: url("/static/img/bg_menu_fornecedor.svg")
+}
+
 .opt_cliente {
     background-image: url("/static/img/bg_menu_clientes.png");
     order: 1;
@@ -232,7 +236,7 @@
 }
 
 .opt_config {
-    background-image: url("/static/img/bg_menu_config2.png");
+    background-image: url("/static/img/bg_menu_config.png");
     order: 5;
 }
 

@@ -58,7 +58,7 @@
 				</div>
 				
 				<div class="oam_brand">
-					<h2 class="oam_brand_title">ENDORAMA ESSÊNCIAS</h2>
+					<a title="Home Page" href="/"><h2 class="oam_brand_title">ENDORAMA ESSÊNCIAS</h2></a>
 				</div>
 				
 				<div class="oam_user_info">
@@ -150,12 +150,16 @@
 					</div>
 				</div>
 				
-				<div class="oam_opt opt_home_page opt_none_bg">
+				<div class="oam_opt opt_fornecedores opt_none_bg">
 					<a href="/iframe/home" target="main_frame">
 						<div class="oam_drop_div">
-							<div class="oam_drop_div_legend">Home Page</div>
+							<div class="oam_drop_div_legend">Fornecedores</div>
 						</div>
 					</a>
+					<div class="oam_dropdown_content">
+						<a href="{% url 'lista_fornecedores' %}" target="main_frame"><div class="oam_drop_opt">Lista Fornecedores</div></a>
+						<a href="{% url 'cadastrar_fornecedor' %}" target="main_frame"><div class="oam_drop_opt">Cadastrar Fornecedor</div></a>
+					</div>
 				</div>
 				
 				<div class="oam_opt opt_config opt_none_bg">
