@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<h1> Cadastrar Fornecedor </h1>
+	
 	
 	{% if success == 'True' %}
 	<div class="overlay" id="overlay">
@@ -34,6 +34,8 @@
 		<div class="formContainer">
 			<form method="POST" enctype="multipart/form-data" autocomplete="off">
                 
+				<h2>Cadastrar Fornecedor</h2>
+
 				<div class="formInputContainer">
                 
 				{% csrf_token %}

@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<h1> Cadastrar Produto </h1>
+	
 	
 	{% if success == 'True' %}
 	<div class="overlay" id="overlay">
@@ -36,6 +36,7 @@
 	<section class="content">
 		<div>
 			<form method="POST" enctype="multipart/form-data" autocomplete="off">
+				<h2>Cadastrar Produto</h2>
 				<div class="formInputContainer">
 				{% csrf_token %}
 

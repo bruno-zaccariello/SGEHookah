@@ -68,7 +68,7 @@ def iframe_home(request):
     )
 
     context = {
-        "fabricacaoPiece":"iframe/homePieces/fabricacaoDetail.html",
+        "fabricacaoPiece":"iframe/pieces/fabricacaoDetail.html",
         "pedidosFabricacao":pedidosFabricacao
     }
     return render(request, "iframe/home.html", context)

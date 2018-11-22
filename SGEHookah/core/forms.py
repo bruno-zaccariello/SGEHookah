@@ -388,6 +388,23 @@ class PedidoVendaForm(forms.ModelForm):
 class ItemVendaForm(forms.ModelForm):
     """ Formulário de item de venda """
 
+    fkid_produto = forms.ModelChoiceField(
+        label="Produto",
+        queryset=model.Produto.objects.filter(
+            hide=False
+        )
+    )
+    quantidade = forms.FloatField(
+        label="Quantidade"
+    )
+    vl_unitario = forms.DecimalField(
+        label="Valor Unitário"
+    )
+    vl_total = forms.DecimalField(
+        label="Valor Total",
+        widget=forms.NumberInput(attrs={'readonly':True})
+    )
+
     class Meta:
         model = model.Itemvenda
         fields = ['fkid_produto', 'quantidade', 'vl_unitario',

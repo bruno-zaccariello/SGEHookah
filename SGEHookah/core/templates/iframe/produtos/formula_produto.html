@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title id="iframe_title">SGE - Cadastrar Produto</title>
+	<title id="iframe_title">SGE - Fórmula Produto</title>
 
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
     
@@ -17,7 +17,7 @@
 </head>
 
 <body>
-	<h1> Fórmula </h1>
+	
 	
 	{% if success == 'True' %}
 	<div class="overlay" id="overlay">
@@ -57,46 +57,7 @@
 
 						</div>
 
-						<table>
-
-							<thead>
-								<tr>
-									<th>Matéria Prima</th>
-									<th>Quantidade</th>
-									<th>Unidade</th>
-									<th>Excluir</th>
-								</tr>
-							</thead>
-
-							<tbody>
-							{{ forms_materia.management_form }}
-							{% for form in forms_materia %}
-								<tr class="form-row">
-									{% for field in form.hidden_fields %}
-										<td class="hidden">
-											{{ field }}
-										</td>
-									{% endfor %}
-									{% for field in form.visible_fields %}
-										<td class="row_center">
-											{{field}}
-											{{field.errors}}
-										</td>
-									{% endfor %}
-								</tr>
-							{% endfor %}
-
-								<tr class="add_row">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td class="row_center">
-										<div title="nova linha-" class="opt_bt opt_add add-form-row">
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						{% include FORMSET_TEMPLATE with formset=forms_materia %}
 
 					<div class="botaoContainer">
 						<button class="btMain btCancelar" type="reset">Limpar</button>

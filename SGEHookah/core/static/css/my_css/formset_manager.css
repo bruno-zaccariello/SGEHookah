@@ -11,11 +11,15 @@ table input:not([type=checkbox]), table select {
 	width: 100%;
 }
 
+table input:read-only, table input:read-only:focus {
+    border: 1px solid transparent;
+}
+
 table td * {
 	margin: auto;
 }
 
-tr:hover td:not(:last-child) td {
+tr:hover:last-child {
 	background-color: #eee;
 }
 
