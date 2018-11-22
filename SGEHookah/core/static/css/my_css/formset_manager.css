@@ -15,6 +15,10 @@ table td * {
 	margin: auto;
 }
 
+tr:hover td:not(:last-child) td {
+	background-color: #eee;
+}
+
 .opt_bt {
 	cursor: pointer;
 }

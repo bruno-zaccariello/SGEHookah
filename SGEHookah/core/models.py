@@ -510,7 +510,12 @@ class Statusvenda(models.Model):
     """ Status de venda """
 
     pkid_status = models.AutoField(primary_key=True)
+    order = models.IntegerField("Ordem")
     descricao = models.CharField(max_length=100, blank=True, null=True)
+    hide = models.BooleanField(default=0)
+
+    def makeOrder(self):
+        return Statusvenda.objects.order_by('-order').first().order + 1
 
     def __str__(self):
         return self.descricao

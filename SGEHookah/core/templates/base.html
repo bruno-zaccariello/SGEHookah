@@ -183,8 +183,9 @@
 						<div class="search_div">
 							<label class="search_label" for="search_sit_pedido">Situação do Pedido:</label><br/>
 							<select class="search_input" type="text" name="search_sit_pedido" id="search_sit_pedido">
-								<option class="search_sel_opt" value="Concluido" selected> Concluido </option>
-								<option class="search_sel_opt" value="Indiferente"> Indiferente </option>
+								{% for status in statusVendas %}
+									<option class="search_sel_opt" value="{{status}}"> {{status}} </option>
+								{% endfor %}
 							</select>
 						</div>
 						

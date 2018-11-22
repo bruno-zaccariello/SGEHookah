@@ -30,9 +30,22 @@ def index(request):
 
 @login_required(login_url="/admin")
 def home(request):
-    """ Página Inicial """
+    """ Página Principal do sistema
+        Segura o iframe
+    """
     
-    return render(request, "base.html")
+    statusVendas = [
+        stat.descricao for stat in models.Statusvenda.objects
+        .all()
+        .order_by('order')
+    ]
+    print(statusVendas)
+
+    context = {
+        "statusVendas":statusVendas,
+    }
+
+    return render(request, "base.html", context)
 
 
 @login_required(login_url="/admin")
@@ -43,7 +56,7 @@ def redirect_home(request):
 
 @login_required(login_url="/admin")
 def iframe_home(request):
-    """ Página inicial do sistema em si """
+    """ Página inicial no iframe """
 
     # Info sobre pedidos de fabricação
     pedidosFabricacao = models.Pedidofabricacao.objects.filter(

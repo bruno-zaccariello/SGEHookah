@@ -81,8 +81,7 @@ urls_fornecedores = [
 ]
 
 api = [
-    path('nova_fabricacao/', view.ajax_nova_fabricacao, name="ajax_nova_fabricacao"),
-    path('checa_materias/', view.ajax_checa_materias, name="ajax_checa_materias"),
+    path('valida_fabricacao/<int:id_formula>', view.valida_fabricacao, name="valida_fabricacao"),
     path('get_produto/', view.get_produto, name="get_produto"),
     path('search_produto/', view.search_produto, name="search_produto"),
 ]

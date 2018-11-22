@@ -25,7 +25,9 @@ $.ajaxSetup({
     } 
 });
 
-function postAPI(url, body, funct) {
+function none() {return null}
+
+function postAPI(url, body, funct, fthen=none ) {
     let data;
     $.ajax({
         method: "POST",
@@ -33,8 +35,33 @@ function postAPI(url, body, funct) {
         data: JSON.stringify(body),
         dataType: 'json',
         success: function(data) {
-            funct(data)
+            funct(data);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(`Erro ${xhr.status} ${thrownError} - ${xhr.responseJSON.error}`);
+            console.log(xhr.responseJSON);
         }
-    })
+    }).then(
+        fthen()
+    )
+    return data
+}
+
+function getAPI(url, funct, fthen=none) {
+    let data;
+    $.ajax({
+        method: "GET",
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+            funct(data);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(`Erro ${xhr.status} ${thrownError} - ${xhr.responseJSON.error}`);
+            console.log(xhr.responseJSON);
+        }
+    }).then(
+        fthen()
+    )
     return data
 }

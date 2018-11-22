@@ -349,7 +349,9 @@ class PedidoVendaForm(forms.ModelForm):
     )
     fkid_status = forms.ModelChoiceField(
         label="Status do Pedido",
-        queryset=model.Statusvenda.objects.all(),
+        queryset=model.Statusvenda.objects.all().order_by(
+            'order'
+        ),
         initial=0
     )
     dt_preventrega = forms.DateTimeField(

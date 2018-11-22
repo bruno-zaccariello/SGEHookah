@@ -14,6 +14,16 @@ $(document).ready(function() {
     $('#id_pago').parent().parent().css('text-align', 'right')
     checkPagamento();
 
+    $('.opt_bt').click(function() {
+        setTimeout(function() {
+            updateSaleTotal();
+            validateForm();
+        }, 50)
+    })
+
+    updateSaleTotal();
+    validateForm();
+
 })
 
 // Função para atualizar preço e estoque após selecionar
@@ -26,22 +36,25 @@ function updateProductData(id, row) {
             '/api/get_produto/',
             {'produto':id},
             function(data) {
-                data = JSON.parse(data)
-                $(row).find('[name*=vl_unitario]').val(
-                    data[0]['fields']['preco']
-                ).trigger('change')
-                let quantidade = $(row).find('[name*=quantidade]')
-                $(quantidade).prop('estoque', data[0]['fields']['totalestoque'])
-                checkStock(quantidade)
+                if (data['response']) {
+                    $(row).find('[name*=vl_unitario]').val(
+                        data['produto']['preco']
+                    ).trigger('change')
+                    let quantidade = $(row).find('[name*=quantidade]')
+                    $(quantidade).prop('estoque', data['produto']['totalestoque'])
+                    checkStock(quantidade)
+                }
             }
-            )
+        )
     }
 }
 
 function updateSaleTotal() {
     let total = 0
     $('[name*=vl_total]').each(function() {
-        total += parseFloat(this.value)
+        let value = this.value
+        if (['', NaN, null].includes(value)) { value = 0 }
+        total += parseFloat(value)
     })
     if (['', NaN, null].includes(total)) { total = 0 }
     $('#saleTotal').text((total).toFixed(2))

@@ -2,6 +2,7 @@
     Módulo auxiliar com funções para views e outros
 """
 
+from django.core.serializers import serialize
 # from xml.etree import ElementTree
 # import requests
 
@@ -10,7 +11,7 @@ from django.db.models import Q
 from core.models import Produto, Pessoa
 
 __all__ = ['filtra_produtos', 'filtra_pessoas',
-           'paginar', 'arruma_url_page']
+           'paginar', 'arruma_url_page', 'JSON']
 
 
 def arruma_url_page(request):
@@ -62,6 +63,8 @@ def paginar(lista):
         page_content.pop(page)
     return page_content
 
+def JSON(object):
+    return serialize('json', object)
 
 # def calcula_frete(
 #     nCdEmpresa='',

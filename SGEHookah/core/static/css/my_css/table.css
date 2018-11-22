@@ -41,7 +41,7 @@ td.lft_padding {
 	padding-left: 25px;
 }
 
-tr:hover:not(:last-child) td {
+tr:hover td {
 	background-color: #fff333;
 }
 

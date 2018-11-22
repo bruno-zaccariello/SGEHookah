@@ -1,131 +1,90 @@
+var MateriaManager = {
+    materias: [],
+    invalids: 0,
+    clear: function() {this.materias=[]},
+    checar: function() {
+        this.invalids = 0
+        for (let i = 0; i < this.materias.length; i++) {
+            let materia = this.materias[i]
+            
+            let materia_span = $('[id_materia='+materia.id+']').find('.materia_qtd')
+            if (materia.estoque < $(materia_span).attr('quantidade')) {
+                this.invalids += 1
+                $('[id_materia='+materia.id+']').css({'background-color':'red', 'color':'red'})
+            } else {
+                $('[id_materia='+materia.id+']').css({'background-color':'green', 'color':'green'})
+            }
+        }
+        this.toggleButton()
+    },
+    toggleButton: function() {
+        if (this.invalid_count > 0) {
+            $('#submitButton').prop('disabled', true)
+            $('#submitButton').removeClass('btConfirmar')
+            $('#submitButton').addClass('btCancelar')
+        } else {
+            $('#submitButton').prop('disabled', false)
+            $('#submitButton').removeClass('btCancelar')
+            $('#submitButton').addClass('btConfirmar')
+        }
+    },
+}
+
 $(document).ready(function() {
-    buscar_materias($('#id_fkid_formula').val())
+    get_materias($('#id_fkid_formula').val())
     alterar_quantidade($('#id_quantidade').val())
 })
 
-function checa_materias() {
+function get_materias(id) {
+    if (!['', null, NaN, undefined].includes(id)) {
 
-    var ids = []
-    
-    $('[id_materia]').each(function() {
+        getAPI(
+            `/api/valida_fabricacao/${id}`,
+            function(data){
+                $('#materias').empty()
 
-        var id_materia = parseInt($(this).attr('id_materia'))
-        var quantity = parseInt($(this).find('span[original]').text())
+                r = data
+                MateriaManager.materias = r.materias
+                for (var i = 0; i < r.materias.length; i++) {
 
-        ids.push([id_materia, quantity])
-    })
+                    let id = r.materias[i].id
+                    let materia = r.materias[i].materia
+                    let quantidade = r.materias[i].quantidade
+                    let unidade = r.materias[i].unidade
 
-    $.ajax({
-        method: "POST",
-        url: "/api/checa_materias/",
-        data: JSON.stringify({materias_ids: ids}),
-        success: function(data) {
-
-            r = JSON.parse(JSON.stringify(data))
-            var r_data = r.checks
-            
-            var invalid_count = 0
-            for (var i = 0; i < r_data.length; i++) {
-                if (r_data[i][1]) {
-                    $('[id_materia='+r_data[i][0]+']').css({'background-color':'green', 'color':'green'})
-                } else {
-                    $('[id_materia='+r_data[i][0]+']').css({'background-color':'red', 'color':'red'})
-                    invalid_count++
+                    $('#materias').append(
+                        "<tr id_materia='"+id+"'>\
+                            <td>"+materia+"</td>\
+                            <td>\
+                                <span class='materia_qtd' quantidade="+quantidade+">"+quantidade+"</span> "+unidade+"\
+                            </td>\
+                        </tr>"
+                    )
                 }
-            }
+            },
+            function(){alterar_quantidade($('#id_quantidade').val())}
+        )
 
-            if (invalid_count > 0) {
-                $('#submitButton').prop('disabled', true)
-                $('#submitButton').removeClass('btConfirmar')
-                $('#submitButton').addClass('btCancelar')
-            } else {
-                $('#submitButton').prop('disabled', false)
-                $('#submitButton').removeClass('btCancelar')
-                $('#submitButton').addClass('btConfirmar')
-            }
-            
-        } 
-    })
-
-}
-
-function buscar_materias(id) {
-    $.ajax({
-        method: "GET",
-        url: "/api/nova_fabricacao/",
-        data: {formula_id: id},
-        success: function(data){ 
-            
-            $('#materias').empty()
-
-            r = JSON.parse(JSON.stringify(data))
-
-            for (var i = 0; i < r.lista.length; i++) {
-
-                var materia = r.lista[i][0].fkid_materiaprima_id
-                var quantidade = r.lista[i][0].quantidade
-                var unidade = r.lista[i][0].unidade_id
-
-                $('#materias').append(
-                    "<tr id_materia='"+r.lista[i][1]+"'>\
-                        <td>"+materia+"</td>\
-                        <td>\
-                            <span class='materia_qtd' original="+quantidade+">"+quantidade+"</span> "+unidade+"\
-                        </td>\
-                    </tr>"
-                )
-            }
-        }
-    }).then(function() {
-        alterar_quantidade($('#id_quantidade').val())
-    })
+    }
 }
 
 function alterar_quantidade(valor) {
-    var multiplicador = valor
-
-    $('.materia_qtd').each(function() {
-        var valor = parseInt($(this).attr('original'))
-        var total = multiplicador * valor
+    console.log(MateriaManager)
+    for (let j = 0; j < MateriaManager.materias.length; j++) {
+        let materia = MateriaManager.materias[j];
+        let materia_span = $('[id_materia='+materia.id+']').find('.materia_qtd');
         
-        $(this).text(total)
-    })
-    checa_materias()
+        let total = materia.quantidade * valor
+        $(materia_span).text(total)
+    }
+    MateriaManager.checar()
 }
 
 $('#id_fkid_formula').change(function() {
-    buscar_materias($(this).val());
+    get_materias($(this).val());
+    MateriaManager.checar();
 })
 
 $('#id_quantidade').change(function() {
     alterar_quantidade($(this).val());
 })
-
-
-
-function getCookie(name)
-{
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-$.ajaxSetup({ 
-    beforeSend: function(xhr, settings) {
-        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-            // Only send the token to relative URLs i.e. locally.
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-        }
-    } 
-});
