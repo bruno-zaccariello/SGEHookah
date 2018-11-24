@@ -1,9 +1,12 @@
 <html>
 
 <head>
-	<title id="iframe_title">SGE - Unidades de Medida</title>
+	<title id="iframe_title">SGE - Cadastrar Categoria</title>
     <!-- Site defaults -->
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/usefull.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/buttons.css"/>
+    <link rel="stylesheet"  type="text/css" href="/static/css/my_css/dft_table.css"/>
     <!-- Page specific -->
     <link rel="stylesheet"  type="text/css" href="/static/css/patterns/lista.css"/>
     <link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/unidade/lista_unidade.css"/>
@@ -11,13 +14,14 @@
     <script src="/static/jquery/jquery-3.3.1.min.js"></script>
     <script src="/static/jquery/jquery.mask.min.js"></script>
 
+	<script src="/static/js/iframe/produtos/unidade/lista_unidade.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
     <script src="/static/js/utils.js"></script>
 </head>
 
 <body>
 
-	
+	<h1>Unidades</h1>
 	
 	<!-- MENSAGEM DE SUCESSO -->
 	
@@ -30,7 +34,7 @@
 			<h2 class="overlay_title_success">Unidade Deletada com Sucesso</h2>
 			
 			<div class="bt_wrapper">
-				<a href="{% url 'lista_unidades' %}"><button class="btMain btConfirmar">Continuar</button></a>
+				<a href="{% url 'lista_editar' %}"><button class="btMain btConfirmar">Continuar</button></a>
 			</div>
 			
 		</div>
@@ -137,14 +141,12 @@
                 <td class="">
 
                     <div class="opts_holder flex_row_nw">
-
-                    <a href="{% url 'editar_unidade' unidade.pkid_unidademedida %}" title="editar" class='vertical opt_bt'>
-                        <div class="opt_bt opt_edit">
-                        </div>
-                    </a>
+                        
+                        <div class="bt_wrapper">
+                            <a href="{% url 'editar_unidade' %}"><button class="btMain btAlterar">Alterar</button></a>
+                        </div>		
                     
-                    {% url 'deletar_unidade' unidade.pkid_unidademedida as url %}
-                    <a href="javascript:confirmaJanelaOn('{{ url }}')" class='vertical opt_bt'>
+                    <a href="javascript:confirmaJanelaOn('{{ unidade.pkid_unidademedida }}')" class='vertical opt_bt'>
                         <div class='opt_bt opt_delete'>
                         </div>
                     </a>

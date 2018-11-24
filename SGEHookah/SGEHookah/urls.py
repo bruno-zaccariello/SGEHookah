@@ -51,9 +51,11 @@ urls_produtos = [
     path('categorias/', view.lista_categorias, name="lista_categorias"),
     path('categorias/deletar/<int:id_categoria>/',
          view.deletar_categoria, name="deletar_categoria"),
+    path('categorias/<int:id_categoria>/', view.editar_categoria, name="editar_categoria"),
     path('unidades/', view.lista_unidades, name="lista_unidades"),
     path('unidades/deletar/<int:id_unidade>/',
-         view.deletar_unidade, name="deletar_unidade")
+         view.deletar_unidade, name="deletar_unidade"),
+    path('unidades/<int:id_unidade>/', view.editar_unidade, name="editar_unidade")
 ]
 
 urls_producao = [

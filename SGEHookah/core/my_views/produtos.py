@@ -357,3 +357,49 @@ def deletar_unidade(request, id_unidade):
     unidade.hide = True
     unidade.save()
     return HttpResponseRedirect('/iframe/produtos/unidades?success=True')
+
+@login_required(login_url="/admin")
+def editar_unidade(request, id_unidade):
+    
+    try:
+        unidade = models.Unidademedida.objects.get(pkid_unidademedida=id_unidade)
+    except:
+        return HttpResponseRedirect('/admin/home')
+
+    if request.POST:
+        form = forms.UnidademedidaForm(request.POST, instance=unidade)
+
+        if form.is_valid() and form.has_changed():
+            form.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = forms.UnidademedidaForm(instance=unidade)
+
+    context = {
+        "unidade": unidade,
+        "form": form,
+    }
+    return render(request,"iframe/produtos/unidade/editar_unidade.html", context)
+
+@login_required(login_url="/admin")
+def editar_categoria(request, id_categoria):
+    
+    try:
+        categoria = models.Categoriaproduto.objects.get(pkid_categoria=id_categoria)
+    except:
+        return HttpResponseRedirect('/admin/home')
+
+    if request.POST:
+        form = forms.CategoriaprodutoForm(request.POST, instance=categoria)
+
+        if form.is_valid() and form.has_changed():
+            form.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = forms.CategoriaprodutoForm(instance=categoria)
+
+    context = {
+        "categoria": categoria,
+        "form": form,
+    }
+    return render(request,"iframe/produtos/categoria/editar_categorias.html", context)

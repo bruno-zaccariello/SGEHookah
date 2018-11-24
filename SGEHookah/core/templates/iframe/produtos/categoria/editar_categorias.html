@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title id="iframe_title">SGE - Categorias</title>
+	<title id="iframe_title">SGE - Cadastrar Categoria</title>
     <!-- Site defaults -->
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
     <!-- Page specific -->
@@ -9,13 +9,14 @@
     <link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/categoria/lista_categorias.css"/>
 
     <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+	<script src="/static/js/iframe/produtos/categoria/lista_categorias.js"></script>
     <script src="/static/js/patterns/lista.js"></script>
     <script src="/static/js/utils.js"></script>
 </head>
 
 <body>
 
-	
+	<h1>Categorias</h1>
 	
 	<!-- MENSAGEM DE SUCESSO -->
 	
@@ -28,7 +29,7 @@
 			<h2 class="overlay_title_success">Categoria Deletada com Sucesso</h2>
 			
 			<div class="bt_wrapper">
-				<a href="{% url 'lista_categorias' %}"><button class="btMain btConfirmar">Continuar</button></a>
+				<a href="{% url 'editar_categorias' %}"><button class="btMain btConfirmar">Continuar</button></a>
 			</div>
 			
 		</div>
@@ -130,14 +131,8 @@
 
                     <td>
                         <div class="opts_holder flex_row_nw">
-
-                        <a href="{% url 'editar_categoria' categoria.pkid_categoria %}" title="editar" class='vertical opt_bt'>
-                            <div class="opt_bt opt_edit">
-                            </div>
-                        </a>
                         
-                            {% url 'deletar_categoria' categoria.pkid_categoria as url %}
-                        <a href="javascript:confirmaJanelaOn('{{ url }}')" title="deletar" class='vertical opt_bt'>
+                        <a href="javascript:confirmaJanelaOn('{{ categoria.pkid_categoria }}')" title="deletar" class='vertical opt_bt'>
                             <div class='opt_bt opt_delete'>
                             </div>
                         </a>
