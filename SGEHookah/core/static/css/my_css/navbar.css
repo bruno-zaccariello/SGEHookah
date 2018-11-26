@@ -329,6 +329,19 @@ select.search_input {
     color: black;
 }
 
+@media screen and (min-width: 1200px) {
+
+    .oam_opt {
+        background-position: 50% 80%;
+        background-size: 17%;
+    }
+    
+    .oam_opt:hover {
+        background-size: 21%;
+    }
+
+}
+
 @media screen and (max-width: 1400px) {
     .oam_drop_div {
         font-size: 78%;

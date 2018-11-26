@@ -15,16 +15,16 @@
     <body>
         
         
-        {% if success == 'True' %}
+        {% if success %}
         <div class="overlay" id="overlay">
             <div class="overlay_bg">
             </div>
             
             <div class="overlay_content">
-                <h2 class="overlay_title">CLIENTE CADASTRADO COM SUCESSO</h2>
+                <h2 class="overlay_title">MATERIA ALTERADA COM SUCESSO</h2>
                 
                 <div class="bt_wrapper">
-                    <a href="{% url 'editar_cliente' %}"><button class="btMain btConfirmar">Continuar</button></a>
+                    <a href="{% url 'editar_materia' materia.pkid_materiaprima %}"><button class="btMain btConfirmar">Continuar</button></a>
                 </div>
                 
             </div>

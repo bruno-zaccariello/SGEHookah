@@ -104,7 +104,7 @@ class PaginaProduto(TemplateView):
         # Checa se o formulário é valido e se foi alterado
         if form.is_valid() and form.has_changed():
             form.save()
-            return HttpResponseRedirect(request.path_info)
+            return HttpResponseRedirect(request.path_info+'?success=True')
         return HttpResponseRedirect(request.path_info)
 
 
@@ -240,7 +240,7 @@ def lista_materia(request):
 
 @login_required(login_url="/admin")
 def editar_materia(request, id_materia):
-
+    success = request.GET.get('success', False)
     try:
         materia = models.Materiaprima.objects.get(pkid_materiaprima = id_materia)
     except:
@@ -251,13 +251,14 @@ def editar_materia(request, id_materia):
 
         if form.is_valid() and form.has_changed():
             form.save()
-            return HttpResponseRedirect(request.path_info)
+            return HttpResponseRedirect(request.path_info+'?success=True')
     else:
         form = forms.MateriaPrimaForm(instance=materia)
 
     context = {
         "materia": materia,
-        "form": form
+        "form": form,
+        "success":success
     }
     return render(request,"iframe/produtos/materia/editar_materia.html", context)
 

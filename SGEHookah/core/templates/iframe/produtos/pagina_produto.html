@@ -4,9 +4,9 @@
 	<title id="iframe_title">SGE - Página Produto</title>
 
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
-	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/pagina_produto.css"/>
 	<link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
-	
+	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/pagina_produto.css"/>
+
 	<script src="/static/jquery/jquery-3.3.1.min.js"></script>
 	<script src="/static/jquery/jquery.mask.min.js"></script>
 	
@@ -15,7 +15,21 @@
 
 <body>
 
-	
+	{% if success == 'True' %}
+	<div class="overlay" id="overlay">
+		<div class="overlay_bg">
+		</div>
+
+		<div class="overlay_content">
+			<h2 class="overlay_title">PRODUTO SALVO COM SUCESSO</h2>
+
+			<div class="bt_wrapper">
+				<a href="{% url 'product_page' produto.pkid_produto %}"><button class="btMain btConfirmar">Continuar</button></a>
+			</div>
+
+		</div>
+	</div>
+	{% endif %}
 
 	<section class="content">
 		<form method="POST" enctype="multipart/form-data" autocomplete="OFF">
@@ -23,8 +37,6 @@
 			{% csrf_token %}
 			
 			<div class="page_content">
-
-				<div class="fields_container">
 
 				<div class="foto_produto">
 					<img id="foto_produto" class="foto_produto" alt="{{ produto.nomeproduto }}" src="{{ produto.fotoproduto.url }}"/>		
@@ -35,21 +47,26 @@
 				<input type="file" style="display:none" name="fotoproduto" class="FotoInput" id="id_fotoproduto">
 
 					{% for field in form_page %}	
-					<div class="formInput">
-						<div class="label">{{ field.label_tag }}</div>
-						<div class="input">{{ field }}
-							{{ field.errors }}
+					<div class="fieldDiv">
+						<div class="formInput">
+							<div class="label">{{ field.label_tag }}</div>
+							<div class="input">{{ field }}
+								{{ field.errors }}
+							</div>
 						</div>
 					</div>
 					{% endfor %}
 					
-					<div class="descricao_div">
-						<div>{{ form.descricao.label_tag }}</div>
-						<div>{{ form.descricao }}</div>
+					<div class="fieldDiv">
+						<div class="formInput">
+							<div class="label">{{ form.descricao.label_tag }}</div>
+							<div class="input">{{ form.descricao }}
+								{{ field.errors }}
+							</div>
+						</div>
 					</div>
-				</div>
 				
-				<div class="bt_wrapper">
+				<div class="botaoContainer">
 					<button class="BtMain BtCancelar" id="BtClean" type="reset">Limpar</button>
 					<button class="BtMain BtConfirmar" type="submit">Salvar</button>
 				</div>

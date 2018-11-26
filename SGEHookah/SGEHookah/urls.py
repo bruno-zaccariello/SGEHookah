@@ -79,7 +79,8 @@ urls_vendas = [
 urls_fornecedores = [
     path('cadastrar/', view.cadastrar_fornecedor, name="cadastrar_fornecedor"),
     path('lista/', view.lista_fornecedores, name="lista_fornecedores"),
-    path('deletar/<int:id_fornecedor>/', view.deletar_fornecedor, name="deletar_fornecedor")
+    path('deletar/<int:id_fornecedor>/', view.deletar_fornecedor, name="deletar_fornecedor"),
+    path('<int:id_fornecedor>/', view.editar_fornecedor, name="editar_fornecedor"),
 ]
 
 api = [

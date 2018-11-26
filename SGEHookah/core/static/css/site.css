@@ -111,6 +111,7 @@ a.bee:hover {
 .h2_logoutMessage {
     font-size: 130%;
     margin: 0 auto;
+    color: white;
 }
 
 .logoutCheckMessage {

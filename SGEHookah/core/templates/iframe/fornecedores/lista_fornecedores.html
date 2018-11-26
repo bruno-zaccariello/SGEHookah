@@ -99,7 +99,7 @@
                     <td>
 
                         <div class="opts_holder flex_row_nw">
-                            <a href="/iframe/fornecedores/{{ fornecedor.pkid_pessoa }}" title="editar" class='vertical opt_bt'>
+                            <a href="{% url 'editar_fornecedor' fornecedor.pkid_pessoa %}" title="editar" class='vertical opt_bt'>
                                 <div class="opt_bt opt_edit">
                                 </div>
                             </a>
