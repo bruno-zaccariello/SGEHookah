@@ -71,6 +71,7 @@ class ListaVendas(TemplateView):
 
     def get(self, request):
         page = int(request.GET.get('page', 1))
+        deletado = request.GET.get('deleted', False)
         
         vendas = models.Pedidovenda.objects.filter(hide=False).order_by('pkid_venda')
         paginas = Paginator(vendas, 10)
@@ -78,6 +79,7 @@ class ListaVendas(TemplateView):
 
         context = {
             'pagina':pagina,
+            'deletado':deletado
         }
         return render(request, self.template_name, context)
 

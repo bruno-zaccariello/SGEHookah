@@ -138,10 +138,10 @@
 
                     <div class="opts_holder flex_row_nw">
 
-                    <a href="{% url 'editar_unidade' unidade.pkid_unidademedida %}" title="editar" class='vertical opt_bt'>
+                    {% comment %} <a href="{% url 'editar_unidade' unidade.pkid_unidademedida %}" title="editar" class='vertical opt_bt'>
                         <div class="opt_bt opt_edit">
                         </div>
-                    </a>
+                    </a> {% endcomment %}
                     
                     {% url 'deletar_unidade' unidade.pkid_unidademedida as url %}
                     <a href="javascript:confirmaJanelaOn('{{ url }}')" class='vertical opt_bt'>

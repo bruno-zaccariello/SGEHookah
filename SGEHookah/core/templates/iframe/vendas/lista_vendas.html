@@ -60,9 +60,9 @@
 	
 	<!--============================================-->
 	
-	<div class="">
+	{% comment %} <div class="">
 		SESSÃO PARA FILTRAR PEDIDO (EM CONSTRUCAO)
-	</div>
+	</div> {% endcomment %}
 	
     <section class="content">
 
@@ -117,10 +117,10 @@
                     <td>
 
                         <div class="opts_holder flex_row_nw">
-                            <a href="/iframe/clientes/" title="detalhes" class='vertical opt_bt'>
+                            {% comment %} <a href="/iframe/clientes/" title="detalhes" class='vertical opt_bt'>
                                 <div class="opt_bt opt_edit">
                                 </div>
-                            </a>
+                            </a> {% endcomment %}
 
                             {% url 'deletar_venda' pedido.pkid_venda as url %}
                             <a href="javascript:confirmaJanelaOn('{{ url }}')" title="deletar" class='vertical opt_bt'>

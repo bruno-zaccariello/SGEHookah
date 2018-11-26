@@ -8,7 +8,7 @@ var MateriaManager = {
             let materia = this.materias[i]
             
             let materia_span = $('[id_materia='+materia.id+']').find('.materia_qtd')
-            if (materia.estoque < $(materia_span).attr('quantidade')) {
+            if (materia.estoque < $(materia_span).prop('quantidade')) {
                 this.invalids += 1
                 $('[id_materia='+materia.id+']').css({'background-color':'red', 'color':'red'})
             } else {
@@ -77,6 +77,7 @@ function alterar_quantidade(valor) {
         
         let total = materia.quantidade * valor
         $(materia_span).text(total)
+        $(materia_span).prop('quantidade', total)
     }
     MateriaManager.checar()
 }

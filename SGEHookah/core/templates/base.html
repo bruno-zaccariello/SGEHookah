@@ -122,7 +122,7 @@
 				</div>
 				
 				<div class="oam_opt opt_vendas opt_none_bg">
-					<a href="">
+					<a href="{% url 'lista_vendas' %}" target="main_frame">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Vendas</div>
 						</div>
@@ -130,12 +130,11 @@
 					<div class="oam_dropdown_content">
 							<a href="{% url 'lista_vendas' %}" target="main_frame"><div class="oam_drop_opt">Lista Vendas</div></a>
 							<a href="{% url 'nova_venda' %}" target="main_frame"><div class="oam_drop_opt">Nova Venda</div></a>
-						<a href="/iframe/vendas/calcula_frete" target="main_frame"><div class="oam_drop_opt">Calcular Frete</div></a>
 					</div>
 				</div>
 				
 				<div class="oam_opt opt_producao opt_none_bg">
-					<a href="">
+					<a href="{% url 'lista_fabricacao' %}" target="main_frame">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Produção</div>
 						</div>
@@ -147,7 +146,7 @@
 				</div>
 				
 				<div class="oam_opt opt_fornecedores opt_none_bg">
-					<a href="/iframe/home" target="main_frame">
+					<a href="{% url 'lista_fornecedores' %}" target="main_frame">
 						<div class="oam_drop_div">
 							<div class="oam_drop_div_legend">Fornecedores</div>
 						</div>

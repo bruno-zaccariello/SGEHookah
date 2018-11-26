@@ -1,7 +1,8 @@
 """
     Módulo que contem fórmularios utilizados no sistema
 """
-
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 import datetime as dt
 import localflavor.br.forms as lf
 
@@ -309,6 +310,8 @@ class PedidofabricacaoForm(forms.ModelForm):
     def clean_dt_fim_maturacao(self):
         """ Realiza o cálculo para quando será o fim da maturação """
 
+        if not self.cleaned_data.get("fkid_formula", False):
+            return dt.datetime.now()
         formula_time = str(
             self.cleaned_data["fkid_formula"].tempomaturacao).split(":")
         hours = int(formula_time[0])

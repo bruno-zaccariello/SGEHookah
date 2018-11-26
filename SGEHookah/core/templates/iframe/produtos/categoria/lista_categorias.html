@@ -131,10 +131,10 @@
                     <td>
                         <div class="opts_holder flex_row_nw">
 
-                        <a href="{% url 'editar_categoria' categoria.pkid_categoria %}" title="editar" class='vertical opt_bt'>
+                        {% comment %} <a href="{% url 'editar_categoria' categoria.pkid_categoria %}" title="editar" class='vertical opt_bt'>
                             <div class="opt_bt opt_edit">
                             </div>
-                        </a>
+                        </a> {% endcomment %}
                         
                             {% url 'deletar_categoria' categoria.pkid_categoria as url %}
                         <a href="javascript:confirmaJanelaOn('{{ url }}')" title="deletar" class='vertical opt_bt'>
