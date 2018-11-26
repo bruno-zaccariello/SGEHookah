@@ -32,7 +32,8 @@ var MateriaManager = {
 
 $(document).ready(function() {
     get_materias($('#id_fkid_formula').val())
-    alterar_quantidade($('#id_quantidade').val())
+    MateriaManager.checar();
+    alterar_quantidade($('#id_quantidade').val());
 })
 
 function get_materias(id) {
@@ -46,10 +47,12 @@ function get_materias(id) {
                 r = data
                 MateriaManager.materias = r.materias
                 for (var i = 0; i < r.materias.length; i++) {
+                    let multiplicador = parseFloat($('#id_quantidade').val())
 
                     let id = r.materias[i].id
                     let materia = r.materias[i].materia
-                    let quantidade = r.materias[i].quantidade
+                    let quantidade = (multiplicador) ? 
+                        r.materias[i].quantidade * multiplicador : r.materias[i].quantidade
                     let unidade = r.materias[i].unidade
 
                     $('#materias').append(
@@ -62,14 +65,12 @@ function get_materias(id) {
                     )
                 }
             },
-            function(){alterar_quantidade($('#id_quantidade').val())}
         )
 
     }
 }
 
 function alterar_quantidade(valor) {
-    console.log(MateriaManager)
     for (let j = 0; j < MateriaManager.materias.length; j++) {
         let materia = MateriaManager.materias[j];
         let materia_span = $('[id_materia='+materia.id+']').find('.materia_qtd');

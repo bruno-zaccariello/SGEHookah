@@ -39,25 +39,61 @@
 			<form method="POST" autocomplete="off">
 				{% csrf_token %}
 
-						<h2 class="txt_center">{{ produto.nomeproduto }}</h2>
-						<div class="flex_row_nw row_center">
-						
-							{% for field in form_formula %}
+					<h2 class="txt_center">{{ produto.nomeproduto }}</h2>
+					<div class="flex_row_nw row_center">
+					
+						{% for field in form_formula %}
 
-							<div class="fieldDiv">
-								<div class="formInput">
-									<div class="label">{{field.label_tag}}</div>
-									<div class="input">{{field}}
-										{{field.errors}}
-									</div>
+						<div class="fieldDiv">
+							<div class="formInput">
+								<div class="label">{{field.label_tag}}</div>
+								<div class="input">{{field}}
+									{{field.errors}}
 								</div>
 							</div>
-
-							{% endfor %}
-
 						</div>
 
-						{% include FORMSET_TEMPLATE with formset=forms_materia %}
+						{% endfor %}
+
+					</div>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Matéria Prima</th>
+								<th>Quantidade</th>
+								<th>Unidade</th>
+								<th>Excluir</th>
+							</tr>
+						</thead>
+						<tbody>
+						{{ forms_materia.management_form }}
+						{% for form in forms_materia %}
+							<tr class="form-row">
+								{% for field in form.hidden_fields %}
+									<td class="hidden">
+										{{ field }}
+									</td>
+								{% endfor %}
+								{% for field in form.visible_fields %}
+									<td class="row_center">
+										{{field}}
+										{{field.errors}}
+									</td>
+								{% endfor %}
+							</tr>
+						{% endfor %}
+							<tr class="add_row">
+								<td></td>
+								<td></td>
+								<td></td>
+								<td class="row_center">
+									<div title="nova linha-" class="opt_bt opt_add add-form-row">
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
 					<div class="botaoContainer">
 						<button class="btMain btCancelar" type="reset">Limpar</button>

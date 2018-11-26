@@ -91,7 +91,7 @@ api = [
 urlpatterns = [
     path('admindjango/', admin.site.urls),
     path('admin/', auth_views.LoginView.as_view(template_name='index.html'), name="login"),
-    path('logout/', auth_views.LogoutView),
+    path('logout/', auth_views.LogoutView.as_view(next_page="/")),
     path('admin/home/', view.home, name="home"),
     path('', view.redirect_home),
     path('iframe/home/', view.iframe_home, name="iframe_home"),

@@ -5,6 +5,7 @@
 
 	<link rel="stylesheet"  type="text/css" href="/static/css/site.css"/>
 	<link rel="stylesheet"  type="text/css" href="/static/css/iframe/produtos/pagina_produto.css"/>
+	<link rel="stylesheet"  type="text/css" href="/static/css/patterns/cadastro.css"/>
 	
 	<script src="/static/jquery/jquery-3.3.1.min.js"></script>
 	<script src="/static/jquery/jquery.mask.min.js"></script>
@@ -23,17 +24,16 @@
 			
 			<div class="page_content">
 
-				<div class="foto_wrapper">
-					<div class="foto_produto">
-						<img id="foto_produto" class="foto_produto" alt="{{ produto.nomeproduto }}" src="{{ produto.fotoproduto.url }}"/>		
-						<img style="display:none" id="foto_preview" class="foto_produto"/>
-					</div>
-					
-					<label class="label_fotoproduto" for="id_fotoproduto"><div class="foto_label vertical">Alterar Foto</div></label>
-					<input type="file" style="display:none" name="fotoproduto" class="FotoInput" id="id_fotoproduto">
-				</div>
-
 				<div class="fields_container">
+
+				<div class="foto_produto">
+					<img id="foto_produto" class="foto_produto" alt="{{ produto.nomeproduto }}" src="{{ produto.fotoproduto.url }}"/>		
+					<img style="display:none" id="foto_preview" class="foto_produto"/>
+				</div>
+				
+				<label class="label_fotoproduto" for="id_fotoproduto"><div class="foto_label vertical">Alterar Foto</div></label>
+				<input type="file" style="display:none" name="fotoproduto" class="FotoInput" id="id_fotoproduto">
+
 					{% for field in form_page %}	
 					<div class="formInput">
 						<div class="label">{{ field.label_tag }}</div>
